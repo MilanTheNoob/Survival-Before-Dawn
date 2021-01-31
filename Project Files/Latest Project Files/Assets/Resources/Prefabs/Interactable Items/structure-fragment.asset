@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d949c0b6cb4901d41b6f9e52951ae126, type: 3}
+  m_Name: structure-fragment
+  m_EditorClassIdentifier: 
+  desc: Fragment
+  descName: Structure Fragment
+  icon: {fileID: 21300000, guid: 1ef92a7bf6984ae4e9ca64e413733cad, type: 3}
+  gameObject: {fileID: 69647224806447978, guid: e1b7de163dbb06543bec1ce9baba7e01, type: 3}
+  description: A Structure Fragment needed to make the ruby crystal, can be crafted
+    from common structures
+  sellValue: 10
+  buyValue: 20
+  originType: 0
+  isUsableItem: 0
+  dontDrop: 0

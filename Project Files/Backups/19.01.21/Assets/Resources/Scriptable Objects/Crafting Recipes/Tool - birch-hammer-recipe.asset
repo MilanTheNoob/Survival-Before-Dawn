@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da035c5cb9f0aee40a44c6d419662867, type: 3}
+  m_Name: Tool - birch-hammer-recipe
+  m_EditorClassIdentifier: 
+  recipeName: Birch Hammer Recipe
+  recipeDesc: The birch variant of a hammer, requires 1 stone and birch log to be
+    crafted
+  recipes:
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 40719958ff642024e84cca88a692bda2, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 18ac03fb145243f4cbd4ba8b1b3e629d, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 3eefe0beb22ce1b47a97cd4614e95070, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 784145743067c614c9e5a0cb43131d90, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: f0d5c47c975138b4a8a0e19fe052925a, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 29ff6922f9994d144acaa027d9c0430e, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: aa5aba885cbc41547a42850cb2c1090c, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 6b10a1a0d6f434d4cbebdb2b14a7d4b6, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 2ebe5d20ab21aab4b85667de0e160e42, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 6717b6d828a13a24eb17c9058900704e, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 80d7967424e264b4eb7124c08068e89b, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 8cc617e9a5759cf48998ecf31e69b1c9, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 468c544b7461ea44d8fa5ecaaf82a031, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 83f44640cb874a442bb4e8d14470e0fc, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: c65d45c48c15bd445a7434efd14df4fe, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 5c0be6d36ddc50340ba773ed7f9bb4c4, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 132c584ba571aa44fbcac55ee7007bb6, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 132c584ba571aa44fbcac55ee7007bb6, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: fe0fae44c5b25e04f9243dd553df1e1d, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: ca0f27ccd5927324e9525e1daf69a366, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+  - Input:
+    - {fileID: 11400000, guid: 46a2d0c5036ed6d47824abd018082a2c, type: 2}
+    - {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}

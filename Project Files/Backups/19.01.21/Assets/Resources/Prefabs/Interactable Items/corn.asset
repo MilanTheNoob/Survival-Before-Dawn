@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e383c231df5e7e4e9ee141862522f8e, type: 3}
+  m_Name: corn
+  m_EditorClassIdentifier: 
+  desc: Corn
+  descName: Corn
+  icon: {fileID: 21300000, guid: 5d267cdace9148d46ab5e44b4033e35e, type: 3}
+  gameObject: {fileID: 1989835390974618, guid: 0118eb39998c893478203f04b2de1924, type: 3}
+  description: A less common vegetable that can be used in filling foods, replenishes
+    health & hunger by 10%
+  sellValue: 1
+  buyValue: 2
+  originType: 0
+  isUsableItem: 1
+  dontDrop: 0
+  healthChange: 0.1
+  hungerChange: 0.1

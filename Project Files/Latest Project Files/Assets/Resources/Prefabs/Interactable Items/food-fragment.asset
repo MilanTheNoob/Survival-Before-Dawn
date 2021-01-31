@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d949c0b6cb4901d41b6f9e52951ae126, type: 3}
+  m_Name: food-fragment
+  m_EditorClassIdentifier: 
+  desc: Fragment
+  descName: Food Fragment
+  icon: {fileID: 21300000, guid: 40b7fd506df5f55408ef12738fbaba35, type: 3}
+  gameObject: {fileID: 661098097338653383, guid: 87f31055b1698b041b3199659171ac08, type: 3}
+  description: The tool fragment, part of the ruby crystal recipe. Can be crafted
+    from tools
+  sellValue: 10
+  buyValue: 20
+  originType: 0
+  isUsableItem: 0
+  dontDrop: 0

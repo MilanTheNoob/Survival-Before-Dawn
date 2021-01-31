@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da035c5cb9f0aee40a44c6d419662867, type: 3}
+  m_Name: Food - pizza-slices-recipe
+  m_EditorClassIdentifier: 
+  recipeName: Pizza Slices Recipe
+  recipeDesc: An easy recipe that slices pizza into pizza slices
+  recipes:
+  - Input:
+    - {fileID: 11400000, guid: 8830d56ef5f7562478a6699d276b3425, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: e10d4a352595e434b8a532b4419e3b68, type: 2}
+    - {fileID: 11400000, guid: e10d4a352595e434b8a532b4419e3b68, type: 2}
+    - {fileID: 11400000, guid: e10d4a352595e434b8a532b4419e3b68, type: 2}
+    - {fileID: 11400000, guid: e10d4a352595e434b8a532b4419e3b68, type: 2}

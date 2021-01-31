@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cce3b9cb6274d299978f334a2cefde, type: 3}
+  m_Name: Default Mesh Settings
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+  ySize: 75
+  meshScale: 2
+  useFlatShading: 1
+  colliderLODIndex: 0
+  detailLevels:
+  - lod: 0
+    visibleDstThreshold: 100
+  chunkSizeIndex: 0
+  flatshadedChunkSizeIndex: 2

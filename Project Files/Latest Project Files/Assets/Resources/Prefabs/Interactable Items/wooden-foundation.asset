@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a65161c55d14a14c932a197b2e7d131, type: 3}
+  m_Name: wooden-foundation
+  m_EditorClassIdentifier: 
+  desc: Floor
+  descName: Wooden Foundation
+  icon: {fileID: 21300000, guid: b21402266eb737743ba4a0df3afdd78e, type: 3}
+  gameObject: {fileID: 6338560216863707730, guid: d2415247bd30229479313e82c26851bf, type: 3}
+  description: A wooden foundation used to make structures, crafted from logs
+  sellValue: 15
+  buyValue: 30
+  originType: 0
+  isUsableItem: 1
+  dontDrop: 1

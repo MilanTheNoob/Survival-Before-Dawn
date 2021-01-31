@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d949c0b6cb4901d41b6f9e52951ae126, type: 3}
+  m_Name: flour
+  m_EditorClassIdentifier: 
+  desc: Flour
+  descName: Flour
+  icon: {fileID: 21300000, guid: de58aafc768408748ab7d321c484b445, type: 3}
+  gameObject: {fileID: 1856945634582594, guid: ec9220c307cfb134b8009ae2432ac7f9, type: 3}
+  description: A simple bag of flour that can only be used for making foods
+  sellValue: 2
+  buyValue: 4
+  originType: 0
+  isUsableItem: 0
+  dontDrop: 0

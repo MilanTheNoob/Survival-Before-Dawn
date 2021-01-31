@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da035c5cb9f0aee40a44c6d419662867, type: 3}
+  m_Name: Structure - stone-wall-with-window-recipe
+  m_EditorClassIdentifier: 
+  recipeName: Stone Wall With Window Recipe
+  recipeDesc: A stone wall with an iron window, can be crafted from bricks and an
+    iron ingot
+  recipes:
+  - Input:
+    - {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
+    - {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
+    - {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
+    - {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
+    - {fileID: 11400000, guid: a7b89a289ce8f8c44b93f1d3598a5418, type: 2}
+    Tools:
+    - {fileID: 11400000, guid: 66156f499a42a274ca6e5a6e61fb04b7, type: 2}
+    Output:
+    - {fileID: 11400000, guid: 0fad88881b3e53247aa8ffd86ec408c4, type: 2}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d949c0b6cb4901d41b6f9e52951ae126, type: 3}
+  m_Name: orange-small-stone
+  m_EditorClassIdentifier: 
+  desc: Stone
+  descName: Orange Small Stone
+  icon: {fileID: 21300000, guid: 0c1631ab20ce2d24985a36ccf4bfcae4, type: 3}
+  gameObject: {fileID: 1000010604084324, guid: 559e97f0f59965d41907066503422e5d, type: 3}
+  description: Stones/Rocks that naturally spawn and can be used for making primitive
+    tools/ bricks for building, etc
+  sellValue: 1
+  buyValue: 2
+  originType: 0
+  isUsableItem: 0
+  dontDrop: 0

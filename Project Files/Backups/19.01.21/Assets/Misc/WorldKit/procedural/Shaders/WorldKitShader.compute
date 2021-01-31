@@ -1,0 +1,37 @@
+﻿// Licensed under the Non-Profit Open Software License version 3.0
+
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel PerlinNoise
+#pragma kernel Clamp
+#pragma kernel HydraulicErosion
+#pragma kernel PseudoRandomNoise
+#pragma kernel HeightMapToTexture
+#pragma kernel Expand
+#pragma kernel HeightContrast
+#pragma kernel Terrace
+
+// Declare global buffers
+float BlendStrength;
+
+// Texture buffer
+RWTexture2D<float4> Texture;
+
+// Height buffer
+uint HeightMapResolution;
+uint HeightMapLength;
+RWStructuredBuffer<float> HeightBuffer;
+
+// Global includes
+#include "Utils/PRNG.hlsl"
+#include "Utils/ClassicNoise2D.hlsl"
+#include "Utils/WorldKitUtils.hlsl"
+
+// Kernel includes
+#include "Layers/PerlinNoise.hlsl"
+#include "Layers/Clamp.hlsl"
+#include "Layers/HydraulicErosion.hlsl"
+#include "Layers/PseudoRandomNoise.hlsl"
+#include "Layers/HeightMapToTexture.hlsl"
+#include "Layers/Expand.hlsl"
+#include "Layers/HeightContrast.hlsl"
+#include "Layers/Terrace.hlsl"

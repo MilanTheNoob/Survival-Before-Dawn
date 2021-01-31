@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a65161c55d14a14c932a197b2e7d131, type: 3}
+  m_Name: wood-chair
+  m_EditorClassIdentifier: 
+  desc: Chair
+  descName: Wood Chair
+  icon: {fileID: 21300000, guid: a2d02868464ff614790669e987e89470, type: 3}
+  gameObject: {fileID: 1882123684952522, guid: 5be3ede12e1c9c941b6a87648d6f2088, type: 3}
+  description: A primitive wooden chair that can be made with logs, can be placed
+    anywhere
+  sellValue: 6
+  buyValue: 12
+  originType: 0
+  isUsableItem: 1
+  dontDrop: 1

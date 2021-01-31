@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da035c5cb9f0aee40a44c6d419662867, type: 3}
+  m_Name: C&F - ore-fragment-recipe
+  m_EditorClassIdentifier: 
+  recipeName: Ore Fragment Recipe
+  recipeDesc: An ore fragment recipe, needed to make a ruby crystal. Can be crafted
+    from all the ores in the game
+  recipes:
+  - Input:
+    - {fileID: 11400000, guid: 46a55e60a73fbb241a1b1a8fd19d658f, type: 2}
+    - {fileID: 11400000, guid: ecedbde32e6450b448097f0a7a282fbd, type: 2}
+    - {fileID: 11400000, guid: d19493d8dac0ebc4b84d9f40840bcf3a, type: 2}
+    Tools: []
+    Output:
+    - {fileID: 11400000, guid: 32503370c651f6a488c9b15b8f53ae9b, type: 2}
