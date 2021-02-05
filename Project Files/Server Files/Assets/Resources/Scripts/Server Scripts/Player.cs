@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -15,17 +14,20 @@ public class Player : MonoBehaviour
 
     public List<string> inventory = new List<string>();
     public GameObject currentItem;
+    public GameObject cameraPos;
 
     public List<Vector2> chunks;
+
+    public bool interacting;
+    public bool moving;
+
+    public float health;
+    public float hunger;
 
     float horizontal;
     float vertical;
     bool jump;
     float yVelocity = 0;
-
-    GameObject cameraPos;
-
-    bool interacting;
 
     private void Start()
     {
@@ -42,6 +44,9 @@ public class Player : MonoBehaviour
         cameraPos = new GameObject();
         cameraPos.transform.parent = controller.transform;
         cameraPos.transform.localPosition = new Vector3(0f, 1.6f, 0.4f);
+
+        health = 1f;
+        hunger = 1f;
     }
 
     public void FixedUpdate()
@@ -56,14 +61,41 @@ public class Player : MonoBehaviour
         {
             interacting = true;
             currentItem = hitInfo.transform.gameObject;
-            ServerSend.InteractItem("Interact with", currentItem.transform.name, this);
+            ServerSend.InteractItem(currentItem, this);
         }
-        else if (interacting && currentItem != null && !hitInteractableObject) 
-        { 
+        if (interacting && !hitInteractableObject) 
+        {
             ServerSend.StopInteractItem(this); 
             currentItem = null; 
             interacting = false; 
         }
+
+        #endregion
+
+        #region Vitals
+
+        if (health <= 0f)
+        {
+            health = 1f;
+            hunger = 1f;
+
+            controller.enabled = false;
+            controller.transform.position = new Vector3(0f, 25f, 0f);
+            controller.enabled = true;
+        }
+        else if (health > 1f) { health = 1f; }
+
+        if (hunger <= 0f)
+        {
+            if (health > 0f) { health -= 0.0003f; }
+        }
+        else if (hunger > 1f)
+        {
+            hunger = 1f;
+        }
+        else { hunger -= 0.00006f; }
+
+        ServerSend.UpdateVitals(this);
 
         #endregion
 
@@ -85,12 +117,15 @@ public class Player : MonoBehaviour
         ServerSend.PlayerRotation(this);
     }
 
-    public void SetInput(float _horizontal, float _vertical, Quaternion _rotation, bool _jump)
+    public void SetInput(float _horizontal, float _vertical, Quaternion _rotation, Quaternion _camera, bool _jump, bool _moving)
     {
         horizontal = _horizontal;
         vertical = _vertical;
         jump = _jump;
 
         transform.rotation = _rotation;
+        cameraPos.transform.rotation = _camera;
+
+        moving = _moving;
     }
 }

@@ -17,7 +17,9 @@ public enum ServerPackets
     structuresChunkUpdate,
     interact,
     stopInteract,
-    updateInventory
+    updateInventory,
+    updateVitals,
+    treeInteract
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -25,7 +27,10 @@ public enum ClientPackets
 {
     welcomeReceived = 1,
     playerMovement,
-    interact
+    interact,
+    modifyVital,
+    destroyProp,
+    addProp
 }
 
 public class Packet : IDisposable

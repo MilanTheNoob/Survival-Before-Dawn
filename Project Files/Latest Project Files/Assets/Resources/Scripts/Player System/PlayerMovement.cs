@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (InputManager.Vertical == 0 && InputManager.Horizontal == 0) { InputManager.moving = false; } else { InputManager.moving = true; }
+        if (InputManager.Vertical == 0 || InputManager.Horizontal == 0) { InputManager.moving = false; } else { InputManager.moving = true; }
 
         if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
         {
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
             if (controller.enabled)
                 controller.enabled = false;
 
-            ClientSend.PlayerMovement(MultiplayerInputManager.Horizontal, MultiplayerInputManager.Vertical, MultiplayerInputManager.instance.jump.onClicked);
+            ClientSend.SendPlayerMovement(MultiplayerInputManager.Horizontal, MultiplayerInputManager.Vertical, MultiplayerInputManager.instance.jump.onClicked);
         }
     }
 

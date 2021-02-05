@@ -94,7 +94,7 @@ public class PropsGeneration : MonoBehaviour
 
         if (SavingManager.SaveFile.chunkData.ContainsKey(new Vector2(chunk.coord.x, chunk.coord.y)))
         {
-            SavingManager.ChunkPropData saveData = SavingManager.SaveFile.chunkData[new Vector2(chunk.coord.x, chunk.coord.y)];
+            ChunkPropData saveData = SavingManager.SaveFile.chunkData[new Vector2(chunk.coord.x, chunk.coord.y)];
 
             for (int i = 0; i < saveData.propName.Count; i++)
             {
@@ -169,10 +169,12 @@ public class PropsGeneration : MonoBehaviour
         }
     }
 
-    public void MultiplayerGenerate(MultiplayerTerrainChunk chunk)
+    public Dictionary<Vector3, GameObject> MultiplayerGenerate(MultiplayerTerrainChunk chunk)
     {
-        if (generatedChunks.Contains(chunk.coord) || chunk.meshFilter.mesh.vertices.Length < 1) { return; }
+        if (generatedChunks.Contains(chunk.coord)) { return null; }
         generatedChunks.Add(chunk.coord);
+
+        Dictionary<Vector3, GameObject> propG = new Dictionary<Vector3, GameObject>();
 
         for (int i = 0; i < chunk.chunkData.props.Count; i++)
         {
@@ -187,8 +189,12 @@ public class PropsGeneration : MonoBehaviour
                 g.transform.localPosition = chunk.chunkData.props.ElementAt(i).Key;
                 g.transform.eulerAngles = chunk.chunkData.props.ElementAt(i).Value.rot;
                 g.SetActive(true);
+
+                propG.Add(g.transform.position, g);
             }
         }
+
+        return propG;
     }
 
     #endregion
@@ -221,9 +227,10 @@ public class PropsGeneration : MonoBehaviour
         if (chunk.props.transform.childCount == 0 || !generatedChunks.Contains(chunk.coord)) { return; }
         generatedChunks.Remove(chunk.coord);
 
+        chunk.propDict.Clear();
         for (int i = 0; i < chunk.props.transform.childCount; i++) { RemoveProp(chunk.props.transform.GetChild(i)); }
     }
-    void RemoveProp(Transform child)
+    public void RemoveProp(Transform child)
     {
         if (!pools.ContainsKey(child.name + " Pool")) { return; }
 
@@ -239,7 +246,9 @@ public class PropsGeneration : MonoBehaviour
 
         i.transform.parent = pools[i.name + " Pool"].gameObject.transform;
         i.transform.name = pools[i.name + " Pool"].pool[0].transform.name;
-        i.SetActive(false);
+        i.transform.position = new Vector3(0f, -10f, 0f);
+        i.transform.rotation = Quaternion.identity;
+        //i.SetActive(false);
 
         pools[i.name + " Pool"].pool.Add(i);
     }
@@ -249,7 +258,7 @@ public class PropsGeneration : MonoBehaviour
     {
         if (!generatedChunks.Contains(chunk.coord)) { return; }
 
-        SavingManager.ChunkPropData chunkData = new SavingManager.ChunkPropData();
+        ChunkPropData chunkData = new ChunkPropData();
 
         for (int i = 0; i < chunk.props.transform.childCount; i++)
         {

@@ -9,8 +9,13 @@ public class PropsGeneration : MonoBehaviour
 
     public PropsSettings propsSettings;
 
+    List<Vector2> generatedChunks = new List<Vector2>();
+
     public Dictionary<Vector3, PropDataStruct> Generate(TerrainChunk chunk)
     {
+        if (generatedChunks.Contains(chunk.coord)) { return null; }
+        generatedChunks.Add(chunk.coord);
+
         Dictionary<Vector3, PropDataStruct> props = new Dictionary<Vector3, PropDataStruct>();
         List<Vector3> vertices = chunk.mesh.vertices.ToList();
 
@@ -44,9 +49,11 @@ public class PropsGeneration : MonoBehaviour
 
                         GameObject g = Instantiate(propsSettings.PropGroups[groupId].Props[propId].prop);
                         g.transform.name = propsSettings.PropGroups[groupId].Props[propId].prop.name;
-                        g.transform.parent = chunk.items.transform;
-                        g.transform.localPosition = new Vector3(vertices[t].x, vertices[t].y + propsSettings.PropGroups[groupId].Props[propId].yOffset, vertices[t].z);
+                        g.transform.parent = chunk.props.transform;
+                        g.transform.localPosition = pos;
                         g.transform.eulerAngles = euler;
+
+                        chunk.propsDict.Add(g.transform.position, g);
 
                         props.Add(pos, prop);
                     }

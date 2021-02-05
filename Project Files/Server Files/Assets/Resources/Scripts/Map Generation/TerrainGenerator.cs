@@ -36,19 +36,17 @@ public class TerrainGenerator : MonoBehaviour
 		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / meshWorldSize);
 	}
 
-	public void UpdateChunks(Dictionary<int, Player> players)
-	{
-		for (int i = 0; i < players.Count; i++)
-        {
-			Player player = players.ElementAt(i).Value;
+    void FixedUpdate()
+    {
+		for (int i = 0; i < NetworkManager.instance.players.Count; i++)
+		{
+			Player player = NetworkManager.instance.players.ElementAt(i).Value;
 
 			Vector2 viewerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
 			Vector2 viewerPositionOld = new Vector2(player.oldPos.x, player.oldPos.y);
 
 			if (viewerPosition != viewerPositionOld)
 			{
-				viewerPositionOld = viewerPosition;
-
 				HashSet<Vector2> alreadyUpdatedChunkCoords = new HashSet<Vector2>();
 
 				int currentChunkCoordX = Mathf.RoundToInt(viewerPosition.x / meshWorldSize);
@@ -68,7 +66,7 @@ public class TerrainGenerator : MonoBehaviour
 								newChunk.Load();
 							}
 							else if (!player.chunks.Contains(viewedChunkCoord))
-                            {
+							{
 								ServerSend.ChunkData(chunkDictionary[viewedChunkCoord].chunkData, player, meshSettings.numVertsPerLine, meshSettings.numVertsPerLine);
 								player.chunks.Add(viewedChunkCoord);
 							}
@@ -110,11 +108,45 @@ public class TerrainGenerator : MonoBehaviour
 		}
 	}
 
-	public void UpdateChunk(Dictionary<Vector3, PropDataStruct> newProps, Vector2 coord)
+	public void UpdateChunk(Vector3 propPos, PropDataStruct newProp)
     {
-		//if (chunkDictionary.ContainsKey(coord))
+		Vector2 coord = new Vector3(Mathf.RoundToInt(propPos.x / meshWorldSize), Mathf.RoundToInt(propPos.z / meshWorldSize));
+		if (!chunkDictionary.ContainsKey(coord)) { print("shiiitt"); return; }
 
-		chunkDictionary[coord]
+		Vector3 localPropPos = chunkDictionary[coord].meshObject.transform.InverseTransformPoint(propPos);
+
+		if (newProp != null)
+        {
+			if (!chunkDictionary[coord].chunkData.props.ContainsKey(localPropPos))
+			{
+				chunkDictionary[coord].chunkData.props.Add(localPropPos, newProp);
+
+				GameObject g = Instantiate(propsSettings.PropGroups[newProp.group].Props[newProp.prop].prop);
+				g.transform.name = propsSettings.PropGroups[newProp.group].Props[newProp.prop].prop.name;
+				g.transform.parent = chunkDictionary[coord].props.transform;
+				g.transform.localPosition = localPropPos;
+				g.transform.eulerAngles = newProp.rot;
+			}
+		}
+        else
+        {
+			print("not shit");
+			if (chunkDictionary[coord].chunkData.props.ContainsKey(localPropPos)) 
+			{
+				if (chunkDictionary[coord].propsDict.ContainsKey(propPos))
+                {
+					Destroy(chunkDictionary[coord].propsDict[propPos]);
+					chunkDictionary[coord].propsDict.Remove(propPos);
+				}
+				chunkDictionary[coord].chunkData.props.Remove(localPropPos); 
+			}
+        }
+
+		for (int i = 0; i < NetworkManager.instance.players.Count; i++)
+        {
+			Player player = NetworkManager.instance.players.ElementAt(i).Value;
+			if (player.chunks.Contains(coord)) { ServerSend.PropChunkUpdate(chunkDictionary[coord].chunkData, player); }
+        }
     }
 }
 

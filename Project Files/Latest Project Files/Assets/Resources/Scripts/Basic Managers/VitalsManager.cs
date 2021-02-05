@@ -14,17 +14,20 @@ public class VitalsManager : MonoBehaviour
 
     public static VitalsManager instance;
     bool isDying;
+    bool isDead;
 
     void Awake()
     {
         instance = this;
 
-        SavingManager.SaveGameCallback += SaveVitals;
-        LoadVitals();
+        if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
+        {
+            SavingManager.SaveGameCallback += SaveVitals;
+            LoadVitals();
 
-        ModifyVitalAmount(0, 0);
-
-        for (int i = 0; i < vitals.Length; i++) { if (vitals[i].subtract != 0) { StartCoroutine(ModifyVitals(vitals[i])); } }
+            ModifyVitalAmount(0, 0);
+            for (int i = 0; i < vitals.Length; i++) { if (vitals[i].subtract != 0) { StartCoroutine(ModifyVitals(vitals[i])); } }
+        }
     }
 
     IEnumerator ModifyVitals(VitalStruct vital)
@@ -42,7 +45,6 @@ public class VitalsManager : MonoBehaviour
         vital.amount += change;
         vital.bar.fillAmount = vital.amount;
 
-        if (vital.warning != null && vital.amount <= 0.2f) { vital.warning.gameObject.SetActive(true); } else { vital.warning.gameObject.SetActive(false); }
         if (vital.amount > 1f) { vital.amount = 1f; }
         if (vital.amount < 0f && vital != vitals[0]) { ModifyVitalAmount(0, -vitals[0].hit); vital.amount = 0f; }
         if (vital == vitals[0] && change < 0) { StartCoroutine(HurtPlayerVisual()); }
@@ -51,6 +53,8 @@ public class VitalsManager : MonoBehaviour
         {
             ResetVitals();
             InputManager.instance.ToggleUISectionsInt(0);
+            Inventory.instance.DestroyAll();
+
             StartCoroutine(Death());
         }
     }
@@ -74,12 +78,37 @@ public class VitalsManager : MonoBehaviour
 
     public IEnumerator Death()
     {
-        TweeningLibrary.FadeIn(deathScreen, 0.2f);
-        yield return new WaitForSeconds(5.5f);
-        TweeningLibrary.FadeOut(deathScreen, 0.2f);
-
-        ModifyVitalAmount(0, 0f);
+        if (!isDead)
+        {
+            isDead = true;
+            TweeningLibrary.FadeIn(deathScreen, 0.2f);
+            yield return new WaitForSeconds(5.5f);
+            TweeningLibrary.FadeOut(deathScreen, 0.2f);
+            isDead = false;
+        }
     }
+
+    #region Multiplayer Code
+
+    public void MultiplayerModifyVitalAmount(int vital, float value)
+    {
+        if (vital == 0 && value < 0.005f)
+        {
+            StartCoroutine(Death());
+        }
+        else if (vital == 0 && value < vitals[0].amount) 
+        { 
+            StartCoroutine(HurtPlayerVisual()); 
+        }
+
+        vitals[vital].amount = value;
+        vitals[vital].bar.fillAmount = value;
+
+        if (value > 1f) { vitals[vital].amount = 1f; }
+        if (value < 0f && vital != 0) { ModifyVitalAmount(0, -vitals[0].hit); vitals[vital].amount = 0f; }
+    }
+
+    #endregion
 }
 
 [System.Serializable]
@@ -91,5 +120,4 @@ public class VitalStruct
     public float hit = 0.001f;
 
     public Image bar;
-    public Image warning;
 }

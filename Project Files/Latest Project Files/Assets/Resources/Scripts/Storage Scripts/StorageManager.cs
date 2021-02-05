@@ -26,7 +26,7 @@ public class StorageManager : MonoBehaviour
 
     public void ToStorage(int slot)
     {
-        if (SavingManager.SaveFile.storage[currentPos].items.Count < maxStorageSize && isStoring)
+        if (SavingManager.SaveFile.storage[currentPos].items.Count < 20 && isStoring && Inventory.instance.items[slot] != null)
         {
             currentStorage.Add(playerSlots[slot].itemSettings);
             UpdateStorageUI();
@@ -37,7 +37,7 @@ public class StorageManager : MonoBehaviour
 
     public void ToPlayer(int slot)
     {
-        if (Inventory.instance.items.Count < Inventory.instance.maxSlots && isStoring)
+        if (Inventory.instance.items.Count < 14 && isStoring && currentStorage[slot] != null)
         {
             Inventory.instance.Add(chestSlots[slot].itemSettings);
 
@@ -54,23 +54,22 @@ public class StorageManager : MonoBehaviour
 
     public void InteractWithStorage(Vector3 pos)
     {
-        if (isStoring)
-            return;
+        if (isStoring) { return; }
 
         InputManager.instance.ToggleUISectionsInt(12);
-
         for (int i = 0; i < chestSlots.Length; i++) { chestSlots[i].ClearSlot(); }
 
         if (SavingManager.SaveFile.storage.ContainsKey(pos))
         {
             for (int i = 0; i < SavingManager.SaveFile.storage[pos].items.Count; i++)
             {
-                try { currentStorage.Add(Resources.Load<ItemSettings>("Prefabs/Interactable Items/" + SavingManager.SaveFile.storage[pos].items[i])); chestSlots[i].AddItem(currentStorage[i]); } catch { }
+                currentStorage.Add(Resources.Load<ItemSettings>("Prefabs/Interactable Items/" + SavingManager.SaveFile.storage[pos].items[i])); 
+                chestSlots[i].AddItem(currentStorage[i]);
             }
         }
         else
         {
-            SavingManager.SaveFile.storage.Add(pos, new SavingManager.StorageData());
+            SavingManager.SaveFile.storage.Add(pos, new StorageData());
             currentStorage = new List<ItemSettings>();
         }
 
@@ -80,6 +79,7 @@ public class StorageManager : MonoBehaviour
 
     public void StopInteractWithStorage()
     {
+        print("FUUUCK");
         isStoring = false;
         InputManager.instance.ToggleUISectionsInt(0);
 

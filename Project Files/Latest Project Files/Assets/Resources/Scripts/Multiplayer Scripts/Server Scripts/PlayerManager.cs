@@ -6,19 +6,24 @@ public class PlayerManager : MonoBehaviour
     public string username;
 
     Vector3 oldPos;
-    Animator anim;
+    public Animator anim;
+
+    int animationTick;
 
     void Start()
     {
         oldPos = transform.position;
         anim = gameObject.GetComponent<Animator>();
+
+        anim.SetFloat("MovementValue", 0f);
     }
 
     void FixedUpdate()
     {
         if (SavingManager.GameState == SavingManager.GameStateEnum.Multiplayer)
         {
-            if (transform.position == oldPos) { anim.SetFloat("MovementValue", 0f); } else { anim.SetFloat("MovementValue", 1f); }
+            if (transform.position == oldPos) { animationTick += 1; } else { animationTick = 0; }
+            if (animationTick >= 5) { anim.SetFloat("MovementValue", 0f); } else { anim.SetFloat("MovementValue", 1f); }
             oldPos = transform.position;
         }
     }

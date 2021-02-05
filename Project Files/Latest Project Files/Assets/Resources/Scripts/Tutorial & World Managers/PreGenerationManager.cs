@@ -130,6 +130,7 @@ public class PreGenerationManager : MonoBehaviour
     // Updates the list of worlds
     public void UpdateWorldsList()
     {
+        /*
         // Loop through all the UI children and destroy them
         for (int i = 0; i < worldsUIParent.transform.childCount; i++) { Destroy(worldsUIParent.transform.GetChild(i).gameObject); }
         // Clear the buttons list
@@ -180,6 +181,7 @@ public class PreGenerationManager : MonoBehaviour
             UITxtComp.resizeTextMaxSize = 60;
             UITxtComp.alignment = TextAnchor.MiddleLeft;
         }
+        */
     }
 
     [System.Serializable]

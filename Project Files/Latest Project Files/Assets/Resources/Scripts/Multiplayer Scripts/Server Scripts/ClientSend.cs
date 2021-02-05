@@ -13,16 +13,31 @@ public class ClientSend : MonoBehaviour
         }
     }
 
-    public static void PlayerMovement(float horizontal, float vertical, bool jump)
+    public static void SendPlayerMovement(float horizontal, float vertical, bool jump)
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerMovement))
         {
             _packet.Write(horizontal);
             _packet.Write(vertical);
             _packet.Write(jump);
-            if (MultiplayerTerrainGenerator.instance.viewer != null) { _packet.Write(MultiplayerTerrainGenerator.instance.viewer.rotation); } else { _packet.Write(Quaternion.identity); }
+
+            _packet.Write(PlayerMovement.instance.transform.rotation);
+            _packet.Write(MouseLook.instance.transform.rotation);
+
+            _packet.Write(InputManager.moving);
 
             SendUDPData(_packet);
+        }
+    }
+
+    public static void UpdateVital(float healthChange, float hungerChange)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.modifyVital))
+        {
+            _packet.Write(healthChange);
+            _packet.Write(hungerChange);
+
+            SendTCPData(_packet);
         }
     }
 

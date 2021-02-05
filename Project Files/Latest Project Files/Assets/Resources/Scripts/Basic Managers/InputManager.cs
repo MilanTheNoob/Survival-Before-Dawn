@@ -138,8 +138,5 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    void OnApplicationPause() { SavingManager.SaveGame(); }
-    void OnApplicationQuit() { SavingManager.SaveGame(); }
-
-    public static void QuitGame() { SavingManager.SaveGame(); Application.Quit(); }
+    public static void QuitGame() { Application.Quit(); }
 }

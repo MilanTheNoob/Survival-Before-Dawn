@@ -80,7 +80,13 @@ public class ClientHandle : MonoBehaviour
         Vector2 coord = _packet.ReadVector2();
         int length = _packet.ReadInt();
 
-        if (!MultiplayerTerrainGenerator.instance.terrainChunkDictionary.ContainsKey(coord)) { return; }
+        MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].chunkData.props = props;
+        GameObject propHolder = MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].props;
+
+        Transform[] children = propHolder.GetComponentsInChildren<Transform>();
+        for (int j = 0; j < children.Length; j++) { PropsGeneration.instance.RemoveProp(children[j]); }
+
+        Dictionary<Vector3, GameObject> propsDict = new Dictionary<Vector3, GameObject>();
 
         for (int i = 0; i < length; i++)
         {
@@ -90,13 +96,27 @@ public class ClientHandle : MonoBehaviour
                 prop = _packet.ReadInt(),
                 rot = _packet.ReadVector3()
             };
+            Vector3 pos = _packet.ReadVector3();
+            props.Add(pos, prop);
 
-            props.Add(_packet.ReadVector3(), prop);
+            GameObject gi = PropsGeneration.instance.propsSettings.PropGroups[prop.group].Props[prop.prop].prefab;
+            GameObject g = PropsGeneration.instance.pools[gi.transform.name + " Pool"].pool[0];
+            PropsGeneration.instance.pools[gi.transform.name + " Pool"].pool.RemoveAt(0);
+
+            g.transform.parent = MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].props.transform;
+            g.transform.localPosition = pos;
+            g.transform.eulerAngles = prop.rot;
+            g.SetActive(true);
+
+            propsDict.Add(g.transform.position, g);
         }
 
-        MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].chunkData.props = props;
+        MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].propDict = propsDict;
+    }
 
-        PropsGeneration.instance.RemoveFromChunk(MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord]);
-        PropsGeneration.instance.MultiplayerGenerate(MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord]);
+    public static void UpdateVitals(Packet _packet)
+    {
+        VitalsManager.instance.MultiplayerModifyVitalAmount(0, _packet.ReadFloat());
+        VitalsManager.instance.MultiplayerModifyVitalAmount(1, _packet.ReadFloat());
     }
 }

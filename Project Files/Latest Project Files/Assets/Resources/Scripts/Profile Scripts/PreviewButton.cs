@@ -22,26 +22,13 @@ public class PreviewButton : MonoBehaviour, IPointerDownHandler
     [HideInInspector]
     public Image button;
 
-    // Called when the button is pressed by the player
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        // Call the OnPointer func
-        OnPointerDown();
+        try
+        {
+            PreviewInputManager.instance.ResetButton(this, true);
+            onClickedEvents.Invoke();
+        } catch { }
     }
-
-    // Called by default to reset the button
-    public virtual void OnPointerDown()
-    {
-        // Resets the button
-        PreviewInputManager.instance.ResetButton(this, true);
-        // Invoke the events
-        try { onClickedEvents.Invoke(); } catch { }
-    }
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        // Get the bg image component
-        button = gameObject.GetComponent<Image>();
-    }
+    void Awake() { button = gameObject.GetComponent<Image>(); }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TerrainChunk
@@ -11,6 +12,7 @@ public class TerrainChunk
 
     public MeshCollider meshCollider;
     public ChunkDataStruct chunkData;
+    public Dictionary<Vector3, GameObject> propsDict = new Dictionary<Vector3, GameObject>();
 
     public bool hasChunkData;
     public Mesh mesh = new Mesh();

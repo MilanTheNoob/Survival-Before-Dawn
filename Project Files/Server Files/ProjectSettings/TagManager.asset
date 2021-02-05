@@ -7,6 +7,7 @@ TagManager:
   - TerrainChunk
   - Wall_SP
   - Foundation_SP
+  - Tree
   layers:
   - Default
   - TransparentFX

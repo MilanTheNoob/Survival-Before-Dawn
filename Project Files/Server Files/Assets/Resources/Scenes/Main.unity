@@ -291,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshSettings: {fileID: 11400000, guid: 46ff57af49f874fe2bd2a350a99d063c, type: 2}
   heightMapSettings: {fileID: 11400000, guid: 740a13ca91e454c51aeb1f625a396eca, type: 2}
-  propsSettings: {fileID: 0}
+  propsSettings: {fileID: 11400000, guid: 35b4cbe71c990b34eb2b651e8ab93508, type: 2}
   meshWorldSize: 0
   chunksVisibleInViewDst: 0
 --- !u!4 &1879172066

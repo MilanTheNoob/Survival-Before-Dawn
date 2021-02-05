@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +20,18 @@ public class GameManager : MonoBehaviour
 
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
+
+    void Start()
+    {
+        players.Clear();
+        StartCoroutine(WaitExitI());
+    }
+
+    IEnumerator WaitExitI()
+    {
+        yield return new WaitForSeconds(2f);
+        if (players.Count == 0) { SceneManager.LoadScene(0, LoadSceneMode.Single); }
+    }
 
     public void SpawnPlayer(int _id, string _username, Vector3 _position, Quaternion _rotation)
     {

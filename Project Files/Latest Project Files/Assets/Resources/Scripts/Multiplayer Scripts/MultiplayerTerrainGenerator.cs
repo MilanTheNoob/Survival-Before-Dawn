@@ -100,6 +100,11 @@ public class MultiplayerTerrainGenerator : MonoBehaviour
 			terrainChunkDictionary.Add(chunkData.coord, newChunk);
 		}
 	}
+
+	public static MultiplayerTerrainChunk GetNearestChunk(Vector3 pos)
+	{
+		return instance.terrainChunkDictionary[new Vector2(Mathf.RoundToInt(pos.x / instance.meshWorldSize), Mathf.RoundToInt(pos.x / instance.meshWorldSize))];
+	}
 }
 
 [System.Serializable]

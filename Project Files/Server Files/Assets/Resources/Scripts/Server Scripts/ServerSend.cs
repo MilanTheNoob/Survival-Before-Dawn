@@ -84,6 +84,7 @@ public class ServerSend : MonoBehaviour
         {
             _packet.Write(_player.id);
             _packet.Write(_player.transform.position);
+            _packet.Write(_player.moving);
 
             SendUDPDataToAll(_packet);
         }
@@ -112,6 +113,7 @@ public class ServerSend : MonoBehaviour
 
     public static void ChunkData(ChunkDataStruct _chunkData, Player _player, int width, int height)
     {
+        if (_chunkData == null) { return; }
         using (Packet _packet = new Packet((int)ServerPackets.chunkData))
         {
             _packet.Write(_chunkData.coord);
@@ -152,25 +154,50 @@ public class ServerSend : MonoBehaviour
         }
     }
 
-    public static void InteractItem(string _interactTxt, string _item, Player _player)
+    public static void InteractItem(GameObject _item, Player _player)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.interact))
+        if (_item.CompareTag("Tree"))
         {
-            _packet.Write(_interactTxt);
-            _packet.Write(_item);
+            using (Packet _packet = new Packet((int)ServerPackets.treeInteract))
+            {
+                _packet.Write("Chop");
+                _packet.Write(_item.transform.name);
+                _packet.Write(_item.transform.position);
 
-            SendTCPData(_player.id, _packet);
+                SendTCPData(_player.id, _packet);
+            }
+        }
+        else
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.interact))
+            {
+                _packet.Write("Pick up");
+                _packet.Write(_item.transform.name);
+
+                SendTCPData(_player.id, _packet);
+            }
         }
     }
     public static void StopInteractItem(Player _player) { SendTCPData(_player.id, new Packet((int)ServerPackets.stopInteract)); }
 
     public static void UpdateInventory(Player _player)
     {
-        Debug.Log("update inventory");
         using (Packet _packet = new Packet((int)ServerPackets.updateInventory))
         {
             _packet.Write(_player.inventory.Count);
             for (int i = 0; i < _player.inventory.Count; i++) { _packet.Write(_player.inventory[i]); }
+
+            SendTCPData(_player.id, _packet);
+        }
+    }
+
+    public static void UpdateVitals(Player _player)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.updateVitals))
+        {
+            //print(_player.hunger);
+            _packet.Write(_player.health);
+            _packet.Write(_player.hunger);
 
             SendTCPData(_player.id, _packet);
         }

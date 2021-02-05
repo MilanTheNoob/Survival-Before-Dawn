@@ -35,11 +35,6 @@ public class NetworkManager : MonoBehaviour
         Server.Start(50, 26950);
     }
 
-    private void FixedUpdate()
-    {
-        TerrainGenerator.instance.UpdateChunks(players);
-    }
-
     private void OnApplicationQuit()
     {
         Server.Stop();

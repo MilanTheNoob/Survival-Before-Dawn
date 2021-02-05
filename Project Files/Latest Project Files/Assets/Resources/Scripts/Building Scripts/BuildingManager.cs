@@ -119,7 +119,7 @@ public class BuildingManager : MonoBehaviour
         if (!previewS.GetSnapped()) { return; }
         previewS.Place();
 
-        SavingManager.StructureData sd = new SavingManager.StructureData
+        StructureData sd = new StructureData
         {
             name = previewI.name,
             pos = previewG.transform.position,

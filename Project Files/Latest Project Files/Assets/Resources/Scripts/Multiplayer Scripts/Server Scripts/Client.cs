@@ -45,9 +45,9 @@ public class Client : MonoBehaviour
     {
         public TcpClient socket;
 
-        private NetworkStream stream;
-        private Packet receivedData;
-        private byte[] receiveBuffer;
+        NetworkStream stream;
+        Packet receivedData;
+        byte[] receiveBuffer;
 
         public void Connect()
         {
@@ -97,7 +97,10 @@ public class Client : MonoBehaviour
                 receivedData.Reset(HandleData(_data));
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
             }
-            catch { Disconnect(); }
+            catch
+            {
+                Disconnect();
+            }
         }
 
         private bool HandleData(byte[] _data)
@@ -135,6 +138,7 @@ public class Client : MonoBehaviour
 
         void Disconnect()
         {
+            Debug.Log("disconnect");
             instance.Disconnect();
 
             stream = null;
@@ -226,7 +230,9 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.propChunkUpdate, ClientHandle.PropChunkUpdate },
             { (int)ServerPackets.interact, Inventory.StartInteract },
             { (int)ServerPackets.stopInteract, Inventory.StopInteract },
-            { (int)ServerPackets.updateInventory, Inventory.UpdateInventory }
+            { (int)ServerPackets.updateInventory, Inventory.UpdateInventory },
+            { (int)ServerPackets.updateVitals, ClientHandle.UpdateVitals },
+            { (int)ServerPackets.treeInteract, Inventory.StartTreeInteract }
         };
         Debug.Log("Initialized packets.");
     }

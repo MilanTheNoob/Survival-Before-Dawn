@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 404363334050098382}
   - component: {fileID: 8272403916985889200}
   - component: {fileID: 5646015598711371444}
-  - component: {fileID: 1309695951836678560}
+  - component: {fileID: -3001559368935776494}
   m_Layer: 0
   m_Name: MultiplayerLocalPlayer
   m_TagString: Untagged
@@ -844,7 +844,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6356666184753097742}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e46140f46a4ff42f7b19650754b29eb3, type: 3}
   m_Controller: {fileID: 9100000, guid: 9f561f35998484c45a0bf7b394b4d5ee, type: 2}
   m_CullingMode: 1
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   username: 
---- !u!143 &1309695951836678560
+--- !u!143 &-3001559368935776494
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

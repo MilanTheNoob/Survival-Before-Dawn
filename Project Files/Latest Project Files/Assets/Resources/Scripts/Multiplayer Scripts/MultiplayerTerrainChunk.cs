@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MultiplayerTerrainChunk
@@ -11,9 +12,11 @@ public class MultiplayerTerrainChunk
 
     public MeshRenderer meshRenderer;
     public MeshFilter meshFilter;
+    public MeshCollider meshCollider;
 
     public bool isVisible;
     public ChunkDataStruct chunkData;
+    public Dictionary<Vector3, GameObject> propDict = new Dictionary<Vector3, GameObject>();
 
     public GameObject props;
     public GameObject items;
@@ -36,6 +39,7 @@ public class MultiplayerTerrainChunk
 
         meshObject = new GameObject("Terrain Chunk " + position.x + "-" + position.y);
         meshRenderer = meshObject.AddComponent<MeshRenderer>();
+        meshCollider = meshObject.AddComponent<MeshCollider>();
         meshFilter = meshObject.AddComponent<MeshFilter>();
 
         meshRenderer.material = material;
@@ -68,8 +72,9 @@ public class MultiplayerTerrainChunk
     {
         mesh = ((MeshData)meshDataObject).CreateMesh();
         meshFilter.mesh = mesh;
+        meshCollider.sharedMesh = mesh;
 
-        PropsGeneration.instance.MultiplayerGenerate(this);
+        propDict = PropsGeneration.instance.MultiplayerGenerate(this);
     }
 
 
@@ -83,7 +88,7 @@ public class MultiplayerTerrainChunk
 
         if (wasVisible != visible)
         {
-            if (visible) { PropsGeneration.instance.MultiplayerGenerate(this); } else { PropsGeneration.instance.RemoveFromChunk(this); }
+            if (visible) { propDict = PropsGeneration.instance.MultiplayerGenerate(this); } else { PropsGeneration.instance.RemoveFromChunk(this); }
 
             SetVisible(visible);
         }

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System;
 using UnityEngine;
+using System.Collections;
 
 public class SavingManager : MonoBehaviour
 {
@@ -15,6 +16,15 @@ public class SavingManager : MonoBehaviour
 
     public InputField newSFName;
     public PreviewButton newSFButton;
+
+    [Space]
+
+    public GameObject serversHolder;
+
+    public PreviewButton playButton;
+    public InputField nameField;
+    public InputField serverField;
+    public InputField portField;
 
     [Space]
 
@@ -31,17 +41,8 @@ public class SavingManager : MonoBehaviour
     public static string ip;
     public static int port;
 
-    static readonly int saveVersion = 1;
-
     List<PreviewButton> saveFileButtons = new List<PreviewButton>();
-
-    static TcpClient socket;
-
-    static NetworkStream stream;
-    static Packet receivedData;
-    static byte[] receiveBuffer;
-
-    static int dataBufferSize = 4096;
+    List<PreviewButton> buttons = new List<PreviewButton>();
 
     public enum GameStateEnum
     {
@@ -52,6 +53,8 @@ public class SavingManager : MonoBehaviour
     }
     static public GameStateEnum GameState;
 
+    bool loadingServer;
+
     void Awake()
     {
         transform.parent = null;
@@ -59,9 +62,9 @@ public class SavingManager : MonoBehaviour
 
         instance = this;
 
-        if (BinarySerializer.HasSaved("SurvivalBeforeDawn_CurrentSaveData.savedata"))
+        if (BinarySerializer.HasSaved("SurvivalBeforeDawn_CurrentSaveData_V2.savedata"))
         {
-            SaveData = BinarySerializer.Load<SaveDataStruct>("SurvivalBeforeDawn_CurrentSaveData.savedata");
+            SaveData = BinarySerializer.Load<SaveDataStruct>("SurvivalBeforeDawn_CurrentSaveData_V2.savedata");
 
             for (int i = 0; i < SaveData.SaveFileNames.Count; i++)
             {
@@ -93,6 +96,37 @@ public class SavingManager : MonoBehaviour
                 sectionButtonGT.transform.localScale = new Vector3(1, 1, 1);
                 saveFileButtons.Add(sectionButtonB);
             }
+
+            for (int i = 0; i < SaveData.Servers.Count; i++)
+            {
+                GameObject sfButtonG = new GameObject(SaveData.Servers[i].localName);
+                sfButtonG.transform.parent = serversHolder.transform;
+                sfButtonG.AddComponent<HorizontalLayoutGroup>();
+                sfButtonG.transform.localScale = new Vector3(1, 1, 1);
+
+                Image sectionButtonI = sfButtonG.AddComponent<Image>();
+                sectionButtonI.color = new Color32(36, 36, 36, 255);
+                sectionButtonI.sprite = Resources.Load<Sprite>("UI/Basic UI Shapes/100px Rounded Square Mild");
+                sectionButtonI.type = Image.Type.Sliced;
+
+                PreviewButton sectionButtonB = sfButtonG.AddComponent<PreviewButton>();
+                sectionButtonB.tabIdle = new Color32(36, 36, 36, 255);
+                sectionButtonB.tabActive = new Color32(255, 255, 255, 255);
+
+                GameObject sectionButtonGT = new GameObject("Text");
+                sectionButtonGT.transform.parent = sfButtonG.transform;
+
+                Text sectionButtonT = sectionButtonGT.AddComponent<Text>();
+                sectionButtonT.text = SavingManager.SaveData.Servers[i].localName;
+                sectionButtonT.color = new Color32(255, 255, 255, 255);
+                sectionButtonT.font = SavingManager.instance.font;
+                sectionButtonT.resizeTextForBestFit = true;
+                sectionButtonT.resizeTextMaxSize = 60;
+                sectionButtonT.alignment = TextAnchor.MiddleCenter;
+
+                sectionButtonGT.transform.localScale = new Vector3(1, 1, 1);
+                buttons.Add(sectionButtonB);
+            }
         }
         else
         {
@@ -102,7 +136,7 @@ public class SavingManager : MonoBehaviour
         GameState = GameStateEnum.Menu;
     }
 
-    private void Update()
+    void FixedUpdate()
     {
         if (GameState == GameStateEnum.Menu)
         {
@@ -116,6 +150,41 @@ public class SavingManager : MonoBehaviour
                     SceneManager.LoadScene(1, LoadSceneMode.Single);
                 }
             }
+
+            if (playButton.onClicked && !loadingServer)
+            {
+                loadingServer = true;
+
+                SavedServerStruct server = new SavedServerStruct();
+                server.localName = nameField.text;
+                server.serverIp = serverField.text;
+                server.official = false;
+
+                int port = 26950;
+
+                if (portField.text.Length > 0) { int.TryParse(portField.text, out port); }
+
+                server.serverPort = port;
+                SaveData.Servers.Add(server);
+
+                SaveGame();
+
+                StartCoroutine(LoadServer(serverField.text, 26950));
+            }
+
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                if (buttons[i].onClicked)
+                {
+                    ip = SaveData.Servers[i].serverIp;
+                    port = SaveData.Servers[i].serverPort;
+
+                    GameState = GameStateEnum.Multiplayer;
+                    SceneManager.LoadScene(2, LoadSceneMode.Single);
+                }
+            }
+
+            if (newSFButton == null) { newSFButton = GameObject.Find("Create Singleplayer Play Button").GetComponent<PreviewButton>(); }
 
             if (newSFButton.onClicked)
             {
@@ -139,183 +208,118 @@ public class SavingManager : MonoBehaviour
         }
     }
 
-    #region Multiplayer Code
-
-    public static void LoadServer(string _ip, int _port)
+    IEnumerator LoadServer(string _ip, int _port)
     {
+        yield return new WaitForSeconds(0.6f);
+
         ip = _ip;
         port = _port;
 
-        print("load server called");
-
-        socket = new TcpClient
-        {
-            ReceiveBufferSize = dataBufferSize,
-            SendBufferSize = dataBufferSize
-        };
-
-        receiveBuffer = new byte[dataBufferSize];
-        socket.BeginConnect(ip, port, instance.ConnectCallback, socket);
-    }
-
-    void ConnectCallback(IAsyncResult _result)
-    {
-        print("connect callback called");
-
-        socket.EndConnect(_result);
-
-        if (!socket.Connected)
-            return;
-
-        stream = socket.GetStream();
-        stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
-
-        receivedData = new Packet();
-    }
-
-    void ReceiveCallback(IAsyncResult _result)
-    {
-        print("receive callback called");
-
-            int _byteLength = stream.EndRead(_result);
-            if (_byteLength <= 0) { return; }
-
-            byte[] _data = new byte[_byteLength];
-            Array.Copy(receiveBuffer, _data, _byteLength);
-
-            HandleData(_data);
-    }
-
-    private void HandleData(byte[] _data)
-    {
-        print("handle data called");
-        int _packetLength = 0;
-        receivedData.SetBytes(_data);
-
-        if (receivedData.UnreadLength() >= 4)
-        {
-            _packetLength = receivedData.ReadInt();
-            if (_packetLength <= 0) { return; }
-        }
-
-        while (_packetLength > 0 && _packetLength <= receivedData.UnreadLength())
-        {
-            byte[] _packetBytes = receivedData.ReadBytes(_packetLength);
-            ThreadManager.ExecuteOnMainThread(() =>
-            {
-                using Packet _packet = new Packet(_packetBytes);
-                int _packetId = _packet.ReadInt();
-                if (_packetId <= 1) { FinishLoadServer(); }
-            });
-
-            _packetLength = 0;
-            if (receivedData.UnreadLength() >= 4)
-            {
-                _packetLength = receivedData.ReadInt();
-                if (_packetLength <= 0) { return; }
-            }
-        }
-    }
-
-    void FinishLoadServer()
-    {
         GameState = GameStateEnum.Multiplayer;
         SceneManager.LoadScene(2, LoadSceneMode.Single);
     }
 
-    #endregion
-
     public static void SaveGame()
     {
-        SaveGameCallback.Invoke();
+        if (SaveGameCallback != null) { SaveGameCallback.Invoke(); }
 
-        bool found = false;
-        for (int i = 0; i < SaveData.SaveFileNames.Count; i++)
+        if (SaveFile != null)
         {
-            if (SaveFile.name == SaveData.SaveFileNames[i]) { SaveData.SaveFiles[i] = SaveFile; found = true; }
+            bool found = false;
+            for (int i = 0; i < SaveData.SaveFileNames.Count; i++) { if (SaveFile.name == SaveData.SaveFileNames[i]) { SaveData.SaveFiles[i] = SaveFile; found = true; } }
+            if (!found) { SaveData.SaveFileNames.Add(SaveFile.name); SaveData.SaveFiles.Add(SaveFile); }
         }
-
-        if (!found) { SaveData.SaveFileNames.Add(SaveFile.name); SaveData.SaveFiles.Add(SaveFile); }
-        BinarySerializer.Save(SaveData, "SurvivalBeforeDawn_CurrentSaveData.savedata");
+        BinarySerializer.Save(SaveData, "SurvivalBeforeDawn_CurrentSaveData_V2.savedata");
     }
 
-    [System.Serializable]
-    public class StructureData
-    {
-        public string name;
+    void OnApplicationPause() { if (SaveFile != null) { SaveGame(); } }
+    void OnApplicationQuit() { if (SaveFile != null) { SaveGame(); } }
+}
 
-        public Vector2 coord;
-        public Vector3 pos;
-        public Quaternion rot;
-    }
+[System.Serializable]
+public class StructureData
+{
+    public string name;
 
-    [System.Serializable]
-    public class ChunkPropData
-    {
-        public List<string> propName = new List<string>();
-        public List<Vector3> position = new List<Vector3>();
-        public List<Quaternion> rotation = new List<Quaternion>();
-    }
+    public Vector2 coord;
+    public Vector3 pos;
+    public Quaternion rot;
+}
 
-    [System.Serializable]
-    public class StorageData
-    {
-        public List<string> items = new List<string>();
-    }
+[System.Serializable]
+public class ChunkPropData
+{
+    public List<string> propName = new List<string>();
+    public List<Vector3> position = new List<Vector3>();
+    public List<Quaternion> rotation = new List<Quaternion>();
+}
 
-    [System.Serializable]
-    public class HeightMapData
-    {
-        public Dictionary<Vector2, int> values = new Dictionary<Vector2, int>();
-    }
+[System.Serializable]
+public class StorageData
+{
+    public List<string> items = new List<string>();
+}
 
-    [System.Serializable]
-    public class SaveFileStruct
-    {
-        public string name;
+[System.Serializable]
+public class HeightMapData
+{
+    public Dictionary<Vector2, int> values = new Dictionary<Vector2, int>();
+}
 
-        public string firstSaveDate = System.DateTime.Now.ToString("dd-MM-yyyy");
-        public string latestSaveDate = System.DateTime.Now.ToString("dd-MM-yyyy");
+[System.Serializable]
+public class SavedServerStruct
+{
+    public string localName;
+    public string serverIp;
+    public int serverPort;
+    public bool official;
+}
 
-        public int seed = UnityEngine.Random.Range(0, 999999);
-        public float funds = 0f;
+[System.Serializable]
+public class SaveFileStruct
+{
+    public string name;
 
-        public List<string> inventoryItems = new List<string>();
-        public List<StructureData> structures = new List<StructureData>();
-        public List<float> vitals = new List<float>();
-        public List<string> clickedAlerts = new List<string>();
+    public string firstSaveDate = DateTime.Now.ToString("dd-MM-yyyy");
+    public string latestSaveDate = DateTime.Now.ToString("dd-MM-yyyy");
 
-        public Dictionary<Vector2, ChunkPropData> chunkData = new Dictionary<Vector2, ChunkPropData>();
-        public Dictionary<Vector3, StorageData> storage = new Dictionary<Vector3, StorageData>();
+    public int seed = UnityEngine.Random.Range(0, 999999);
+    public float funds = 0f;
 
-        public Vector3 playerPos;
+    public List<string> inventoryItems = new List<string>();
+    public List<StructureData> structures = new List<StructureData>();
+    public List<float> vitals = new List<float>();
+    public List<string> clickedAlerts = new List<string>();
 
-        public bool finishedTutorial = false;
+    public Dictionary<Vector2, ChunkPropData> chunkData = new Dictionary<Vector2, ChunkPropData>();
+    public Dictionary<Vector3, StorageData> storage = new Dictionary<Vector3, StorageData>();
 
-        public float MainAudioLevel = 0f;
-        public float SFAudioLevel = 0f;
-        public float MusicAudioLevel = 0f;
+    public Vector3 playerPos = new Vector3(0f, 0f, 0f);
+    public bool finishedTutorial = false;
+}
 
-        public int FPSLimit = 30;
+[System.Serializable]
+public class SaveDataStruct
+{
+    public List<SavedServerStruct> Servers = new List<SavedServerStruct>();
 
-        public bool aa = false;
-        public bool hdr = false;
-        public bool dr = false;
+    public bool milk_statue = false;
+    public bool fragment_statue = false;
+    public bool crystal_statue = false;
 
-        public int vd = 1;
-        public int pp = 2;
-    }
+    public List<string> SaveFileNames = new List<string>();
+    public List<SaveFileStruct> SaveFiles = new List<SaveFileStruct>();
 
-    [System.Serializable]
-    public class SaveDataStruct
-    {
-        public int version = saveVersion;
+    public float MainAudioLevel = 0f;
+    public float SFAudioLevel = 0f;
+    public float MusicAudioLevel = 0f;
 
-        public bool milk_statue = false;
-        public bool fragment_statue = false;
-        public bool crystal_statue = false;
+    public int FPSLimit = 30;
 
-        public List<string> SaveFileNames = new List<string>();
-        public List<SaveFileStruct> SaveFiles = new List<SaveFileStruct>();
-    }
+    public bool aa = false;
+    public bool hdr = false;
+    public bool dr = false;
+
+    public int vd = 1;
+    public int pp = 2;
 }

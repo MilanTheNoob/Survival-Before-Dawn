@@ -40,14 +40,22 @@ public class DetailsManager : MonoBehaviour
 
     void Update()
     {
-        if (useButton.onClicked && currentItem != null) { currentItem.Use(); InputManager.instance.ToggleUISectionsInt(0); }
-        if (returnButton.onClicked) { InputManager.instance.ToggleUISectionsInt(2); }
+        if (InputManager.instance != null)
+        {
+            if (useButton.onClicked && currentItem != null) { currentItem.Use(); InputManager.instance.ToggleUISectionsInt(0); }
+            if (returnButton.onClicked) { InputManager.instance.ToggleUISectionsInt(2); }
+        }
+        else
+        {
+            if (useButton.onClicked && currentItem != null) { currentItem.Use(); MultiplayerInputManager.instance.ToggleUISectionsInt(0); }
+            if (returnButton.onClicked) { MultiplayerInputManager.instance.ToggleUISectionsInt(2); }
+        }
     }
 
     // Called to set an item in the details page
     public void SetItem(ItemSettings itemSettings)
     {
-        InputManager.instance.ToggleUISectionsInt(5);
+        if (InputManager.instance != null) { InputManager.instance.ToggleUISectionsInt(5); } else { MultiplayerInputManager.instance.ToggleUISectionsInt(5); }
         currentItem = itemSettings;
 
         if (itemSettings.isUsableItem)

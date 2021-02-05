@@ -100,12 +100,12 @@ public class BinarySerializer
 
 	static string GetDirectoryPath ()
 	{
-		return persistentDataPath + "//" + folderName;
+		return persistentDataPath + "/" + folderName;
 	}
 
 	static string GetFilePath (string filename)
 	{
-		return  GetDirectoryPath () + "//" + filename;
+		return  GetDirectoryPath () + "/" + filename;
 	}
 
 

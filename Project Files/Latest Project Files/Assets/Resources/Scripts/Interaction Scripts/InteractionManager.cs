@@ -35,7 +35,7 @@ public class InteractionManager : MonoBehaviour
         Trader
     }
 
-    //[HideInInspector]
+    [HideInInspector]
     public Camera interactCamera;
 
     bool buttonFaded;
@@ -61,21 +61,7 @@ public class InteractionManager : MonoBehaviour
             {
                 InteractableItem interactable = hitInfo.transform.GetComponent<InteractableItem>();
 
-                if (ToolsManager.instance != null)
-                {
-                    if (interactable.toolType == ToolsManager.instance.currentToolType && interactable.isInteractable || interactable.toolType == ToolsManager.ToolType.None && interactable.isInteractable)
-                    {
-                        interactText.text = interactable.interactTxt;
-                        interactName.text = interactable.name;
-
-                        if (interactButton.onClicked) { interactable.OnInteract(); }
-                        if (!buttonFaded) { TweeningLibrary.FadeIn(interactButton.gameObject, 0.1f); buttonFaded = true; }
-
-                        HighlightManager.Highlight(interactable.gameObject);
-                        currentG = interactable.gameObject;
-                    }
-                }
-                else
+                if (interactable.toolType == ToolsManager.instance.currentToolType && interactable.isInteractable || interactable.toolType == ToolsManager.ToolType.None && interactable.isInteractable)
                 {
                     interactText.text = interactable.interactTxt;
                     interactName.text = interactable.name;
