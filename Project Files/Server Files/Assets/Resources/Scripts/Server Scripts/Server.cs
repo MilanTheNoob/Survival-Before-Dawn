@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Linq;
 using UnityEngine;
 
 public class Server
@@ -38,14 +37,14 @@ public class Server
     {
         TcpClient _client = tcpListener.EndAcceptTcpClient(_result);
         tcpListener.BeginAcceptTcpClient(TCPConnectCallback, null);
-        Debug.Log($"Incoming connection from {_client.Client.RemoteEndPoint}...");
+        Debug.Log($"Incoming connection from {_client.Client.RemoteEndPoint}");
 
         for (int i = 1; i <= MaxPlayers; i++)
         {
             if (clients[i].tcp.socket == null)
             {
-                Debug.Log("connecting, will become player " + i);
-                clients[i] = new Client(i);
+                //Debug.Log("connecting, will become player " + i);
+                clients[i] = new Client(i, _client.Client.RemoteEndPoint.ToString());
                 clients[i].tcp.Connect(_client);
                 return;
             }
@@ -110,7 +109,7 @@ public class Server
     {
         for (int i = 1; i <= MaxPlayers; i++)
         {
-            clients.Add(i, new Client(i));
+            clients.Add(i, new Client(i, ""));
         }
 
         packetHandlers = new Dictionary<int, PacketHandler>()
@@ -120,7 +119,11 @@ public class Server
             { (int)ClientPackets.interact, ServerHandle.Interact },
             { (int)ClientPackets.modifyVital, ServerHandle.ModifyVital },
             { (int)ClientPackets.destroyProp, ServerHandle.DestroyProp },
-            { (int)ClientPackets.addProp, ServerHandle.AddProp }
+            { (int)ClientPackets.addProp, ServerHandle.AddProp },
+            { (int)ClientPackets.addStructure, ServerHandle.AddStructure },
+            { (int)ClientPackets.craft, ServerHandle.Craft },
+            { (int)ClientPackets.endStorage, ServerHandle.EndStorage },
+            { (int)ClientPackets.removeInventory, ServerHandle.RemoveFromInventory }
         };
         Debug.Log("Initialized packets.");
     }

@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ServerSend : MonoBehaviour
 {
@@ -130,6 +132,15 @@ public class ServerSend : MonoBehaviour
                 _packet.Write(_chunkData.props.ElementAt(i).Key);
             }
 
+            _packet.Write(_chunkData.structures.Count);
+
+            for (int i = 0; i < _chunkData.structures.Count; i++)
+            {
+                _packet.Write(_chunkData.structures.ElementAt(i).Value.structure);
+                _packet.Write(_chunkData.structures.ElementAt(i).Value.rot);
+                _packet.Write(_chunkData.structures.ElementAt(i).Key);
+            }
+
             SendUDPData(_player.id, _packet);
         }
     }
@@ -154,6 +165,24 @@ public class ServerSend : MonoBehaviour
         }
     }
 
+    public static void StructureChunkUpdate(ChunkDataStruct _chunkData, Player _player)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.structuresChunkUpdate))
+        {
+            _packet.Write(_chunkData.coord);
+            _packet.Write(_chunkData.structures.Count);
+
+            for (int i = 0; i < _chunkData.structures.Count; i++)
+            {
+                _packet.Write(_chunkData.structures.ElementAt(i).Value.structure);
+                _packet.Write(_chunkData.structures.ElementAt(i).Value.rot);
+                _packet.Write(_chunkData.structures.ElementAt(i).Key);
+            }
+
+            SendUDPData(_player.id, _packet);
+        }
+    }
+
     public static void InteractItem(GameObject _item, Player _player)
     {
         if (_item.CompareTag("Tree"))
@@ -164,6 +193,23 @@ public class ServerSend : MonoBehaviour
                 _packet.Write(_item.transform.name);
                 _packet.Write(_item.transform.position);
 
+                SendTCPData(_player.id, _packet);
+            }
+        }
+        else if (_item.CompareTag("Storage"))
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.storageInteract))
+            {
+                _packet.Write("Open");
+                _packet.Write(_item.transform.name);
+
+                if (!NetworkManager.instance.storageData.ContainsKey(_item.transform.position)) { NetworkManager.instance.storageData.Add(_item.transform.position, new List<string>()); }
+
+                _packet.Write(NetworkManager.instance.storageData[_item.transform.position].Count);
+                for (int i = 0; i < NetworkManager.instance.storageData[_item.transform.position].Count; i++) { _packet.Write(NetworkManager.instance.storageData[_item.transform.position][i]); }
+
+                _player.currentStorage = _item.transform.position;
+                _packet.Write(_item.transform.position);
                 SendTCPData(_player.id, _packet);
             }
         }

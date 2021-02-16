@@ -37,9 +37,7 @@ public class Button : MonoBehaviour, IPointerDownHandler
                 SavingManager.SaveFile.clickedAlerts.Add(alertID);
         }
 
-        if (onClickedEvents != null)
-            try { onClickedEvents.Invoke(); } catch { }
-
+        try { onClickedEvents.Invoke(); } catch { }
         if (InputManager.instance != null) { InputManager.instance.Click(this, true); } else { MultiplayerInputManager.instance.Click(this, true); }
     }
 

@@ -58,7 +58,7 @@ public class InputManager : MonoBehaviour
     void Start() 
     {        
         SavingManager.SaveGameCallback += SavePos;
-        MovePlayer(SavingManager.SaveFile.playerPos);
+        if (SavingManager.SaveFile.finishedTutorial) { MovePlayer(SavingManager.SaveFile.playerPos); }
     }
 
     void Update() 
@@ -137,6 +137,9 @@ public class InputManager : MonoBehaviour
             if (i == UIIndex) { UISections[i].SetActive(true); } else { UISections[i].SetActive(false); }
         }
     }
+
+    void OnApplicationPause() { SavingManager.SaveGame(); }
+    void OnApplicationQuit() { SavingManager.SaveGame(); }
 
     public static void QuitGame() { Application.Quit(); }
 }

@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     public float health;
     public float hunger;
 
+    public Vector3 currentStorage = new Vector3(0, -10, 0);
+
     float horizontal;
     float vertical;
     bool jump;
@@ -47,6 +49,8 @@ public class Player : MonoBehaviour
 
         health = 1f;
         hunger = 1f;
+
+        ServerSend.UpdateInventory(this);
     }
 
     public void FixedUpdate()
@@ -78,6 +82,9 @@ public class Player : MonoBehaviour
         {
             health = 1f;
             hunger = 1f;
+
+            inventory.Clear();
+            ServerSend.UpdateInventory(this);
 
             controller.enabled = false;
             controller.transform.position = new Vector3(0f, 25f, 0f);

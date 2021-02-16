@@ -41,6 +41,33 @@ public class ClientSend : MonoBehaviour
         }
     }
 
+    public static void AddStructure(GameObject structure)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.addStructure))
+        {
+            _packet.Write(structure.transform.position);
+            _packet.Write(structure.name);
+            _packet.Write(structure.transform.eulerAngles);
+
+            SendTCPData(_packet);
+        }
+    }
+
+    public static void Craft(CraftingVariant recipe)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.craft))
+        {
+            _packet.Write(recipe.Output.Length);
+            for (int i = 0; i < recipe.Output.Length; i++) { _packet.Write(recipe.Output[i].name); }
+            _packet.Write(recipe.Tools.Length);
+            for (int i = 0; i < recipe.Tools.Length; i++) { _packet.Write(recipe.Tools[i].name); }
+            _packet.Write(recipe.Input.Length);
+            for (int i = 0; i < recipe.Input.Length; i++) { _packet.Write(recipe.Input[i].name); }
+
+            SendTCPData(_packet);
+        }
+    }
+
     #region Send Data Funcs
 
     public static void SendTCPData(Packet _packet) { _packet.WriteLength(); Client.instance.tcp.SendData(_packet); }

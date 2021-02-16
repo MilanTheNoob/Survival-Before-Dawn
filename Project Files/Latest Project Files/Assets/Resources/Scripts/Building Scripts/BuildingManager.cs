@@ -33,7 +33,7 @@ public class BuildingManager : MonoBehaviour
 
     List<Vector3> placedStructures = new List<Vector3>();
 
-    Camera cam;
+    public Camera cam;
 
     bool isBuilding;
     bool pauseBuilding;
@@ -46,17 +46,17 @@ public class BuildingManager : MonoBehaviour
 
     void Start()
     {
-        cam = FindObjectOfType<Camera>();
-
         buildButton.SetActive(false);
         cancelButton.SetActive(false);
         rotateButton.SetActive(false);
 
-        LoadData();
+        if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer) { LoadData(); }
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        if (cam == null) { cam = FindObjectOfType<Camera>(); }
+
         if (isBuilding)
         {
             if (isBuilding != oldBuilding) { TweeningLibrary.FadeIn(cancelButton, 0.1f); TweeningLibrary.FadeIn(rotateButton, 0.1f); oldBuilding = isBuilding; }
@@ -69,7 +69,14 @@ public class BuildingManager : MonoBehaviour
 
             if (pauseBuilding)
             {
-                if (Mathf.Abs(InputManager.MouseX) >= tolerance || Mathf.Abs(InputManager.MouseY) >= tolerance) { pauseBuilding = false; }
+                if (InputManager.instance != null)
+                {
+                    if (Mathf.Abs(InputManager.MouseX) >= tolerance || Mathf.Abs(InputManager.MouseY) >= tolerance) { pauseBuilding = false; }
+                }
+                else
+                {
+                    if (Mathf.Abs(MultiplayerInputManager.MouseX) >= tolerance || Mathf.Abs(MultiplayerInputManager.MouseY) >= tolerance) { pauseBuilding = false; }
+                }
             }
             else { BuildRay(); }
         }
@@ -80,6 +87,7 @@ public class BuildingManager : MonoBehaviour
         if (isBuilding) { return false; }
 
         previewG = Instantiate(i.gameObject, Vector3.zero, i.gameObject.transform.rotation);
+        previewG.name = i.name;
         previewS = previewG.GetComponent<BuildPreview>();
         previewI = i;
         previewG.layer = layerInt;
@@ -117,18 +125,26 @@ public class BuildingManager : MonoBehaviour
     public void FinishBuild()
     {
         if (!previewS.GetSnapped()) { return; }
-        previewS.Place();
 
-        StructureData sd = new StructureData
+        if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
         {
-            name = previewI.name,
-            pos = previewG.transform.position,
-            rot = previewG.transform.rotation
-        };
-        placedStructures.Add(previewG.transform.position);
-        SavingManager.SaveFile.structures.Add(sd);
+            StructureData sd = new StructureData
+            {
+                name = previewI.name,
+                pos = previewG.transform.position,
+                rot = previewG.transform.rotation
+            };
+            placedStructures.Add(previewG.transform.position);
+            SavingManager.SaveFile.structures.Add(sd);
 
-        Inventory.instance.Destroy(previewI);
+            Inventory.instance.Destroy(previewI);
+            previewS.Place();
+        }
+        else if (SavingManager.GameState == SavingManager.GameStateEnum.Multiplayer)
+        {
+            ClientSend.AddStructure(previewG);
+            Destroy(previewG);
+        }
 
         previewG = null;
         previewS = null;

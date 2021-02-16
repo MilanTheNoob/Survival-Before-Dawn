@@ -105,7 +105,7 @@ public class VitalsManager : MonoBehaviour
         vitals[vital].bar.fillAmount = value;
 
         if (value > 1f) { vitals[vital].amount = 1f; }
-        if (value < 0f && vital != 0) { ModifyVitalAmount(0, -vitals[0].hit); vitals[vital].amount = 0f; }
+        if (value < 0f && vital != 0) { MultiplayerModifyVitalAmount(0, -vitals[0].hit); vitals[vital].amount = 0f; }
     }
 
     #endregion

@@ -7,41 +7,45 @@ using System.Linq;
 public class CraftingManager : MonoBehaviour
 {
     [Header("Basic UI Components")]
-    public Button craftButton;
     public GameObject recipesUI;
 
     List<CraftingSettings> recipes = new List<CraftingSettings>();
-    Dictionary<Button, CraftingSettings> recipeButtons = new Dictionary<Button, CraftingSettings>();
-    List<GameObject> emptyRecipes = new List<GameObject>();
+    Dictionary<int, Button> buttons = new Dictionary<int, Button>();
 
-    CraftingSettings selectedR;
+    bool dontCraft = false;
 
     void Start()
     {
         Inventory.instance.onItemChangedCallback += UpdateRecipes;
-
         var trecipes = Resources.LoadAll("Scriptable Objects/Crafting Recipes", typeof(CraftingSettings)).Cast<CraftingSettings>();
         foreach (var recipe in trecipes) { recipes.Add(recipe); }
     }
 
-    // Called every frame
     void FixedUpdate()
     {
-        for (int i = 0; i < recipeButtons.Count; i++) { if (recipeButtons.ElementAt(i).Key.onClicked) { selectedR = recipeButtons.ElementAt(i).Value; } }
-
-        if (craftButton.onClicked && selectedR != null)
+        for (int i = 0; i < buttons.Count; i++)
         {
-            selectedR.Craft();
-            selectedR = null;
-            AudioManager.PlayEquip();
+            if (buttons.ElementAt(i).Value.onClicked && !dontCraft)
+            {
+                dontCraft = true;
+                StartCoroutine(ResetCraftI());
+
+                AudioManager.PlayEquip();
+                recipes[buttons.ElementAt(i).Key].Craft();
+            }
         }
+    }
+
+    IEnumerator ResetCraftI()
+    {
+        yield return new WaitForSeconds(0.2f);
+        dontCraft = false;
     }
 
     void UpdateRecipes()
     {
         for (int i = 0; i < recipesUI.transform.childCount; i++) { Destroy(recipesUI.transform.GetChild(i).gameObject); }
-        recipeButtons.Clear();
-        emptyRecipes.Clear();
+        buttons.Clear();
 
         for (int i = 0; i < recipes.Count; i++)
         {
@@ -63,7 +67,7 @@ public class CraftingManager : MonoBehaviour
                 recipeButton.tabIdle = new Color32(36, 36, 36, 255);
                 recipeButton.tabActive = new Color32(255, 255, 255, 255);
 
-                recipeButtons.Add(recipeButton, recipes[i]);
+                buttons.Add(i, recipeButton);
 
                 HorizontalLayoutGroup recipeLayoutGroup = recipeUI.AddComponent<HorizontalLayoutGroup>();
                 recipeLayoutGroup.spacing = 5;
@@ -146,7 +150,6 @@ public class CraftingManager : MonoBehaviour
 
                 recipeUI.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 100);
                 recipeUI.transform.localScale = new Vector3(1, 1, 1);
-                emptyRecipes.Add(recipeUI);
 
                 HorizontalLayoutGroup recipeLayoutGroup = recipeUI.AddComponent<HorizontalLayoutGroup>();
                 recipeLayoutGroup.spacing = 5;

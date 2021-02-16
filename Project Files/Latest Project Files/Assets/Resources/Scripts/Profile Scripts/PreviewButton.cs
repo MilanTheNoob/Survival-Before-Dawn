@@ -26,7 +26,7 @@ public class PreviewButton : MonoBehaviour, IPointerDownHandler
     {
         try
         {
-            PreviewInputManager.instance.ResetButton(this, true);
+            PreviewInputManager.instance.ResetButton(this);
             onClickedEvents.Invoke();
         } catch { }
     }

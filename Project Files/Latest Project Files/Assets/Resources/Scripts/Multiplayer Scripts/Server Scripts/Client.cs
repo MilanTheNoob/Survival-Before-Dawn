@@ -138,7 +138,6 @@ public class Client : MonoBehaviour
 
         void Disconnect()
         {
-            Debug.Log("disconnect");
             instance.Disconnect();
 
             stream = null;
@@ -232,9 +231,10 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.stopInteract, Inventory.StopInteract },
             { (int)ServerPackets.updateInventory, Inventory.UpdateInventory },
             { (int)ServerPackets.updateVitals, ClientHandle.UpdateVitals },
-            { (int)ServerPackets.treeInteract, Inventory.StartTreeInteract }
+            { (int)ServerPackets.treeInteract, Inventory.StartTreeInteract },
+            { (int)ServerPackets.structuresChunkUpdate, ClientHandle.StructureChunkUpdate },
+            { (int)ServerPackets.storageInteract, Inventory.StartStorageInteract }
         };
-        Debug.Log("Initialized packets.");
     }
 
     private void Disconnect()

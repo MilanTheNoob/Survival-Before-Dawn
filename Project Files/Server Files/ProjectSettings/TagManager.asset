@@ -8,6 +8,7 @@ TagManager:
   - Wall_SP
   - Foundation_SP
   - Tree
+  - Storage
   layers:
   - Default
   - TransparentFX

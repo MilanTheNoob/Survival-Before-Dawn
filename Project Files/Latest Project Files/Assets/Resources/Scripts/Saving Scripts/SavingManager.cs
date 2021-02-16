@@ -140,6 +140,8 @@ public class SavingManager : MonoBehaviour
     {
         if (GameState == GameStateEnum.Menu)
         {
+            if (playButton == null) { Destroy(gameObject); }
+
             for (int i = 0; i < saveFileButtons.Count; i++)
             {
                 if (saveFileButtons[i].onClicked)
@@ -295,7 +297,7 @@ public class SaveFileStruct
     public Dictionary<Vector3, StorageData> storage = new Dictionary<Vector3, StorageData>();
 
     public Vector3 playerPos = new Vector3(0f, 0f, 0f);
-    public bool finishedTutorial = false;
+    public bool finishedTutorial = true;
 }
 
 [System.Serializable]

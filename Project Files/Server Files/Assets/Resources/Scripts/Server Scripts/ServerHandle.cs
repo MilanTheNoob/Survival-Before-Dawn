@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ServerHandle
 {
@@ -41,7 +42,6 @@ public class ServerHandle
 
     public static void ModifyVital(int _fromClient, Packet _packet)
     {
-        Debug.Log(_packet.ReadFloat(false));
         Server.clients[_fromClient].player.health += _packet.ReadFloat();
         Server.clients[_fromClient].player.hunger += _packet.ReadFloat();
     }
@@ -53,9 +53,7 @@ public class ServerHandle
 
     public static void AddProp(int _fromClient, Packet _packet)
     {
-        Debug.Log("AAAAAAAAAAAAAAAAADDDDDD");
         Vector3 pos = _packet.ReadVector3();
-
         PropDataStruct propData = new PropDataStruct
         {
             rot = _packet.ReadVector3(),
@@ -64,5 +62,64 @@ public class ServerHandle
         };
 
         TerrainGenerator.instance.UpdateChunk(pos, propData);
+    }
+
+    public static void AddStructure(int _fromClient, Packet _packet)
+    {
+        Vector3 pos = _packet.ReadVector3();
+
+        StructureDataStruct propData = new StructureDataStruct
+        {
+            structure = _packet.ReadString(),
+            rot = _packet.ReadVector3()
+        };
+
+        TerrainGenerator.instance.StructureUpdateChunk(pos, propData);
+
+        if (Server.clients[_fromClient].player.inventory.Contains(propData.structure))
+        {
+            Server.clients[_fromClient].player.inventory.Remove(propData.structure);
+            ServerSend.UpdateInventory(Server.clients[_fromClient].player);
+        }
+    }
+    public static void Craft(int _fromClient, Packet _packet)
+    {
+        List<string> output = new List<string>();
+        List<string> tools = new List<string>();
+        List<string> input = new List<string>();
+
+        int outputCount = _packet.ReadInt();
+        for (int i = 0; i < outputCount; i++) { output.Add(_packet.ReadString()); }
+        int toolsCount = _packet.ReadInt();
+        for (int i = 0; i < toolsCount; i++) { tools.Add(_packet.ReadString()); }
+        int inputCount = _packet.ReadInt();
+        for (int i = 0; i < inputCount; i++) { input.Add(_packet.ReadString()); }
+
+        for (int i = 0; i < input.Count; i++) { Server.clients[_fromClient].player.inventory.Remove(input[i]); }
+        for (int i = 0; i < output.Count; i++) { Server.clients[_fromClient].player.inventory.Add(output[i]); }
+
+        ServerSend.UpdateInventory(Server.clients[_fromClient].player);
+    }
+
+    public static void EndStorage(int _fromClient, Packet _packet)
+    {
+        int inventoryCount = _packet.ReadInt();
+        int storageCount = _packet.ReadInt();
+        Vector3 storagePos = _packet.ReadVector3();
+
+        NetworkManager.instance.storageData[storagePos].Clear();
+        Server.clients[_fromClient].player.inventory.Clear();
+
+        for (int i = 0; i < inventoryCount; i++) { Server.clients[_fromClient].player.inventory.Add(_packet.ReadString()); }
+        for (int i = 0; i < storageCount; i++) { NetworkManager.instance.storageData[storagePos].Add(_packet.ReadString()); }
+
+        ServerSend.UpdateInventory(Server.clients[_fromClient].player);
+    }
+
+    public static void RemoveFromInventory(int _fromClient, Packet _packet)
+    {
+        int itemCount = _packet.ReadInt();
+        for (int i = 0; i < itemCount; i++) { Server.clients[_fromClient].player.inventory.Remove(_packet.ReadString()); }
+        ServerSend.UpdateInventory(Server.clients[_fromClient].player);
     }
 }

@@ -103,7 +103,7 @@ public class MultiplayerTerrainGenerator : MonoBehaviour
 
 	public static MultiplayerTerrainChunk GetNearestChunk(Vector3 pos)
 	{
-		return instance.terrainChunkDictionary[new Vector2(Mathf.RoundToInt(pos.x / instance.meshWorldSize), Mathf.RoundToInt(pos.x / instance.meshWorldSize))];
+		return instance.terrainChunkDictionary[new Vector2(Mathf.RoundToInt(pos.x / instance.meshWorldSize), Mathf.RoundToInt(pos.z / instance.meshWorldSize))];
 	}
 }
 
@@ -115,6 +115,12 @@ public class PropDataStruct
 	public int prop;
 }
 
+public class StructureDataStruct
+{
+	public Vector3 rot;
+	public string structure;
+}
+
 [System.Serializable]
 public class ChunkDataStruct
 {
@@ -122,6 +128,5 @@ public class ChunkDataStruct
 	public HeightMap heightMap;
 
 	public Dictionary<Vector3, PropDataStruct> props = new Dictionary<Vector3, PropDataStruct>();
-	public List<PropDataStruct> items = new List<PropDataStruct>();
-	public List<PropDataStruct> structures = new List<PropDataStruct>();
+	public Dictionary<Vector3, StructureDataStruct> structures = new Dictionary<Vector3, StructureDataStruct>();
 }

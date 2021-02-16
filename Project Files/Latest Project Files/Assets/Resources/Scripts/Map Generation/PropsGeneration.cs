@@ -169,12 +169,13 @@ public class PropsGeneration : MonoBehaviour
         }
     }
 
-    public Dictionary<Vector3, GameObject> MultiplayerGenerate(MultiplayerTerrainChunk chunk)
+    public void MultiplayerGenerate(MultiplayerTerrainChunk chunk)
     {
-        if (generatedChunks.Contains(chunk.coord)) { return null; }
+        if (generatedChunks.Contains(chunk.coord)) { return; }
         generatedChunks.Add(chunk.coord);
 
-        Dictionary<Vector3, GameObject> propG = new Dictionary<Vector3, GameObject>();
+        chunk.propDict.Clear();
+        chunk.structureDict.Clear();
 
         for (int i = 0; i < chunk.chunkData.props.Count; i++)
         {
@@ -190,11 +191,22 @@ public class PropsGeneration : MonoBehaviour
                 g.transform.eulerAngles = chunk.chunkData.props.ElementAt(i).Value.rot;
                 g.SetActive(true);
 
-                propG.Add(g.transform.position, g);
+                chunk.propDict.Add(g.transform.position, g);
             }
         }
+        for (int i = 0; i < chunk.chunkData.structures.Count; i++)
+        {
+            ItemSettings item = Resources.Load<ItemSettings>("Prefabs/Interactable Items/" + chunk.chunkData.structures.ElementAt(i).Value.structure);
+            GameObject g = Instantiate(item.gameObject);
 
-        return propG;
+            g.transform.name = item.name;
+            g.transform.parent = chunk.structures.transform;
+            g.transform.position = chunk.chunkData.structures.ElementAt(i).Key;
+            g.transform.eulerAngles = chunk.chunkData.structures.ElementAt(i).Value.rot;
+            g.SetActive(true);
+
+            chunk.structureDict.Add(g.transform.position, g);
+        }
     }
 
     #endregion

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -70,12 +71,24 @@ public class ClientHandle : MonoBehaviour
             chunkData.props.Add(_packet.ReadVector3(), prop);
         }
 
+        int structuresCount = _packet.ReadInt();
+
+        for (int i = 0; i < structuresCount; i++)
+        {
+            StructureDataStruct structure = new StructureDataStruct
+            {
+                structure = _packet.ReadString(),
+                rot = _packet.ReadVector3()
+            };
+            chunkData.structures.Add(_packet.ReadVector3(), structure);
+        }
+
         MultiplayerTerrainGenerator.instance.SpawnChunk(chunkData);
     }
 
     public static void PropChunkUpdate(Packet _packet)
     {
-        Dictionary<Vector3, PropDataStruct> props = new Dictionary<Vector3, PropDataStruct>(); 
+        Dictionary<Vector3, PropDataStruct> props = new Dictionary<Vector3, PropDataStruct>();
 
         Vector2 coord = _packet.ReadVector2();
         int length = _packet.ReadInt();
@@ -112,6 +125,46 @@ public class ClientHandle : MonoBehaviour
         }
 
         MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].propDict = propsDict;
+    }
+
+    public static void StructureChunkUpdate(Packet _packet)
+    {
+        Dictionary<Vector3, StructureDataStruct> structures = new Dictionary<Vector3, StructureDataStruct>();
+
+        Vector2 coord = _packet.ReadVector2();
+        int length = _packet.ReadInt();
+
+        MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].chunkData.structures = structures;
+        GameObject structuresHolder = MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].structures;
+
+        Transform[] children = structuresHolder.GetComponentsInChildren<Transform>();
+        for (int j = 0; j < children.Length; j++) { PropsGeneration.instance.RemoveProp(children[j]); }
+
+        Dictionary<Vector3, GameObject> structuresDict = new Dictionary<Vector3, GameObject>();
+
+        for (int i = 0; i < length; i++)
+        {
+            StructureDataStruct structure = new StructureDataStruct()
+            {
+                structure = _packet.ReadString(),
+                rot = _packet.ReadVector3()
+            };
+            Vector3 pos = _packet.ReadVector3();
+            structures.Add(pos, structure);
+
+            ItemSettings item = Resources.Load<ItemSettings>("Prefabs/Interactable Items/" + structure.structure);
+            GameObject g = Instantiate(item.gameObject);
+
+            g.transform.name = item.name;
+            g.transform.parent = MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].props.transform;
+            g.transform.position = pos;
+            g.transform.eulerAngles = structure.rot;
+            g.SetActive(true);
+
+            structuresDict.Add(g.transform.position, g);
+        }
+
+        MultiplayerTerrainGenerator.instance.terrainChunkDictionary[coord].structureDict = structuresDict;
     }
 
     public static void UpdateVitals(Packet _packet)

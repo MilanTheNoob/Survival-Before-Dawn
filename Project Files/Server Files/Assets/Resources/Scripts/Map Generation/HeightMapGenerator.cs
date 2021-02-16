@@ -28,7 +28,9 @@ public static class HeightMapGenerator
 
 }
 
-public struct HeightMap {
+[System.Serializable]
+public struct HeightMap 
+{
 	public readonly float[,] values;
 	public readonly float minValue;
 	public readonly float maxValue;

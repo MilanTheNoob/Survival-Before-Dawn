@@ -19,7 +19,8 @@ public enum ServerPackets
     stopInteract,
     updateInventory,
     updateVitals,
-    treeInteract
+    treeInteract,
+    storageInteract
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -30,7 +31,11 @@ public enum ClientPackets
     interact,
     modifyVital,
     destroyProp,
-    addProp
+    addProp,
+    addStructure,
+    craft,
+    endStorage,
+    removeInventory
 }
 
 public class Packet : IDisposable

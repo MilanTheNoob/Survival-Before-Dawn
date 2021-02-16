@@ -16,7 +16,9 @@ public class MultiplayerTerrainChunk
 
     public bool isVisible;
     public ChunkDataStruct chunkData;
+
     public Dictionary<Vector3, GameObject> propDict = new Dictionary<Vector3, GameObject>();
+    public Dictionary<Vector3, GameObject> structureDict = new Dictionary<Vector3, GameObject>();
 
     public GameObject props;
     public GameObject items;
@@ -74,7 +76,7 @@ public class MultiplayerTerrainChunk
         meshFilter.mesh = mesh;
         meshCollider.sharedMesh = mesh;
 
-        propDict = PropsGeneration.instance.MultiplayerGenerate(this);
+        PropsGeneration.instance.MultiplayerGenerate(this);
     }
 
 
@@ -88,7 +90,7 @@ public class MultiplayerTerrainChunk
 
         if (wasVisible != visible)
         {
-            if (visible) { propDict = PropsGeneration.instance.MultiplayerGenerate(this); } else { PropsGeneration.instance.RemoveFromChunk(this); }
+            if (visible) { PropsGeneration.instance.MultiplayerGenerate(this); } else { PropsGeneration.instance.RemoveFromChunk(this); }
 
             SetVisible(visible);
         }

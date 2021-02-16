@@ -3,12 +3,8 @@ using UnityEngine;
 
 public class StorageSlot : MonoBehaviour
 {
-    [Header("The UI peices")]
     public Image icon;
-    public GameObject removeButton;
-    public Text objectTitle;
 
-    [HideInInspector]
     public ItemSettings itemSettings;
 
     // Used to add a new item to the slot

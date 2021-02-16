@@ -108,29 +108,73 @@ public class TerrainGenerator : MonoBehaviour
 		}
 	}
 
+	public void StructureUpdateChunk(Vector3 propPos, StructureDataStruct newStructure)
+    {
+		Vector2 coord = new Vector3(Mathf.RoundToInt(propPos.x / meshWorldSize), Mathf.RoundToInt(propPos.z / meshWorldSize));
+		if (!chunkDictionary.ContainsKey(coord)) { return; }
+
+		Vector3 localPropPos = chunkDictionary[coord].structures.transform.InverseTransformPoint(propPos);
+		print("structureupdatechunk - " + localPropPos);
+
+		if (newStructure != null)
+		{
+			if (!chunkDictionary[coord].chunkData.structures.ContainsKey(localPropPos))
+			{
+				GameObject prefab = Resources.Load<GameObject>("Prefabs/Non Interactables/" + newStructure.structure);
+
+				GameObject g = Instantiate(prefab);
+				g.transform.name = prefab.name;
+				g.transform.parent = chunkDictionary[coord].structures.transform;
+				g.transform.localPosition = localPropPos;
+				g.transform.eulerAngles = newStructure.rot;
+
+				chunkDictionary[coord].chunkData.structures.Add(localPropPos, newStructure);
+				chunkDictionary[coord].structuresDict.Add(propPos, g);
+			}
+		}
+		else
+		{
+			if (chunkDictionary[coord].chunkData.structures.ContainsKey(localPropPos))
+			{
+				if (chunkDictionary[coord].structuresDict.ContainsKey(propPos))
+				{
+					Destroy(chunkDictionary[coord].structuresDict[propPos]);
+					chunkDictionary[coord].structuresDict.Remove(propPos);
+				}
+				chunkDictionary[coord].chunkData.structures.Remove(localPropPos);
+			}
+		}
+
+		for (int i = 0; i < NetworkManager.instance.players.Count; i++)
+		{
+			Player player = NetworkManager.instance.players.ElementAt(i).Value;
+			if (player.chunks.Contains(coord)) { ServerSend.StructureChunkUpdate(chunkDictionary[coord].chunkData, player); }
+		}
+	}
+
 	public void UpdateChunk(Vector3 propPos, PropDataStruct newProp)
     {
 		Vector2 coord = new Vector3(Mathf.RoundToInt(propPos.x / meshWorldSize), Mathf.RoundToInt(propPos.z / meshWorldSize));
-		if (!chunkDictionary.ContainsKey(coord)) { print("shiiitt"); return; }
+		if (!chunkDictionary.ContainsKey(coord)) { return; }
 
-		Vector3 localPropPos = chunkDictionary[coord].meshObject.transform.InverseTransformPoint(propPos);
+		Vector3 localPropPos = chunkDictionary[coord].props.transform.InverseTransformPoint(propPos);
 
 		if (newProp != null)
         {
 			if (!chunkDictionary[coord].chunkData.props.ContainsKey(localPropPos))
 			{
-				chunkDictionary[coord].chunkData.props.Add(localPropPos, newProp);
-
 				GameObject g = Instantiate(propsSettings.PropGroups[newProp.group].Props[newProp.prop].prop);
 				g.transform.name = propsSettings.PropGroups[newProp.group].Props[newProp.prop].prop.name;
 				g.transform.parent = chunkDictionary[coord].props.transform;
 				g.transform.localPosition = localPropPos;
 				g.transform.eulerAngles = newProp.rot;
+
+				chunkDictionary[coord].chunkData.props.Add(localPropPos, newProp);
+				chunkDictionary[coord].propsDict.Add(propPos, g);
 			}
 		}
         else
         {
-			print("not shit");
 			if (chunkDictionary[coord].chunkData.props.ContainsKey(localPropPos)) 
 			{
 				if (chunkDictionary[coord].propsDict.ContainsKey(propPos))
@@ -158,6 +202,12 @@ public class PropDataStruct
 	public int prop;
 }
 
+public class StructureDataStruct
+{
+	public Vector3 rot;
+	public string structure;
+}
+
 [System.Serializable]
 public class ChunkDataStruct
 {
@@ -165,6 +215,5 @@ public class ChunkDataStruct
 	public HeightMap heightMap;
 
 	public Dictionary<Vector3, PropDataStruct> props = new Dictionary<Vector3, PropDataStruct>();
-	public List<PropDataStruct> items = new List<PropDataStruct>();
-	public List<PropDataStruct> structures = new List<PropDataStruct>();
+	public Dictionary<Vector3, StructureDataStruct> structures = new Dictionary<Vector3, StructureDataStruct>();
 }

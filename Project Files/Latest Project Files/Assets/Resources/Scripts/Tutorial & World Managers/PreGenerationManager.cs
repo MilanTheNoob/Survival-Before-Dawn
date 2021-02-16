@@ -95,21 +95,20 @@ public class PreGenerationManager : MonoBehaviour
     // Called to generate
     public void GenerateWorld(WorldDataStruct world)
     {
-        // Get the original seed if we are not in a world
-        if (!isInWorld)
-            originalSeed = TerrainGenerator.instance.heightMapSettings.noiseSettings.seed;
+        if (!isInWorld) { originalSeed = TerrainGenerator.instance.heightMapSettings.noiseSettings.seed; }
 
-        // Basic vars being set
+        InputManager.instance.player.GetComponent<CharacterController>().enabled = false;
+        InputManager.instance.player.transform.position = world.pos;
+        InputManager.instance.player.GetComponent<CharacterController>().enabled = true;
+        print(InputManager.instance.player.transform.position);
+
         isInWorld = true;
         currentWorldSettings = world;
+        world.propsParent.SetActive(true);
 
-        // Set the TerrainGenerator params
         TerrainGenerator.instance.heightMapSettings.noiseSettings.seed = world.seed;
         TerrainGenerator.instance.generateType = TerrainGenerator.GenerateType.PreGen;
         TerrainGenerator.instance.ResetChunks();
-
-        // Enable the world in the scene
-        world.propsParent.SetActive(true);
     }
 
     // Returns a world 
@@ -188,6 +187,7 @@ public class PreGenerationManager : MonoBehaviour
     public class WorldDataStruct
     {
         public GameObject propsParent;
+        public Vector3 pos;
         public int seed;
         public string name;
     }

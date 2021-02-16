@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -14,9 +12,12 @@ public class Client
     public TCP tcp;
     public UDP udp;
 
-    public Client(int _clientId)
+    public string ip;
+
+    public Client(int _clientId, string _ip)
     {
         id = _clientId;
+        ip = _ip;
         tcp = new TCP(id);
         udp = new UDP(id);
     }
@@ -191,7 +192,7 @@ public class Client
 
     public void SendIntoGame(string _playerName)
     {
-        player = NetworkManager.instance.InstantiatePlayer(id);
+        player = NetworkManager.instance.InstantiatePlayer(id, ip);
         player.Initialize(id, _playerName);
 
         foreach (Client _client in Server.clients.Values)
@@ -220,8 +221,22 @@ public class Client
     {
         ThreadManager.ExecuteOnMainThread(() => 
         {
+            char div = ':';
+            string[] mess = ip.Split(div);
+
+            PlayerData data = new PlayerData
+            {
+                health = player.health,
+                hunger = player.hunger,
+
+                pos = player.transform.position,
+                inventory = player.inventory
+            };
+
+            if (NetworkManager.instance.playerData.ContainsKey(mess[0])) { NetworkManager.instance.playerData[mess[0]] = data; } else { NetworkManager.instance.playerData.Add(mess[0], data); }
             NetworkManager.instance.players.Remove(id);
-            if (player != null && player.gameObject != null) { UnityEngine.Object.Destroy(player.gameObject); }
+
+            UnityEngine.Object.Destroy(player.gameObject);
             ServerSend.PlayerDisconnected(id);
 
             tcp = new TCP(id);

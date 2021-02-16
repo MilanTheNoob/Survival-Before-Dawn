@@ -12,16 +12,16 @@ public class TerrainChunk
 
     public MeshCollider meshCollider;
     public ChunkDataStruct chunkData;
+
+    public Dictionary<Vector3, GameObject> structuresDict = new Dictionary<Vector3, GameObject>();
     public Dictionary<Vector3, GameObject> propsDict = new Dictionary<Vector3, GameObject>();
 
-    public bool hasChunkData;
     public Mesh mesh = new Mesh();
 
     public GameObject props;
-    public GameObject items;
     public GameObject structures;
 
-    HeightMap heightData;
+    public HeightMap heightData;
 
     HeightMapSettings heightMapSettings;
     MeshSettings meshSettings;
@@ -52,10 +52,6 @@ public class TerrainChunk
         props.transform.parent = meshObject.transform;
         props.transform.localPosition = Vector3.zero;
 
-        items = new GameObject("Items Holder");
-        items.transform.parent = meshObject.transform;
-        items.transform.localPosition = Vector3.zero;
-
         structures = new GameObject("Structure Pieces Holder");
         structures.transform.parent = meshObject.transform;
         structures.transform.localPosition = Vector3.zero;
@@ -77,15 +73,7 @@ public class TerrainChunk
         mesh = ((MeshData)meshDataObject).CreateMesh();
         meshCollider.sharedMesh = mesh;
 
-        chunkData = new ChunkDataStruct
-        {
-            coord = coord,
-            heightMap = heightData,
-            props = PropsGeneration.instance.Generate(this)
-        };
-
-        hasChunkData = true;
-
+        PropsGeneration.instance.Generate(this);
         ServerSend.ChunkData(chunkData, player, meshSettings.numVertsPerLine, meshSettings.numVertsPerLine);
     }
 

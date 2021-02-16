@@ -36,6 +36,7 @@ public class BuildPreview : MonoBehaviour
 
     void Snapped(Vector3 pos)
     {
+        print("PAUSE");
         BuildingManager.PauseBuild(true);
 
         transform.position = pos;

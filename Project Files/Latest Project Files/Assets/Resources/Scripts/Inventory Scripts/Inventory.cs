@@ -19,21 +19,29 @@ public class Inventory : MonoBehaviour
     public Text interactText;
     public Text interactNameText;
 
+    [Header("Misc")]
+    public ItemSettings axe;
+
     [HideInInspector]
     public int maxSlots = 14;
     [HideInInspector]
     public List<ItemSettings> items = new List<ItemSettings>();
+    [HideInInspector]
+    public List<string> tempStorage = new List<string>();
+    [HideInInspector]
+    public GameObject currentObject;
+    [HideInInspector]
+    public Vector3 tempStoragePos;
 
-    GameObject currentObject;
-
-    enum CurrentItemTypeEnum
+    public enum CurrentItemTypeEnum
     { 
         None,
         Normal,
         Tree,
         Storage
     }
-    CurrentItemTypeEnum currentItemType;
+    [HideInInspector]
+    public CurrentItemTypeEnum currentItemType;
 
     void Awake()
     {
@@ -68,27 +76,54 @@ public class Inventory : MonoBehaviour
     public void Remove(ItemSettings itemSettings)
     {
         if (!items.Contains(itemSettings)) { return; }
-        items.Remove(itemSettings);
 
-        if (itemSettings.gameObject != null && !itemSettings.dontDrop)
+        if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
         {
-            Vector3 pPos = InputManager.instance.player.transform.position;
-            GameObject item = Instantiate(itemSettings.gameObject, new Vector3(pPos.x, pPos.y + 5, pPos.z), Quaternion.identity);
-            item.transform.name = itemSettings.gameObject.transform.name;
+            items.Remove(itemSettings);
 
-            item.AddComponent<Rigidbody>();
-            try { item.GetComponent<MeshCollider>().convex = true; } catch { }
+            if (itemSettings.gameObject != null && !itemSettings.dontDrop)
+            {
+                Vector3 pPos = InputManager.instance.player.transform.position;
+                GameObject item = Instantiate(itemSettings.gameObject, new Vector3(pPos.x, pPos.y + 5, pPos.z), Quaternion.identity);
+                item.transform.name = itemSettings.gameObject.transform.name;
+
+                item.AddComponent<Rigidbody>();
+                try { item.GetComponent<MeshCollider>().convex = true; } catch { }
+            }
+
+            if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer) { SavingManager.SaveFile.inventoryItems.Remove(itemSettings.name); }
+            onItemChangedCallback.Invoke();
         }
+        else if (SavingManager.GameState == SavingManager.GameStateEnum.Multiplayer)
+        {
+            using (Packet _packet = new Packet((int)ClientPackets.removeInventory))
+            {
+                _packet.Write(1);
+                _packet.Write(itemSettings.name);
 
-        SavingManager.SaveFile.inventoryItems.Remove(itemSettings.name);
-        onItemChangedCallback.Invoke();
+                ClientSend.SendTCPData(_packet);
+            }
+        }
     }
 
     public void Destroy(ItemSettings itemSettings)
     {
-        SavingManager.SaveFile.inventoryItems.Remove(itemSettings.name);
-        items.Remove(itemSettings);
-        onItemChangedCallback.Invoke();
+        if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
+        {
+            SavingManager.SaveFile.inventoryItems.Remove(itemSettings.name);
+            items.Remove(itemSettings);
+            onItemChangedCallback.Invoke();
+        }
+        else if (SavingManager.GameState == SavingManager.GameStateEnum.Multiplayer)
+        {
+            using (Packet _packet = new Packet((int)ClientPackets.removeInventory))
+            {
+                _packet.Write(items.Count);
+                for (int i = 0; i < items.Count; i++) { _packet.Write(items[i].name); }
+
+                ClientSend.SendTCPData(_packet);
+            }
+        }
     }
 
     public void DestroyAll()
@@ -109,8 +144,8 @@ public class Inventory : MonoBehaviour
         }
         else if (SavingManager.GameState == SavingManager.GameStateEnum.Multiplayer)
         {
-            for (int i = 0; i < slots.Length; i++) { slots[i].ClearSlot(); craftingSlots[i].ClearSlot(); }
-            for (int i = 0; i < items.Count; i++) { slots[i].AddItem(items[i]); craftingSlots[i].AddItem(items[i]); }
+            for (int i = 0; i < slots.Length; i++) { slots[i].ClearSlot(); craftingSlots[i].ClearSlot(); StorageManager.instance.playerSlots[i].ClearSlot(); }
+            for (int i = 0; i < items.Count; i++) { slots[i].AddItem(items[i]); craftingSlots[i].AddItem(items[i]); StorageManager.instance.playerSlots[i].AddItem(items[i]); }
         }
     }
 
@@ -127,6 +162,8 @@ public class Inventory : MonoBehaviour
 
     public static void StartTreeInteract(Packet _packet)
     {
+        if (!instance.items.Contains(instance.axe)) { return; }
+
         string interactTxt = _packet.ReadString();
         string interactNameTxt = _packet.ReadString();
         Vector3 pos = _packet.ReadVector3();
@@ -137,6 +174,32 @@ public class Inventory : MonoBehaviour
         TweeningLibrary.FadeIn(instance.interactButton.gameObject, 0.2f);
         instance.interactText.text = interactTxt;
         instance.interactNameText.text = interactNameTxt;
+    }
+
+    public static void StartStorageInteract(Packet _packet)
+    {
+        string interactTxt = _packet.ReadString();
+        string interactNameTxt = _packet.ReadString();
+
+        instance.currentItemType = CurrentItemTypeEnum.Storage;
+
+        TweeningLibrary.FadeIn(instance.interactButton.gameObject, 0.2f);
+        instance.interactText.text = interactTxt;
+        instance.interactNameText.text = interactNameTxt;
+
+        int storageSize = _packet.ReadInt();
+        instance.tempStorage.Clear();
+
+        if (storageSize > 0)
+        {
+            for (int i = 0; i < storageSize; i++)
+            {
+                instance.tempStorage.Add(_packet.ReadString());
+                print(instance.tempStorage[i]);
+            }
+        }
+
+        instance.tempStoragePos = _packet.ReadVector3();
     }
 
     public void Interact()
@@ -172,10 +235,16 @@ public class Inventory : MonoBehaviour
 
             currentItemType = CurrentItemTypeEnum.None;
         }
+        else if (currentItemType == CurrentItemTypeEnum.Storage)
+        {
+            StorageManager.instance.MultiplayerInteractWithStorage(tempStorage, tempStoragePos);
+        }
     }
 
     public static void StopInteract(Packet _packet)
     {
+        if (instance.currentItemType == CurrentItemTypeEnum.None) { return; }
+
         TweeningLibrary.FadeOut(instance.interactButton.gameObject, 0.2f);
         instance.interactText.text = "";
         instance.interactNameText.text = "";
