@@ -33,13 +33,6 @@ public class PreviewInputManager : MonoBehaviour
     public void ResetButton(PreviewButton button)
     {
         AudioManager.PlayClick();
-
-        Text[] txt = button.GetComponentsInChildren<Text>();
-        Image[] img = button.GetComponentsInChildren<Image>();
-
-        for (int i = 0; i < txt.Length; i++) { TweeningLibrary.LerpColor(txt[i], button.tabActive, button.tabIdle, 0.1f); }
-        for (int i = 0; i < img.Length; i++) { TweeningLibrary.LerpColor(img[i], button.tabActive, button.tabIdle, 0.1f); }
-
         TweeningLibrary.LerpColor(button.button, button.tabIdle, button.tabActive, 0.1f);
 
         button.onClicked = true;
