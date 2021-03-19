@@ -1,0 +1,35 @@
+body
+{
+	font-family: 'Montserrat', sans-serif;
+	background-image: url("bg.png");
+}
+
+#title
+{
+	text-align: center;
+	color: white;
+	font-size: 75px;
+	padding-top: 20px;
+}
+
+#uTitle
+{
+	text-align: center;
+	color: white;
+	font-size: 50px;
+	margin-top: -40px;
+}
+
+h3
+{
+	text-align: center;
+	color: white;
+	font-size: 40px;
+}
+
+a
+{
+	margin: center;
+	font-size: 30px;
+	text-decoration: none;
+}

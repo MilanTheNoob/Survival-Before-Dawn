@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e383c231df5e7e4e9ee141862522f8e, type: 3}
+  m_Name: peach
+  m_EditorClassIdentifier: 
+  desc: Peach
+  descName: Peach
+  icon: {fileID: 21300000, guid: 7505934b61d3cda489ea6f9e33997c90, type: 3}
+  gameObject: {fileID: 6467739697545267921, guid: 7bad394fc8563284095b4b6cf11ea9c6, type: 3}
+  description: A nice ripe peach that restores health & hunger by 7%. Can't be used
+    in recipes
+  sellValue: 2
+  buyValue: 4
+  originType: 0
+  isUsableItem: 1
+  dontDrop: 0
+  healthChange: 0.07
+  hungerChange: 0.07

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e383c231df5e7e4e9ee141862522f8e, type: 3}
+  m_Name: broccoli
+  m_EditorClassIdentifier: 
+  desc: Broccoli
+  descName: Broccoli
+  icon: {fileID: 21300000, guid: a2380f0415a9e694ab213f0b32f8e8d5, type: 3}
+  gameObject: {fileID: 4337355781907094235, guid: 8f059d547653f864687400acec7cb65c, type: 3}
+  description: Very plain broccoli, restores hunger by 15% and health by 5%, Can
+    be used in filling meals.
+  sellValue: 3
+  buyValue: 6
+  originType: 0
+  isUsableItem: 1
+  dontDrop: 0
+  healthChange: 0.05
+  hungerChange: 0.15

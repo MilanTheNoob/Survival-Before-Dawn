@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e383c231df5e7e4e9ee141862522f8e, type: 3}
+  m_Name: grapes
+  m_EditorClassIdentifier: 
+  desc: Grapes
+  descName: Grapes
+  icon: {fileID: 21300000, guid: dd4542fbc606fdf42ad0173947963729, type: 3}
+  gameObject: {fileID: 6418516252496782850, guid: b09f7ba47fbe69c429c78e9e459fecd4, type: 3}
+  description: A nice bunch of grapes that restores hunger by 15% and health by 10%.
+  sellValue: 2
+  buyValue: 4
+  originType: 0
+  isUsableItem: 1
+  dontDrop: 0
+  healthChange: 10
+  hungerChange: 15

@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6dfc3f290a5b284391e0e7cbf9ce505, type: 3}
+  m_Name: Default Prop Settings
+  m_EditorClassIdentifier: 
+  autoUpdate: 0
+  PropGroups:
+  - Name: Trees
+    Props:
+    - PrefabVariants:
+      - {fileID: 4241519956225222151, guid: 4d1a07ad390f0b94fafee403716be119, type: 3}
+      - {fileID: 2115630578259181188, guid: a9ce8275bf80eb6429ede0569cef476d, type: 3}
+      - {fileID: 4241519956225222151, guid: 4d1a07ad390f0b94fafee403716be119, type: 3}
+      YOffset: -0.2
+      RotationClamp: {x: 5, y: 180, z: 5}
+    - PrefabVariants:
+      - {fileID: 5134803203259455989, guid: c9dac8d0083edef4f9d69a86f2b9e814, type: 3}
+      - {fileID: 652379776919850053, guid: ef6e5839b2303ce4798487b083166bd9, type: 3}
+      YOffset: -0.2
+      RotationClamp: {x: 5, y: 180, z: 5}
+  - Name: Rocks
+    Props:
+    - PrefabVariants:
+      - {fileID: 1000010262655218, guid: 4219a34a252329845951487f3638b799, type: 3}
+      - {fileID: 1000010635393592, guid: dbc745348c90eef419686653605cd7b1, type: 3}
+      - {fileID: 1000011505633412, guid: eae67a4ae2f76a443b6f0658b5fe2dda, type: 3}
+      YOffset: -0.05
+      RotationClamp: {x: 5, y: 180, z: 5}
+    - PrefabVariants:
+      - {fileID: 1000013747084568, guid: 1ddaf028a0e74ed489d51ddc3c637ee2, type: 3}
+      - {fileID: 1000013714799558, guid: 99f4a1c5d05971547873356f8f25897b, type: 3}
+      - {fileID: 1000011816824358, guid: eb408404c5abb4c48a2c3dfa4a9b84ba, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 180, y: 180, z: 180}
+  - Name: Ores
+    Props:
+    - PrefabVariants:
+      - {fileID: 1000011724667232, guid: 855c271cb8b750547ab6237a901499ca, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 5, y: 180, z: 5}
+    - PrefabVariants:
+      - {fileID: 1000013815401846, guid: d3f22b25a11ced94f9b8031e08d4cfc6, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 5, y: 180, z: 5}
+    - PrefabVariants:
+      - {fileID: 1000012672329024, guid: 1b68a55cd43b464458a39faf3e5b68a3, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 5, y: 180, z: 5}
+  - Name: Nature
+    Props:
+    - PrefabVariants:
+      - {fileID: 1000013385108184, guid: 50020ba5947da8640986440787d983b6, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+    - PrefabVariants:
+      - {fileID: 1000013157714826, guid: 0263f908a55ef3045bfe2d5fee2357ee, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+    - PrefabVariants:
+      - {fileID: 1000014092007092, guid: 821b66508d0d1b144a58963d36e0e4e9, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+    - PrefabVariants:
+      - {fileID: 1000012594744698, guid: e0c268c3d3128df4199a1f3bc6a32e16, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+    - PrefabVariants:
+      - {fileID: 1000012396999754, guid: b148061cf3c1a6843aaf77a4fb75d655, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+  Biomes:
+  - Name: Conifer Forest
+    props:
+    - Name: Conifer Tree
+      Group: 0
+      Prop: 0
+      PerChunk: 10
+      SizeMax: 2
+      SizeMin: 0.8
+    - Name: Spruce Tree
+      Group: 0
+      Prop: 1
+      PerChunk: 3
+      SizeMax: 2
+      SizeMin: 0.8
+    - Name: Flat Stone
+      Group: 1
+      Prop: 0
+      PerChunk: 5
+      SizeMax: 1.2
+      SizeMin: 0.4
+    - Name: Diamond Stone
+      Group: 1
+      Prop: 1
+      PerChunk: 5
+      SizeMax: 1.2
+      SizeMin: 0.4
+    - Name: Blue Ore
+      Group: 2
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 0.4
+    - Name: Green Ore
+      Group: 2
+      Prop: 1
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 0.4
+    - Name: Orange Ore
+      Group: 2
+      Prop: 2
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 0.4
+    - Name: Boletus Mushroom
+      Group: 3
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Boletus Mushroom
+      Group: 3
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Green Mushroom
+      Group: 3
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Boletus Mushroom
+      Group: 3
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Boletus Mushroom
+      Group: 3
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
