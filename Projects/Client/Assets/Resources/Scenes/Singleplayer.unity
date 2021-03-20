@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 962081136}
-  m_IndirectSpecularColor: {r: 0.43151304, g: 0.6567409, b: 0.94834715, a: 1}
+  m_IndirectSpecularColor: {r: 0.43156528, g: 0.65677184, b: 0.948343, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13961,12 +13961,8 @@ MonoBehaviour:
   backgroundPanel: {fileID: 873038478}
   smallRandomItems:
   - {fileID: 11400000, guid: 2805cb2fd64da524b9ebbc290da5b4a3, type: 2}
-  - {fileID: 11400000, guid: 8fdd2d27900923e4d96c84c56bcdad03, type: 2}
   - {fileID: 11400000, guid: 4cad770c7c9107449abb19bb1f4611b9, type: 2}
   - {fileID: 11400000, guid: 927d80551681b494e8212ef4a80ee3be, type: 2}
-  - {fileID: 11400000, guid: 2662615be428e40418df7dd6fa81e46b, type: 2}
-  - {fileID: 11400000, guid: dfa32e0077382a541b51d2bac1454328, type: 2}
-  - {fileID: 11400000, guid: 861469296a578f1428f6ad07ee11488c, type: 2}
   - {fileID: 11400000, guid: b95640c302e3c724ab8bd088288fb2f2, type: 2}
   - {fileID: 11400000, guid: f3e65d5670f09bb4186e6fff1a1f0931, type: 2}
   - {fileID: 11400000, guid: 9a96e5a39ca67694ea7b039210aaf42b, type: 2}
@@ -13974,8 +13970,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 44e272e0408c3714eb931c79c2021dfb, type: 2}
   - {fileID: 11400000, guid: ed3402f390bf2454d927db4e0988de51, type: 2}
   - {fileID: 11400000, guid: 67873ca125a2b9941b8d78e2e372cbc4, type: 2}
-  - {fileID: 11400000, guid: 67873ca125a2b9941b8d78e2e372cbc4, type: 2}
-  - {fileID: 11400000, guid: 67873ca125a2b9941b8d78e2e372cbc4, type: 2}
+  - {fileID: 11400000, guid: e32e6071fc3ed4747bb054deda46f9fe, type: 2}
+  - {fileID: 11400000, guid: b2746d38fd7c3c64cbdcea60438137b6, type: 2}
+  - {fileID: 11400000, guid: a62c5863cd9e6304ea55db4ffb535882, type: 2}
+  - {fileID: 11400000, guid: aa8927caee947d54888586df47967a33, type: 2}
+  - {fileID: 11400000, guid: 016d76ba70ddbd24ba161c1d31eff9ab, type: 2}
+  - {fileID: 11400000, guid: 741ff398daa83534d90949a82125f99d, type: 2}
+  - {fileID: 11400000, guid: 5cf4a284127c5c141963aa58b2a06bd2, type: 2}
+  - {fileID: 11400000, guid: fbd3ab9ef78014341829669cbf55cf5d, type: 2}
+  - {fileID: 11400000, guid: 9a96e5a39ca67694ea7b039210aaf42b, type: 2}
+  - {fileID: 11400000, guid: 286b09ee56d4b064585dfa2357d968da, type: 2}
+  - {fileID: 11400000, guid: 5310b719f55013547b739db7cf988765, type: 2}
+  - {fileID: 11400000, guid: 6d973330afe6b67429c4a92fa467409f, type: 2}
+  - {fileID: 11400000, guid: c850c2f00e938134bab246ebebfaae69, type: 2}
+  - {fileID: 11400000, guid: 03bc716cf7d9c8643b6bdce2f2a451a9, type: 2}
+  - {fileID: 11400000, guid: d265c9649c609a14d9bcc9970738957d, type: 2}
+  - {fileID: 11400000, guid: a87f25537342c4c4aa47f21fe1886c02, type: 2}
   errorParent: {fileID: 385773670}
   errorText: {fileID: 1814647726}
   gravity: -18
@@ -68519,7 +68529,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -6340101977746384038, guid: dc21bd957541dc4a788afc97995ca323, type: 2}
   m_audioClip: {fileID: 8300000, guid: e9714160ce34f2b4ab63ff8c27bd68e1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0

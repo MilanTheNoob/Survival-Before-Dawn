@@ -108,7 +108,7 @@ public class PropsGeneration : MonoBehaviour
             Random.InitState(TerrainGenerator.instance.heightMapSettings.noiseSettings.seed + (int)chunk.coord.x + (int)chunk.coord.y);
             int structureRand = Random.Range(1, 20);
 
-            if (structureRand > 9)
+            if (structureRand < 3)
             {
                 StructureChunk structureData = PropSettings.Structures[Random.Range(0, PropSettings.Structures.Length)];
                 GameObject g = Instantiate(structureData.Structure);
@@ -118,7 +118,7 @@ public class PropsGeneration : MonoBehaviour
                 for (int i = 0; i < childs.Length; i++) { if (i != 0) tempBounds.Encapsulate(childs[i].bounds); }
 
                 g.transform.parent = chunk.structures.transform;
-                g.transform.localPosition = new Vector3(tempBounds.center.x, tempBounds.center.y + 2f, tempBounds.center.z);
+                g.transform.localPosition = new Vector3(0, vertices[vertices.Count / 2].y + 0.5f, 0);
                 g.transform.eulerAngles = new Vector3(0F, Random.Range(0, 360f), 0f);
                 g.SetActive(true);
 
@@ -128,6 +128,42 @@ public class PropsGeneration : MonoBehaviour
                     {
                         exclusions.Add(vertices[i]);
                         vertices.RemoveAt(i);
+                    }
+                }
+
+                for (int j = 0; j < structureData.Props.Length; j++)
+                {
+                    int propId = structureData.Props[j].Prop;
+                    int groupId = structureData.Props[j].Group;
+
+                    PoolData pool = Pools[PropSettings.PropGroups[groupId].Props[propId].PrefabVariants[0].transform.name + " Pool"];
+
+                    for (int i = 0; i < structureData.Props[j].PerChunk; i++)
+                    {
+                        int f = Random.Range(0, pool.PropVariants.Count);
+                        int t = Random.Range(0, vertices.Count);
+
+                        if (pool.PropVariants[f].Props.Count > 0 && !exclusions.Contains(vertices[t]))
+                        {
+                            float s = Random.Range(structureData.Props[j].SizeMin, structureData.Props[j].SizeMax);
+
+                            Vector3 euler = Vector3.zero;
+                            euler.x = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.x, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.x);
+                            euler.y = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.y, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.y);
+                            euler.z = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.z, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.z);
+
+                            GameObject gp = pool.PropVariants[f].Props[0];
+                            pool.PropVariants[f].Props.RemoveAt(0);
+
+                            gp.transform.parent = chunk.props.transform;
+                            gp.transform.localPosition = new Vector3(vertices[t].x, vertices[t].y + PropSettings.PropGroups[groupId].Props[propId].YOffset, vertices[t].z);
+                            gp.transform.eulerAngles = euler;
+                            gp.transform.localScale = new Vector3(s, s, s);
+                            gp.SetActive(true);
+
+                            exclusions.Add(vertices[t]);
+                            vertices.RemoveAt(t);
+                        }
                     }
                 }
             }

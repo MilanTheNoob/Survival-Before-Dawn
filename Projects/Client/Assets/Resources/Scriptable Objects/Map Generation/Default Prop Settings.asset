@@ -46,6 +46,12 @@ MonoBehaviour:
       YOffset: -0.2
       RotationClamp: {x: 5, y: 180, z: 5}
       PoolSizes: 200
+    - PropName: Pot Tree
+      PrefabVariants:
+      - {fileID: 4721673776926961227, guid: 884e1d5302214054e8d9c803030c21ab, type: 3}
+      YOffset: -0.1
+      RotationClamp: {x: 0, y: 180, z: 0}
+      PoolSizes: 200
   - Name: Rocks
     Props:
     - PropName: Flat Stone
@@ -210,13 +216,13 @@ MonoBehaviour:
     - Name: Conifer Tree
       Group: 0
       Prop: 0
-      PerChunk: 10
+      PerChunk: 5
       SizeMax: 2
-      SizeMin: 0.8
+      SizeMin: 1.5
     - Name: Spruce Tree
       Group: 0
       Prop: 1
-      PerChunk: 3
+      PerChunk: 2
       SizeMax: 2
       SizeMin: 0.8
     - Name: Diamond Stone
@@ -374,15 +380,15 @@ MonoBehaviour:
     - Name: Sunflower
       Group: 3
       Prop: 4
-      PerChunk: 10
-      SizeMax: 1
-      SizeMin: 2
+      PerChunk: 6
+      SizeMax: 1.3
+      SizeMin: 0.7
   - Name: Mega Conifer Forest
     props:
     - Name: Conifer Tree
       Group: 0
       Prop: 0
-      PerChunk: 5
+      PerChunk: 3
       SizeMax: 3
       SizeMin: 2
     - Name: Diamond Stone
@@ -433,12 +439,6 @@ MonoBehaviour:
       PerChunk: 1
       SizeMax: 1.5
       SizeMin: 0.8
-    - Name: Carrot
-      Group: 4
-      Prop: 4
-      PerChunk: 1
-      SizeMax: 1.2
-      SizeMin: 0.8
     - Name: Table
       Group: 5
       Prop: 0
@@ -465,35 +465,11 @@ MonoBehaviour:
       PerChunk: 3
       SizeMax: 1
       SizeMin: 0.5
-    - Name: Blue Ore
-      Group: 2
-      Prop: 0
-      PerChunk: 1
-      SizeMax: 0.6
-      SizeMin: 0.4
-    - Name: Green Ore
-      Group: 2
-      Prop: 1
-      PerChunk: 1
-      SizeMax: 0.6
-      SizeMin: 0.4
-    - Name: Orange Ore
-      Group: 2
-      Prop: 2
-      PerChunk: 1
-      SizeMax: 0.6
-      SizeMin: 0.4
     - Name: Log
       Group: 3
       Prop: 2
       PerChunk: 2
       SizeMax: 1.2
-      SizeMin: 0.8
-    - Name: Apple
-      Group: 4
-      Prop: 0
-      PerChunk: 1
-      SizeMax: 1.5
       SizeMin: 0.8
     - Name: Carrot
       Group: 4
@@ -521,4 +497,58 @@ MonoBehaviour:
       SizeMin: 0.7
   Structures:
   - Structure: {fileID: 1169681003932024, guid: 06b472f147551488aa5393e9477e4e0b, type: 3}
-    Props: []
+    Props:
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+  - Structure: {fileID: 1000012191212250, guid: 02b6852f899a15d44957b934349e7e9a, type: 3}
+    Props:
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+  - Structure: {fileID: 1000012383013900, guid: be44107002abe0046a8a7f08bbf0eef1, type: 3}
+    Props:
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+  - Structure: {fileID: 1000012625864402, guid: d9f771127f198ea40869d419a85f3b89, type: 3}
+    Props:
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1.5
+      SizeMin: 0.5
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1

@@ -52,7 +52,14 @@ public class BuildingManager : MonoBehaviour
 
         if (isBuilding)
         {
-            if (isBuilding != oldBuilding) { TweeningLibrary.FadeIn(cancelButton, 0.1f); TweeningLibrary.FadeIn(rotateButton, 0.1f); oldBuilding = isBuilding; }
+            if (isBuilding != oldBuilding) 
+            { 
+                TweeningLibrary.FadeIn(cancelButton, 0.1f); 
+                TweeningLibrary.FadeIn(rotateButton, 0.1f); 
+                oldBuilding = isBuilding; 
+
+                if (previewS.GetSnapped()) { TweeningLibrary.FadeIn(buildButton, 0.1f); }
+            }
 
             if (previewS.GetSnapped() != oldSnapped)
             {

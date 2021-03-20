@@ -6,7 +6,7 @@ public class SpawnScript : MonoBehaviour
 {
     void Start()
     {
-        if (InputManager.instance != null)
+        if (InputManager.instance != null && Random.Range(1, 3) == 1)
         {
             int r = Random.Range(0, InputManager.instance.smallRandomItems.Count);
             GameObject g = Instantiate(InputManager.instance.smallRandomItems[r].gameObject, transform.position, Quaternion.identity);

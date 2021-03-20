@@ -255,8 +255,6 @@ GameObject:
   - component: {fileID: 5339011999018249162}
   - component: {fileID: 4055844233317029341}
   - component: {fileID: 1339448030562438336}
-  - component: {fileID: 7672155708756859672}
-  - component: {fileID: 5090829483837465897}
   m_Layer: 0
   m_Name: stone-brick (7)
   m_TagString: Untagged
@@ -327,35 +325,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7672155708756859672
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2483162157188950394}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &5090829483837465897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2483162157188950394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
 --- !u!1 &2982785683643810008
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,8 +336,6 @@ GameObject:
   - component: {fileID: 4880053704254282567}
   - component: {fileID: 636039536770811988}
   - component: {fileID: 3752157805937135491}
-  - component: {fileID: 1838897519255334465}
-  - component: {fileID: 2559872157385332302}
   m_Layer: 0
   m_Name: stone-brick (6)
   m_TagString: Untagged
@@ -439,35 +406,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1838897519255334465
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2982785683643810008}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &2559872157385332302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2982785683643810008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
 --- !u!1 &3493396083678136648
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,8 +478,6 @@ GameObject:
   - component: {fileID: 5376433857543878926}
   - component: {fileID: 359474486943367122}
   - component: {fileID: 131414170205104128}
-  - component: {fileID: 4176827692386043883}
-  - component: {fileID: 1938974511168971646}
   m_Layer: 0
   m_Name: stone-brick (2)
   m_TagString: Untagged
@@ -612,35 +548,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4176827692386043883
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3707970030553437468}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &1938974511168971646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3707970030553437468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
 --- !u!1 &4274729123055569519
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,8 +620,6 @@ GameObject:
   - component: {fileID: 2560285675025983476}
   - component: {fileID: 4720377586526438136}
   - component: {fileID: 6824661067064410993}
-  - component: {fileID: 2788206259768474878}
-  - component: {fileID: 8382799911479475819}
   m_Layer: 0
   m_Name: stone-brick (5)
   m_TagString: Untagged
@@ -785,35 +690,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2788206259768474878
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4887716477283371597}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &8382799911479475819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4887716477283371597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
 --- !u!1 &4903913816924613903
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,8 +701,6 @@ GameObject:
   - component: {fileID: 8152961665003969041}
   - component: {fileID: 1177390234575370942}
   - component: {fileID: 9008997855419010738}
-  - component: {fileID: 9007547056345455686}
-  - component: {fileID: 1279291254812843018}
   m_Layer: 0
   m_Name: stone-brick (1)
   m_TagString: Untagged
@@ -897,35 +771,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &9007547056345455686
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4903913816924613903}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &1279291254812843018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4903913816924613903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
 --- !u!1 &5842583900523269757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,8 +894,6 @@ GameObject:
   - component: {fileID: 5489276933079969288}
   - component: {fileID: 8542395264027782865}
   - component: {fileID: 718298232738356535}
-  - component: {fileID: 5642874947977070496}
-  - component: {fileID: 332673858362966045}
   m_Layer: 0
   m_Name: stone-brick (8)
   m_TagString: Untagged
@@ -1121,35 +964,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5642874947977070496
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6459661703543827695}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &332673858362966045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6459661703543827695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
 --- !u!1 &6689734273339471246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,8 +1097,6 @@ GameObject:
   - component: {fileID: 7794790419277942235}
   - component: {fileID: 7806884662958658035}
   - component: {fileID: 7814637094316257639}
-  - component: {fileID: 7837512679341530277}
-  - component: {fileID: 7613614917327791073}
   m_Layer: 0
   m_Name: stone-brick
   m_TagString: Untagged
@@ -1355,35 +1167,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7837512679341530277
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7791527431254435653}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &7613614917327791073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7791527431254435653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
 --- !u!1 &8619992336526924892
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,8 +1178,6 @@ GameObject:
   - component: {fileID: 6883764918328056740}
   - component: {fileID: 5116856648435055234}
   - component: {fileID: 8060100705670900935}
-  - component: {fileID: 7305914483231138183}
-  - component: {fileID: 3091049123555182786}
   m_Layer: 0
   m_Name: stone-brick (3)
   m_TagString: Untagged
@@ -1467,35 +1248,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7305914483231138183
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8619992336526924892}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &3091049123555182786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8619992336526924892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}
 --- !u!1 &8918875015835082996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,8 +1259,6 @@ GameObject:
   - component: {fileID: 2085453135281488855}
   - component: {fileID: 472127429218133504}
   - component: {fileID: 3423483829490394491}
-  - component: {fileID: 7159579373304833548}
-  - component: {fileID: 9076775366995965858}
   m_Layer: 0
   m_Name: stone-brick (4)
   m_TagString: Untagged
@@ -1579,32 +1329,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7159579373304833548
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8918875015835082996}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6711089, y: 0.6713885, z: 1.5106237}
-  m_Center: {x: 0.000001013279, y: 0.3359881, z: -0.0013352633}
---- !u!114 &9076775366995965858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8918875015835082996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844b40a85c2ec043a61826f1905e270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolType: 0
-  interactTxt: 
-  isInteractable: 0
-  itemSettings: {fileID: 11400000, guid: 6784f5d3b9f7c4545919f367cabbd6b3, type: 2}

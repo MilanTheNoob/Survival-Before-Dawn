@@ -171,7 +171,7 @@ public class SavingManager : MonoBehaviour
         }
     }
 
-    public static void SetPlayer() { player = Instantiate(instance.playerPrefab, new Vector3(0f, 20f, 0f), Quaternion.identity); instance.StartCoroutine(EnablePlayerI()); }
+    public static void SetPlayer() { player = Instantiate(instance.playerPrefab, new Vector3(0f, 30f, 0f), Quaternion.identity); instance.StartCoroutine(EnablePlayerI()); }
     static IEnumerator EnablePlayerI() { player.SetActive(true); yield return new WaitForSeconds(3f); player.SetActive(true); }
 
     [Serializable]
