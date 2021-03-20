@@ -103,39 +103,69 @@ public class PropsGeneration : MonoBehaviour
             GPlayManager.instance.AddExploredChunks();
 
             List<Vector3> vertices = chunk.meshFilter.mesh.vertices.ToList();
+            List<Vector3> exclusions = new List<Vector3>();
+
             Random.InitState(TerrainGenerator.instance.heightMapSettings.noiseSettings.seed + (int)chunk.coord.x + (int)chunk.coord.y);
+            int structureRand = Random.Range(1, 20);
 
-            for (int j = 0; j < PropSettings.Biomes[chunk.biome].props.Length; j++)
+            if (structureRand > 9)
             {
-                int propId = PropSettings.Biomes[chunk.biome].props[j].Prop;
-                int groupId = PropSettings.Biomes[chunk.biome].props[j].Group;
+                StructureChunk structureData = PropSettings.Structures[Random.Range(0, PropSettings.Structures.Length)];
+                GameObject g = Instantiate(structureData.Structure);
 
-                PoolData pool = Pools[PropSettings.PropGroups[groupId].Props[propId].PrefabVariants[0].transform.name + " Pool"];
+                Renderer[] childs = g.GetComponentsInChildren<Renderer>();
+                Bounds tempBounds = childs[0].bounds;
+                for (int i = 0; i < childs.Length; i++) { if (i != 0) tempBounds.Encapsulate(childs[i].bounds); }
 
-                for (int i = 0; i < PropSettings.Biomes[chunk.biome].props[j].PerChunk; i++)
+                g.transform.parent = chunk.structures.transform;
+                g.transform.localPosition = new Vector3(tempBounds.center.x, tempBounds.center.y + 2f, tempBounds.center.z);
+                g.transform.eulerAngles = new Vector3(0F, Random.Range(0, 360f), 0f);
+                g.SetActive(true);
+
+                for (int i = 0; i < vertices.Count; i++)
                 {
-                    int f = Random.Range(0, pool.PropVariants.Count);
-
-                    if (pool.PropVariants[f].Props.Count > 0)
+                    if (tempBounds.Contains(vertices[i]))
                     {
+                        exclusions.Add(vertices[i]);
+                        vertices.RemoveAt(i);
+                    }
+                }
+            }
+            else
+            {
+                for (int j = 0; j < PropSettings.Biomes[chunk.biome].props.Length; j++)
+                {
+                    int propId = PropSettings.Biomes[chunk.biome].props[j].Prop;
+                    int groupId = PropSettings.Biomes[chunk.biome].props[j].Group;
+
+                    PoolData pool = Pools[PropSettings.PropGroups[groupId].Props[propId].PrefabVariants[0].transform.name + " Pool"];
+
+                    for (int i = 0; i < PropSettings.Biomes[chunk.biome].props[j].PerChunk; i++)
+                    {
+                        int f = Random.Range(0, pool.PropVariants.Count);
                         int t = Random.Range(0, vertices.Count);
-                        float s = Random.Range(PropSettings.Biomes[chunk.biome].props[j].SizeMin, PropSettings.Biomes[chunk.biome].props[j].SizeMax);
 
-                        Vector3 euler = Vector3.zero;
-                        euler.x = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.x, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.x);
-                        euler.y = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.y, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.y);
-                        euler.z = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.z, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.z);
+                        if (pool.PropVariants[f].Props.Count > 0 && !exclusions.Contains(vertices[t]))
+                        {
+                            float s = Random.Range(PropSettings.Biomes[chunk.biome].props[j].SizeMin, PropSettings.Biomes[chunk.biome].props[j].SizeMax);
 
-                        GameObject g = pool.PropVariants[f].Props[0];
-                        pool.PropVariants[f].Props.RemoveAt(0);
+                            Vector3 euler = Vector3.zero;
+                            euler.x = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.x, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.x);
+                            euler.y = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.y, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.y);
+                            euler.z = Random.Range(-PropSettings.PropGroups[groupId].Props[propId].RotationClamp.z, PropSettings.PropGroups[groupId].Props[propId].RotationClamp.z);
 
-                        g.transform.parent = chunk.props.transform;
-                        g.transform.localPosition = new Vector3(vertices[t].x, vertices[t].y + PropSettings.PropGroups[groupId].Props[propId].YOffset, vertices[t].z);
-                        g.transform.eulerAngles = euler;
-                        g.transform.localScale = new Vector3(s, s, s);
-                        g.SetActive(true);
+                            GameObject g = pool.PropVariants[f].Props[0];
+                            pool.PropVariants[f].Props.RemoveAt(0);
 
-                        vertices.RemoveAt(t);
+                            g.transform.parent = chunk.props.transform;
+                            g.transform.localPosition = new Vector3(vertices[t].x, vertices[t].y + PropSettings.PropGroups[groupId].Props[propId].YOffset, vertices[t].z);
+                            g.transform.eulerAngles = euler;
+                            g.transform.localScale = new Vector3(s, s, s);
+                            g.SetActive(true);
+
+                            exclusions.Add(vertices[t]);
+                            vertices.RemoveAt(t);
+                        }
                     }
                 }
             }

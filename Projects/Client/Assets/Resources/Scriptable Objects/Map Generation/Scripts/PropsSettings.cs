@@ -8,6 +8,10 @@ public class PropsSettings : UpdatableSettings
     public PropsGroupStruct[] PropGroups;
     public BiomesStruct[] Biomes;
 
+    [Space]
+
+    public StructureChunk[] Structures;
+
     [System.Serializable]
     public class PropsGroupStruct
     {
@@ -35,26 +39,33 @@ public class PropsSettings : UpdatableSettings
     }
 
     [System.Serializable]
-    public class BiomePropStruct
-    {
-        public string Name;
-        public int Group;
-        public int Prop;
-
-        [Space]
-
-        public int PerChunk;
-
-        [Space]
-
-        public float SizeMax = 2.3f;
-        public float SizeMin = 0.8f;
-    }
-
-    [System.Serializable]
     public class BiomesStruct
     {
         public string Name;
         public BiomePropStruct[] props;
     }
+}
+
+[System.Serializable]
+public class BiomePropStruct
+{
+    public string Name;
+    public int Group;
+    public int Prop;
+
+    [Space]
+
+    public int PerChunk;
+
+    [Space]
+
+    public float SizeMax = 2.3f;
+    public float SizeMin = 0.8f;
+}
+
+[System.Serializable]
+public class StructureChunk
+{
+    public GameObject Structure;
+    public BiomePropStruct[] Props;
 }
