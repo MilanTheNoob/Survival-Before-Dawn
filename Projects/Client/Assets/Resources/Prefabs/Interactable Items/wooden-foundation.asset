@@ -15,7 +15,7 @@ MonoBehaviour:
   desc: Floor
   descName: Wooden Foundation
   icon: {fileID: 21300000, guid: b21402266eb737743ba4a0df3afdd78e, type: 3}
-  gameObject: {fileID: 6338560216863707730, guid: d2415247bd30229479313e82c26851bf, type: 3}
+  gameObject: {fileID: 5842583900523269757, guid: 58e6112a6c5d6ba498eea85d5f2c1563, type: 3}
   description: A wooden foundation used to make structures, crafted from logs
   sellValue: 15
   buyValue: 30

@@ -24,10 +24,6 @@ public class TerrainChunk
     public int biome;
     public int lodIndex;
 
-    LODInfo[] detailLevels;
-    LODMesh[] lodMeshes;
-    int colliderLODIndex;
-
     public HeightMap heightData;
     bool heightMapRecieved;
     int previousLODIndex = -1;
@@ -38,14 +34,13 @@ public class TerrainChunk
     MeshSettings meshSettings;
 
     Transform viewer;
-
     TerrainGenerator.GenerateType gType;
+
+    LODMesh meshStruct;
 
     public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings, MeshSettings meshSettings, LODInfo[] detailLevels, int colliderLODIndex, Transform parent, Material material, TerrainGenerator.GenerateType gType, int biome)
     {
         this.coord = coord;
-        this.detailLevels = detailLevels;
-        this.colliderLODIndex = colliderLODIndex;
         this.heightMapSettings = heightMapSettings;
         this.meshSettings = meshSettings;
         this.viewer = SavingManager.player.transform;
@@ -85,18 +80,6 @@ public class TerrainChunk
 
         SetVisible(false);
 
-        lodMeshes = new LODMesh[detailLevels.Length];
-
-        for (int i = 0; i < detailLevels.Length; i++)
-        {
-            lodMeshes[i] = new LODMesh(detailLevels[i].lod);
-            lodMeshes[i].updateCallback += UpdateTerrainChunk;
-            if (i == colliderLODIndex)
-            {
-                lodMeshes[i].updateCallback += UpdateCollisionMesh;
-            }
-        }
-
         maxViewDst = detailLevels[detailLevels.Length - 1].visibleDstThreshold;
     }
 
@@ -132,30 +115,13 @@ public class TerrainChunk
 
             if (visible)
             {
-                lodIndex = 0;
-
-                for (int i = 0; i < detailLevels.Length - 1; i++)
+                if (!meshStruct.hasRequestedMesh)
                 {
-                    if (viewerDistanceFromNearestEdge > detailLevels[i].visibleDstThreshold)
-                    {
-                        lodIndex = i + 1;
-                    }
-                    else { break; }
+                    meshStruct.RequestMesh(heightData, meshSettings);
                 }
-
-                if (lodIndex != previousLODIndex)
+                else
                 {
-                    LODMesh lodMesh = lodMeshes[lodIndex];
-                    if (lodMesh.hasMesh)
-                    {
-                        previousLODIndex = lodIndex;
-                        if (meshFilter != null)
-                            meshFilter.mesh = lodMesh.mesh;
-                    }
-                    else if (!lodMesh.hasRequestedMesh)
-                    {
-                        lodMesh.RequestMesh(heightData, meshSettings);
-                    }
+                    meshFilter.mesh = meshStruct.mesh;
                 }
 
                 if (lodIndex == 0 && gType == TerrainGenerator.GenerateType.Standard)
