@@ -16,67 +16,141 @@ MonoBehaviour:
   PropGroups:
   - Name: Trees
     Props:
-    - PrefabVariants:
+    - PropName: Conifer Tree
+      PrefabVariants:
       - {fileID: 4241519956225222151, guid: 4d1a07ad390f0b94fafee403716be119, type: 3}
       - {fileID: 2115630578259181188, guid: a9ce8275bf80eb6429ede0569cef476d, type: 3}
       - {fileID: 4241519956225222151, guid: 4d1a07ad390f0b94fafee403716be119, type: 3}
       YOffset: -0.2
       RotationClamp: {x: 5, y: 180, z: 5}
-    - PrefabVariants:
+      PoolSizes: 300
+    - PropName: Spruce Tree
+      PrefabVariants:
       - {fileID: 5134803203259455989, guid: c9dac8d0083edef4f9d69a86f2b9e814, type: 3}
       - {fileID: 652379776919850053, guid: ef6e5839b2303ce4798487b083166bd9, type: 3}
       YOffset: -0.2
       RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
   - Name: Rocks
     Props:
-    - PrefabVariants:
+    - PropName: Flat Stone
+      PrefabVariants:
       - {fileID: 1000010262655218, guid: 4219a34a252329845951487f3638b799, type: 3}
       - {fileID: 1000010635393592, guid: dbc745348c90eef419686653605cd7b1, type: 3}
       - {fileID: 1000011505633412, guid: eae67a4ae2f76a443b6f0658b5fe2dda, type: 3}
       YOffset: -0.05
       RotationClamp: {x: 5, y: 180, z: 5}
-    - PrefabVariants:
+      PoolSizes: 200
+    - PropName: Diamond Stone
+      PrefabVariants:
       - {fileID: 1000013747084568, guid: 1ddaf028a0e74ed489d51ddc3c637ee2, type: 3}
       - {fileID: 1000013714799558, guid: 99f4a1c5d05971547873356f8f25897b, type: 3}
       - {fileID: 1000011816824358, guid: eb408404c5abb4c48a2c3dfa4a9b84ba, type: 3}
       YOffset: 0
       RotationClamp: {x: 180, y: 180, z: 180}
+      PoolSizes: 200
   - Name: Ores
     Props:
-    - PrefabVariants:
+    - PropName: Blue Ore
+      PrefabVariants:
       - {fileID: 1000011724667232, guid: 855c271cb8b750547ab6237a901499ca, type: 3}
       YOffset: 0
       RotationClamp: {x: 5, y: 180, z: 5}
-    - PrefabVariants:
+      PoolSizes: 200
+    - PropName: Green Ore
+      PrefabVariants:
       - {fileID: 1000013815401846, guid: d3f22b25a11ced94f9b8031e08d4cfc6, type: 3}
       YOffset: 0
       RotationClamp: {x: 5, y: 180, z: 5}
-    - PrefabVariants:
+      PoolSizes: 200
+    - PropName: Orange Ore
+      PrefabVariants:
       - {fileID: 1000012672329024, guid: 1b68a55cd43b464458a39faf3e5b68a3, type: 3}
       YOffset: 0
       RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
   - Name: Nature
     Props:
-    - PrefabVariants:
+    - PropName: Boletus Mushroom
+      PrefabVariants:
       - {fileID: 1000013385108184, guid: 50020ba5947da8640986440787d983b6, type: 3}
       YOffset: -0.03
       RotationClamp: {x: 5, y: 180, z: 5}
-    - PrefabVariants:
+      PoolSizes: 100
+    - PropName: Green Toadstool
+      PrefabVariants:
       - {fileID: 1000013157714826, guid: 0263f908a55ef3045bfe2d5fee2357ee, type: 3}
       YOffset: -0.03
       RotationClamp: {x: 5, y: 180, z: 5}
-    - PrefabVariants:
+      PoolSizes: 100
+    - PropName: Log
+      PrefabVariants:
       - {fileID: 1000014092007092, guid: 821b66508d0d1b144a58963d36e0e4e9, type: 3}
       YOffset: -0.03
       RotationClamp: {x: 5, y: 180, z: 5}
-    - PrefabVariants:
+      PoolSizes: 200
+    - PropName: Roses
+      PrefabVariants:
       - {fileID: 1000012594744698, guid: e0c268c3d3128df4199a1f3bc6a32e16, type: 3}
       YOffset: -0.03
       RotationClamp: {x: 5, y: 180, z: 5}
-    - PrefabVariants:
+      PoolSizes: 200
+    - PropName: Sunflower
+      PrefabVariants:
       - {fileID: 1000012396999754, guid: b148061cf3c1a6843aaf77a4fb75d655, type: 3}
       YOffset: -0.03
       RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+  - Name: Food
+    Props:
+    - PropName: Apple
+      PrefabVariants:
+      - {fileID: 1297172181180802, guid: fe9c3ad0a7fc5c0449548e6bcc52f8e3, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 200
+    - PropName: Blueberries
+      PrefabVariants:
+      - {fileID: 4693999766978958390, guid: 06ba5e6bdad6bad46aaae50cd542b99b, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 100
+    - PropName: Broccoli
+      PrefabVariants:
+      - {fileID: 4337355781907094235, guid: 8f059d547653f864687400acec7cb65c, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Beans
+      PrefabVariants:
+      - {fileID: 1830786660257520, guid: 4c83b93dfdeef4246a08377a5754996d, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Carrot
+      PrefabVariants:
+      - {fileID: 1391460097829842, guid: 00953b025589fc54f8e0098d78b4b60e, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Egg
+      PrefabVariants:
+      - {fileID: 8698811430785092606, guid: 1577fe1a0a501874d86feb754961f5bd, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Corn
+      PrefabVariants:
+      - {fileID: 1989835390974618, guid: 0118eb39998c893478203f04b2de1924, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Potato
+      PrefabVariants:
+      - {fileID: 2409780807096047618, guid: 3c0864beedc409b4b9cd3c2d274b9816, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
   Biomes:
   - Name: Conifer Forest
     props:
@@ -128,27 +202,27 @@ MonoBehaviour:
       PerChunk: 1
       SizeMax: 1.2
       SizeMin: 0.8
-    - Name: Boletus Mushroom
+    - Name: Green Mushroom
       Group: 3
       Prop: 1
       PerChunk: 1
       SizeMax: 1.2
       SizeMin: 0.8
-    - Name: Green Mushroom
+    - Name: Log
       Group: 3
-      Prop: 0
-      PerChunk: 1
+      Prop: 2
+      PerChunk: 2
       SizeMax: 1.2
       SizeMin: 0.8
-    - Name: Boletus Mushroom
+    - Name: Roses
       Group: 3
-      Prop: 0
-      PerChunk: 1
+      Prop: 3
+      PerChunk: 5
       SizeMax: 1.2
       SizeMin: 0.8
-    - Name: Boletus Mushroom
+    - Name: Sunflower
       Group: 3
-      Prop: 0
+      Prop: 4
       PerChunk: 1
       SizeMax: 1.2
       SizeMin: 0.8

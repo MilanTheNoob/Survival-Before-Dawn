@@ -18,12 +18,20 @@ public class PropsSettings : UpdatableSettings
     [System.Serializable]
     public class PropsStruct
     {
+        public string PropName;
+
+        [Space]
+
         public GameObject[] PrefabVariants;
         
         [Space]
 
         public float YOffset = -0.2f;
         public Vector3 RotationClamp = new Vector3(5, 180, 5);
+
+        [Space]
+
+        public int PoolSizes = 200;
     }
 
     [System.Serializable]

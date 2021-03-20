@@ -47,7 +47,7 @@ public class PropsGeneration : MonoBehaviour
                     };
                     PropPool.Holder.transform.parent = Pool.PoolHolder.transform;
 
-                    for (int j = 0; j < 200; j++)
+                    for (int j = 0; j < PropSettings.PropGroups[i].Props[y].PoolSizes; j++)
                     {
                         GameObject newObject = Instantiate(PropSettings.PropGroups[i].Props[y].PrefabVariants[l]);
 
