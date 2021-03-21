@@ -12,47 +12,64 @@ public class HighlightManager : MonoBehaviour
 
     #endregion
 
-    public Material outlineMat;
-    public float outlineScale;
-
-    static MeshRenderer currentRend;
+    static Dictionary<int, Outline> outlines = new Dictionary<int, Outline>();
 
     public static void Highlight(GameObject g)
     {
-        /*
-        if (currentRend != null || g.GetComponent<MeshFilter>() == null || g == null) { return; }
+        if (outlines.ContainsKey(g.GetInstanceID())) { return; }
 
-        GameObject outlineG = new GameObject();
-        outlineG.transform.parent = g.transform;
-        outlineG.transform.localPosition = Vector3.zero;
-        outlineG.transform.localRotation = Quaternion.identity;
-        outlineG.AddComponent<MeshFilter>().sharedMesh = g.GetComponent<MeshFilter>().sharedMesh;
-        currentRend = outlineG.AddComponent<MeshRenderer>();
+        Outline outline = g.AddComponent<Outline>();
+        outlines.Add(g.GetInstanceID(), outline);
 
-        currentRend.material = instance.outlineMat;
-        currentRend.material.SetColor("_OutlineColor", new Color(1, 1, 1));
-        currentRend.material.SetFloat("_Scale", instance.outlineScale);
+        instance.StartCoroutine(FadeInOutline(outline));
+    }
 
-        /*
-        for (int i = 0; i < currentRend.sharedMaterials.Length; i++)  
+    static IEnumerator FadeInOutline(Outline o)
+    {
+        float _timeStartedLerping = Time.time;
+        float timeSinceStarted = Time.time - _timeStartedLerping;
+        float percentageComplete = timeSinceStarted / 0.3f;
+
+        while (true)
         {
-            print("boo");
+            timeSinceStarted = Time.time - _timeStartedLerping;
+            percentageComplete = timeSinceStarted / 0.3f;
 
-            currentRend.sharedMaterials[i] = instance.outlineMat;
-            currentRend.sharedMaterials[i].SetColor("_OutlineColor", new Color(1, 1, 1));
-            currentRend.sharedMaterials[i].SetFloat("_Scale", instance.outlineScale);
+            float currentValue = Mathf.Lerp(0f, 15f, percentageComplete);
+            o.OutlineWidth = currentValue;
+
+            if (percentageComplete >= 1) { break; }
+            yield return new WaitForFixedUpdate();
         }
-        currentRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        */
     }
 
     public static void Restore(GameObject g)
     {
-        /*
-        if (currentRend == null || g == null) { return; }
+        if (g == null) { return; }
+        if (!outlines.ContainsKey(g.GetInstanceID())) { return; }
 
-        Destroy(currentRend.gameObject);
-        currentRend = null;
-        */
+        instance.StartCoroutine(FadeOutOutline(outlines[g.GetInstanceID()]));
+    }
+
+    static IEnumerator FadeOutOutline(Outline o)
+    {
+        float _timeStartedLerping = Time.time;
+        float timeSinceStarted = Time.time - _timeStartedLerping;
+        float percentageComplete = timeSinceStarted / 0.3f;
+
+        while (true)
+        {
+            if (o == null) { break; }
+
+            timeSinceStarted = Time.time - _timeStartedLerping;
+            percentageComplete = timeSinceStarted / 0.3f;
+
+            float currentValue = Mathf.Lerp(15f, 0f, percentageComplete);
+            o.OutlineWidth = currentValue;
+
+            if (percentageComplete >= 1) { outlines.Remove(o.gameObject.GetInstanceID()); Destroy(o); break; }
+
+            yield return new WaitForFixedUpdate();
+        }
     }
 }

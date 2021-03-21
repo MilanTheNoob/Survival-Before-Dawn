@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 962081136}
-  m_IndirectSpecularColor: {r: 0.43151304, g: 0.6567409, b: 0.94834715, a: 1}
+  m_IndirectSpecularColor: {r: 0.43156528, g: 0.65677184, b: 0.948343, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18073,8 +18073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4b72786bea0864996841feb948c994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMat: {fileID: 0}
-  outlineScale: 0
 --- !u!1 &549453119
 GameObject:
   m_ObjectHideFlags: 0
@@ -24448,7 +24446,7 @@ MonoBehaviour:
   UseVignette: {fileID: 1111870156}
   UseBloom: {fileID: 563095704}
   Sensitivity: {fileID: 1364178519}
-  ProcessingVolume: {fileID: 11400000, guid: d6bae5a1227e3ed4f865980430271176, type: 2}
+  Volume: {fileID: 1074981667}
 --- !u!4 &717782979
 Transform:
   m_ObjectHideFlags: 0
@@ -29538,8 +29536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4b72786bea0864996841feb948c994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMat: {fileID: 2100000, guid: 624a08be5d74eef468648c235b8cb187, type: 2}
-  outlineScale: -1.2
 --- !u!1 &883684787
 GameObject:
   m_ObjectHideFlags: 0
@@ -34908,7 +34904,7 @@ MonoBehaviour:
   biomesDictionary: []
   meshSettings: {fileID: 11400000, guid: 7e5ba77964dd7de44b309927b10eca77, type: 2}
   heightMapSettings: {fileID: 11400000, guid: 740a13ca91e454c51aeb1f625a396eca, type: 2}
-  mapMaterial: {fileID: 2100000, guid: b0872f84cf3c7441d893168677410c73, type: 2}
+  mapMaterial: {fileID: 2100000, guid: 4100bd8ce19193647a8eadff22db5258, type: 2}
   generateType: 0
   meshWorldSize: 0
   chunksVisibleInViewDst: 0
@@ -37111,12 +37107,6 @@ MonoBehaviour:
   buildButton: {fileID: 1388595084}
   cancelButton: {fileID: 1455941738}
   rotateButton: {fileID: 2082446686}
-  BuildLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  ItemLayer:
-    serializedVersion: 2
-    m_Bits: 512
   tolerance: 0.2
   cam: {fileID: 0}
 --- !u!1 &1066847445
@@ -37371,7 +37361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1074981666}
   - component: {fileID: 1074981667}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37401,14 +37391,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1074981665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: a79f9d679144b2b42bbfdd1345127f95, type: 2}
   isGlobal: 1
-  priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: d6bae5a1227e3ed4f865980430271176, type: 2}
+  priority: 0
 --- !u!1 &1075861148
 GameObject:
   m_ObjectHideFlags: 0

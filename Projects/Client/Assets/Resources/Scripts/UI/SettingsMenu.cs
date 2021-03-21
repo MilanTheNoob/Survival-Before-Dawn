@@ -2,8 +2,7 @@
 using UnityEngine.Audio;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.PostProcessing;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -47,13 +46,13 @@ public class SettingsMenu : MonoBehaviour
     public Slider Sensitivity;
 
     [Header("Profiles & Scriptable Objects")]
-    public VolumeProfile ProcessingVolume;
+    public PostProcessVolume Volume;
 
     Camera cam;
 
     Vignette vignette;
     Bloom bloom;
-    Tonemapping tonemapping;
+    ColorGrading colorGrading;
     MotionBlur motionBlur;
 
     void Start()
@@ -61,10 +60,10 @@ public class SettingsMenu : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         cam = SavingManager.player.GetComponentInChildren<Camera>();
 
-        ProcessingVolume.TryGet(out vignette);
-        ProcessingVolume.TryGet(out bloom);
-        ProcessingVolume.TryGet(out tonemapping);
-        ProcessingVolume.TryGet(out motionBlur);
+        Volume.profile.TryGetSettings(out vignette);
+        Volume.profile.TryGetSettings(out bloom);
+        Volume.profile.TryGetSettings(out colorGrading);
+        Volume.profile.TryGetSettings(out motionBlur);
 
         #region Audio Setup
 
@@ -98,7 +97,7 @@ public class SettingsMenu : MonoBehaviour
         bloom.active = SavingManager.SaveData.SettingsData.Bloom;
 
         UseTonemapping.isOn = SavingManager.SaveData.SettingsData.Tonemapping;
-        tonemapping.active = SavingManager.SaveData.SettingsData.Tonemapping;
+        colorGrading.active = SavingManager.SaveData.SettingsData.Tonemapping;
 
         UseMotionBlur.isOn = SavingManager.SaveData.SettingsData.MotionBlur;
         motionBlur.active = SavingManager.SaveData.SettingsData.MotionBlur;
@@ -125,7 +124,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetVignette(bool b) { UseVignette.isOn = b; vignette.active = b; }
     public void SetBloom(bool b) { UseBloom.isOn = b; bloom.active = b; }
-    public void SetTonemapping(bool b) { UseTonemapping.isOn = b; tonemapping.active = b; }
+    public void SetTonemapping(bool b) { UseTonemapping.isOn = b; colorGrading.active = b; }
     public void SetMotionBlur(bool b) { UseMotionBlur.isOn = b; motionBlur.active = b; SavingManager.SaveData.SettingsData.MotionBlur = b; }
 
     public void SetSensitivity(float s) { InputManager.instance.viewSensitivity = s; SavingManager.SaveData.SettingsData.Sensitivity = s; }

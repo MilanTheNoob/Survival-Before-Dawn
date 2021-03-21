@@ -46,11 +46,5 @@ public class PreviewTerrainGenerator : MonoBehaviour
 
 		PreviewTerrainChunk chunk0 = new PreviewTerrainChunk(new Vector2(0, 0), heightMapSettings, meshSettings, transform, mapMaterial);
 		chunk0.Load();
-		PreviewTerrainChunk chunk1 = new PreviewTerrainChunk(new Vector2(1, 0), heightMapSettings, meshSettings, transform, mapMaterial);
-		chunk1.Load();
-		PreviewTerrainChunk chunk2 = new PreviewTerrainChunk(new Vector2(0, -1), heightMapSettings, meshSettings, transform, mapMaterial);
-		chunk2.Load();
-		PreviewTerrainChunk chunk3 = new PreviewTerrainChunk(new Vector2(1, -1), heightMapSettings, meshSettings, transform, mapMaterial);
-		chunk3.Load();
 	}
 }

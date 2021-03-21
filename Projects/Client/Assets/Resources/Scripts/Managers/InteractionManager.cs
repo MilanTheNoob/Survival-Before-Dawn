@@ -39,7 +39,7 @@ public class InteractionManager : MonoBehaviour
     public Camera interactCamera;
 
     bool buttonFaded;
-    GameObject currentG;
+    InteractableItem interactableI;
 
     void Start()
     {
@@ -57,27 +57,30 @@ public class InteractionManager : MonoBehaviour
             RaycastHit hitInfo;
 
             bool hitInteractableObject = Physics.SphereCast(ray, raycastSphereRadius, out hitInfo, raycastDistance, interactableLayer);
-            if (hitInteractableObject)
+            if (hitInteractableObject && interactableI == null)
             {
-                InteractableItem interactable = hitInfo.transform.GetComponent<InteractableItem>();
+                interactableI = hitInfo.transform.GetComponent<InteractableItem>();
 
-                if (interactable.toolType == ToolsManager.instance.currentToolType && interactable.isInteractable || interactable.toolType == ToolsManager.ToolType.None && interactable.isInteractable)
+                if (interactableI.toolType == ToolsManager.instance.currentToolType && interactableI.isInteractable || interactableI.toolType == ToolsManager.ToolType.None && interactableI.isInteractable)
                 {
-                    interactText.text = interactable.interactTxt;
-                    interactName.text = interactable.name.Replace("-", " ");
+                    interactText.text = interactableI.interactTxt;
+                    interactName.text = interactableI.name.Replace("-", " ");
 
-                    if (interactButton.onClicked) { interactable.OnInteract(); }
-                    if (!buttonFaded) { TweeningLibrary.FadeIn(interactButton.gameObject, 0.1f); buttonFaded = true; }
+                    if (interactButton.onClicked) { interactableI.OnInteract(); }
+                    TweeningLibrary.FadeIn(interactButton.gameObject, 0.1f);
 
-                    HighlightManager.Highlight(interactable.gameObject);
-                    currentG = interactable.gameObject;
+                    HighlightManager.Highlight(interactableI.gameObject);
                 }
             }
-            else
+            else if (!hitInteractableObject && interactableI != null)
             {
-                HighlightManager.Restore(currentG); currentG = null;
-                if (interactText != null) { interactText.text = ""; interactName.text = ""; }
-                if (buttonFaded) { TweeningLibrary.FadeOut(interactButton.gameObject, 0.1f); buttonFaded = false; }
+                HighlightManager.Restore(interactableI.gameObject);
+                interactableI = null;
+
+                interactText.text = "";
+                interactName.text = "";
+
+                TweeningLibrary.FadeOut(interactButton.gameObject, 0.1f);
             }
         }
     }
