@@ -82,7 +82,7 @@ public class SavingManager : MonoBehaviour
         TransitionManager.ToSingleplayer();
     }
 
-    public static void CreateSave(string name, string unParsedSeed)
+    public static void CreateSave(string name, string unParsedSeed, bool _LQGeneration)
     {
         instance.playerPrefab = ProfileManager.instance.SkinData[SaveData.currentSkin].gameObject;
 
@@ -93,14 +93,9 @@ public class SavingManager : MonoBehaviour
         {
             name = name,
             seed = _seed,
+            LQGeneration = _LQGeneration,
             id = SaveData.SaveFiles.Count
         };
-
-        /*
-        if (SaveData.milk_statue) { SaveFile.inventoryItems.Add(PreviewIAPManager.instance.iaps[0].item.name); }
-        if (SaveData.fragment_statue) { SaveFile.inventoryItems.Add(PreviewIAPManager.instance.iaps[1].item.name); }
-        if (SaveData.crystal_statue) { SaveFile.inventoryItems.Add(PreviewIAPManager.instance.iaps[2].item.name); }
-        */
 
         GameState = GameStateEnum.Singleplayer;
         TransitionManager.ToSingleplayer();
@@ -194,6 +189,7 @@ public class SavingManager : MonoBehaviour
         public Dictionary<Vector3, StorageData> storage = new Dictionary<Vector3, StorageData>();
 
         public Vector3 playerPos = new Vector3(0f, 0f, 0f);
+        public bool LQGeneration = false;
     }
 
     [Serializable]
@@ -252,6 +248,7 @@ public class SavingManager : MonoBehaviour
     public class SettingsData
     {
         public int FPS = 30;
+        public int RenderDistance = 80;
 
         public bool AA = true;
         public bool HDR = false;

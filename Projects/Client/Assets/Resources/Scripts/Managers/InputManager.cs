@@ -42,14 +42,30 @@ public class InputManager : MonoBehaviour
 
     public static bool moving;
 
-    private void Awake()
+    void Awake()
     {
-        DisableUISections();
-        StartCoroutine(EnableUI());
-
         instance = this;
         errorParent.SetActive(false);
         SavingManager.SetPlayer();
+
+        StartCoroutine(EnableUI());
+    }
+
+    IEnumerator EnableUI()
+    {
+        GameObject UI = GameObject.Find("UI");
+        CharacterController playerc = SavingManager.player.GetComponent<CharacterController>();
+
+        playerc.enabled = false;
+        UI.SetActive(false);
+
+        yield return new WaitForSeconds(3f);
+
+        playerc.enabled = true;
+        UI.SetActive(true);
+        InstantToggleUISectionsInt(0);
+
+        TweeningLibrary.FadeIn(UI, 1f);
     }
 
     void Start() 
@@ -191,9 +207,9 @@ public class InputManager : MonoBehaviour
     public void ShowLeaderboards() { Social.ShowLeaderboardUI(); }
     public void ShowAchievements() { Social.ShowAchievementsUI(); }
 
-    IEnumerator EnableUI()
+    public void SetLayer(int l, GameObject g)
     {
-        yield return new WaitForSeconds(3f);
-        ToggleUISectionsInt(0);
+        print("FFS BRO");
+        g.layer = l;
     }
 }

@@ -19,6 +19,8 @@ public class TransitionManager : MonoBehaviour
     [HideInInspector]
     public GameObject UI;
 
+    static bool loading;
+
     void Start()
     {
         transform.parent = null;
@@ -36,16 +38,54 @@ public class TransitionManager : MonoBehaviour
         TweeningLibrary.FadeIn(UI, 0.3f);
     }
 
-    public static void ToMenu() { TweeningLibrary.FadeOut(GameObject.Find("UI"), 1f); instance.anim.SetTrigger("DefaultTransition"); instance.StartCoroutine(ToMenuI()); }
-    static IEnumerator ToMenuI() { yield return new WaitForSeconds(3f); SceneManager.LoadScene(0, LoadSceneMode.Single); }
+    public static void ToMenu() 
+    { 
+        if (loading) { return; }
+        loading = true;
 
-    public static void ToSingleplayer() { TweeningLibrary.FadeOut(instance.UI, 1f); instance.anim.SetTrigger("DefaultTransition"); instance.StartCoroutine(ToSingleplayerI()); }
+        TweeningLibrary.FadeOut(GameObject.Find("UI"), 1f); 
+        instance.anim.SetTrigger("DefaultTransition"); 
+        instance.StartCoroutine(ToMenuI()); 
+    }
+    static IEnumerator ToMenuI() 
+    { 
+        yield return new WaitForSeconds(3f); 
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+
+        loading = false;
+    }
+
+    public static void ToSingleplayer() 
+    {
+        if (loading) { return; }
+        loading = true;
+
+        TweeningLibrary.FadeOut(instance.UI, 1f);
+        instance.anim.SetTrigger("DefaultTransition"); 
+        instance.StartCoroutine(ToSingleplayerI()); 
+    }
     static IEnumerator ToSingleplayerI() 
     { 
         yield return new WaitForSeconds(3f); 
         SceneManager.LoadScene(1, LoadSceneMode.Single);
+
+        loading = false;
     }
 
-    public static void ToMultiplayer() { TweeningLibrary.FadeOut(instance.UI, 0.3f); instance.anim.SetTrigger("DefaultTransition"); instance.StartCoroutine(ToMultiplayerI()); }
-    static IEnumerator ToMultiplayerI() { yield return new WaitForSeconds(3f); SceneManager.LoadScene(2, LoadSceneMode.Single); }
+    public static void ToMultiplayer() 
+    {
+        if (loading) { return; }
+        loading = true;
+
+        TweeningLibrary.FadeOut(instance.UI, 0.3f); 
+        instance.anim.SetTrigger("DefaultTransition"); 
+        instance.StartCoroutine(ToMultiplayerI()); 
+    }
+    static IEnumerator ToMultiplayerI() 
+    { 
+        yield return new WaitForSeconds(3f); 
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
+
+        loading = false;
+    }
 }

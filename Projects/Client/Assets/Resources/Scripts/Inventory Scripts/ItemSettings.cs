@@ -9,18 +9,20 @@ public class ItemSettings : ScriptableObject
     [Header("Long name")]
     public string descName;
 
-    [Header("The icon")]
+    [Space]
+
     public Sprite icon;
-
-    [Header("GameObjbect for the item")]
     public GameObject gameObject;
-
-    [Header("The description of the item")]
     public string description;
 
-    [Header("How much does it cost to sell/buy with a trader")]
+    [Space]
+
     public float sellValue;
     public float buyValue;
+
+    [Space]
+
+    public bool ignoreGravity;
 
     [HideInInspector]
     public TradingManager.OriginType originType;

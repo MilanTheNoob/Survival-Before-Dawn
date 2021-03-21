@@ -26,9 +26,8 @@ public class TerrainChunk
 
     public HeightMap heightData;
     bool heightMapRecieved;
-    int previousLODIndex = -1;
-    bool hasSetCollider;
     float maxViewDst;
+    bool generated;
 
     HeightMapSettings heightMapSettings;
     MeshSettings meshSettings;
@@ -38,7 +37,7 @@ public class TerrainChunk
 
     LODMesh meshStruct;
 
-    public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings, MeshSettings meshSettings, LODInfo[] detailLevels, int colliderLODIndex, Transform parent, Material material, TerrainGenerator.GenerateType gType, int biome)
+    public TerrainChunk(Vector2 coord, HeightMapSettings heightMapSettings, MeshSettings meshSettings, float maxViewDst, Transform parent, Material material, TerrainGenerator.GenerateType gType, int biome)
     {
         this.coord = coord;
         this.heightMapSettings = heightMapSettings;
@@ -46,6 +45,7 @@ public class TerrainChunk
         this.viewer = SavingManager.player.transform;
         this.gType = gType;
         this.biome = biome;
+        this.maxViewDst = maxViewDst;
 
         sampleCentre = coord * meshSettings.meshWorldSize / meshSettings.meshScale;
         Vector3 position = coord * meshSettings.meshWorldSize;
@@ -77,10 +77,10 @@ public class TerrainChunk
         structures.transform.localPosition = Vector3.zero;
 
         BuildingManager.instance.LoadData();
-
         SetVisible(false);
 
-        maxViewDst = detailLevels[detailLevels.Length - 1].visibleDstThreshold;
+        meshStruct = new LODMesh(0);
+        meshStruct.updateCallback += SetChunkMesh;
     }
 
     public void Load()
@@ -94,14 +94,6 @@ public class TerrainChunk
         heightMapRecieved = true;
 
         UpdateTerrainChunk();
-    }
-
-    Vector2 viewerPosition
-    {
-        get
-        {
-            return new Vector2(viewer.position.x, viewer.position.z);
-        }
     }
 
     public void UpdateTerrainChunk()
@@ -119,84 +111,41 @@ public class TerrainChunk
                 {
                     meshStruct.RequestMesh(heightData, meshSettings);
                 }
-                else
-                {
-                    meshFilter.mesh = meshStruct.mesh;
-                }
-
-                if (lodIndex == 0 && gType == TerrainGenerator.GenerateType.Standard)
-                {
-                    PropsGeneration.instance.Generate(this);
-                }
-                else if (lodIndex > 0)
-                {
-                    PropsGeneration.instance.RemoveFromChunk(this);
-                    ChunkSaving.SaveChunkData(this);
-                }
-
-                if (meshFilter != null)
-                    meshCollider.sharedMesh = meshFilter.mesh;
             }
 
             if (wasVisible != visible)
             {
                 SetVisible(visible);
-
                 onVisibilityChanged?.Invoke(this, visible);
 
                 if (!visible)
                 {
                     ChunkSaving.SaveChunkData(this);
                     PropsGeneration.instance.RemoveFromChunk(this);
+                    meshStruct.setMesh = false;
+                }
+                else
+                {
+                    PropsGeneration.instance.Generate(this);
                 }
             }
         }
     }
 
-    public void UpdateCollisionMesh()
+    public void SetChunkMesh()
     {
-        if (!hasSetCollider)
-        {
-            float sqrDstFromViewerToEdge = bounds.SqrDistance(viewerPosition);
+        meshFilter.mesh = meshStruct.mesh;
+        meshCollider.sharedMesh = meshFilter.mesh;
 
-            if (sqrDstFromViewerToEdge < detailLevels[colliderLODIndex].sqrVisibleDstThreshold)
-            {
-                if (!lodMeshes[colliderLODIndex].hasRequestedMesh)
-                {
-                    lodMeshes[colliderLODIndex].RequestMesh(heightData, meshSettings);
-                }
-            }
-
-            if (sqrDstFromViewerToEdge < colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold)
-            {
-                if (lodMeshes[colliderLODIndex].hasMesh)
-                {
-                    meshCollider.sharedMesh = lodMeshes[colliderLODIndex].mesh;
-                    hasSetCollider = true;
-                }
-            }
-        }
+        PropsGeneration.instance.Generate(this);
+        meshStruct.setMesh = true;
     }
 
-    public void RemoveChunk()
-    {
-        PropsGeneration.instance.RemoveFromChunk(this);
-
-        Object.Destroy(meshObject);
-
-        //TerrainGenerator.instance.terrainChunkDictionary.Remove(coord);
-        //TerrainGenerator.instance.visibleTerrainChunks.Remove(this);
-    }
-
-    public void SetVisible(bool visible)
-    {
-        meshObject.SetActive(visible);
-    }
-
-    public bool IsVisible()
-    {
-        if (meshObject != null) { return meshObject.activeSelf; } else { return false; }
-    }
+    Vector2 viewerPosition { get { return new Vector2(viewer.position.x, viewer.position.z); } }
+    public void RemoveChunk() { PropsGeneration.instance.RemoveFromChunk(this); Object.Destroy(meshObject); }
+    public void UpdateViewDst(float _ViewDst) { maxViewDst = _ViewDst; }
+    public void SetVisible(bool visible) { meshObject.SetActive(visible); }
+    public bool IsVisible() { if (meshObject != null) { return meshObject.activeSelf; } else { return false; } }
 }
 
 class LODMesh
@@ -205,6 +154,7 @@ class LODMesh
     public Mesh mesh;
     public bool hasRequestedMesh;
     public bool hasMesh;
+    public bool setMesh;
     int lod;
     public event System.Action updateCallback;
 

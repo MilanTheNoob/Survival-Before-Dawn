@@ -13,9 +13,6 @@ public class MeshSettings : UpdatableSettings {
 	public float meshScale = 2.5f;
 	public bool useFlatShading;
 
-	public int colliderLODIndex;
-	public LODInfo[] detailLevels;
-
 	[Range(0,numSupportedChunkSizes-1)]
 	public int chunkSizeIndex;
 	[Range(0,numSupportedFlatshadedChunkSizes-1)]
@@ -36,22 +33,4 @@ public class MeshSettings : UpdatableSettings {
 	}
 
 
-}
-
-[System.Serializable]
-public struct LODInfo
-{
-	[Range(0, MeshSettings.numSupportedLODs - 1)]
-	public int lod;
-	public float visibleDstThreshold;
-
-
-	public float sqrVisibleDstThreshold
-	{
-		get
-		{
-			// Return the visible distance threshold squared
-			return visibleDstThreshold * visibleDstThreshold;
-		}
-	}
 }

@@ -19,6 +19,7 @@ public class MultiplayerTerrainGenerator : MonoBehaviour
 
 	[Header("Basic vars")]
 	public Material mapMaterial;
+	public float ViewDst = 70f;
 
 	public enum ChildType
 	{
@@ -45,9 +46,8 @@ public class MultiplayerTerrainGenerator : MonoBehaviour
 
 	void Start()
 	{
-		float maxViewDst = meshSettings.detailLevels[meshSettings.detailLevels.Length - 1].visibleDstThreshold;
 		meshWorldSize = meshSettings.meshWorldSize;
-		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / meshWorldSize);
+		chunksVisibleInViewDst = Mathf.RoundToInt(ViewDst / meshWorldSize);
 	}
 
 	void FixedUpdate()

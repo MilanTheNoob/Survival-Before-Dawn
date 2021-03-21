@@ -20,6 +20,7 @@ MonoBehaviour:
     for few crafting recipes
   sellValue: 8
   buyValue: 16
+  ignoreGravity: 1
   originType: 0
   isUsableItem: 0
   dontDrop: 0

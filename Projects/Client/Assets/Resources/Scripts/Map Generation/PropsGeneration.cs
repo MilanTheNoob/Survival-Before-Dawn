@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class PropsGeneration : MonoBehaviour
 {
-    public PropsSettings PropSettings;
+    public static PropsGeneration instance;
+
+    public PropsSettings DefaultPropSettings;
+    public PropsSettings LQPropSettings;
 
     [HideInInspector]
     public Dictionary<string, PoolData> Pools = new Dictionary<string, PoolData>();
-
-    [HideInInspector]
-    public List<GameObject> structures = new List<GameObject>();
-    [HideInInspector]
-    public List<GameObject> props = new List<GameObject>();
-
     [HideInInspector]
     public GameObject PropPools;
-
-    public static PropsGeneration instance;
+    [HideInInspector]
+    public PropsSettings PropSettings;
 
     List<Vector2> generatedChunks = new List<Vector2>();
 
     #region Start Funcs
 
-    void Awake() { instance = this; }
+    void Awake() 
+    { 
+        instance = this;
+        EnableLQGeneration(SavingManager.SaveFile.LQGeneration);
+    }
     void Start()
     {
         SavingManager.SaveGameCallback += StoreVisibleChunks;
@@ -56,7 +57,6 @@ public class PropsGeneration : MonoBehaviour
                         newObject.SetActive(false);
 
                         PropPool.Props.Add(newObject);
-                        props.Add(newObject);
                     }
 
                     Pool.PropVariants.Add(PropPool);
@@ -108,7 +108,7 @@ public class PropsGeneration : MonoBehaviour
             Random.InitState(TerrainGenerator.instance.heightMapSettings.noiseSettings.seed + (int)chunk.coord.x + (int)chunk.coord.y);
             int structureRand = Random.Range(1, 20);
 
-            if (structureRand < 3)
+            if (structureRand < 3 && !SavingManager.SaveFile.LQGeneration)
             {
                 StructureChunk structureData = PropSettings.Structures[Random.Range(0, PropSettings.Structures.Length)];
                 GameObject g = Instantiate(structureData.Structure);
@@ -312,6 +312,7 @@ public class PropsGeneration : MonoBehaviour
     }
 
     public int GetRandomBiome() { return Random.Range(0, PropSettings.Biomes.Length); }
+    public void EnableLQGeneration(bool e) { if (e) { PropSettings = LQPropSettings; } else { PropSettings = DefaultPropSettings; } }
 
     #endregion
 

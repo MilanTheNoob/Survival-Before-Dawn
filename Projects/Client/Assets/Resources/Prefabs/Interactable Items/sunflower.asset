@@ -19,6 +19,7 @@ MonoBehaviour:
   description: A simple flower that can be used for recipes
   sellValue: 2
   buyValue: 4
+  ignoreGravity: 1
   originType: 0
   isUsableItem: 0
   dontDrop: 0

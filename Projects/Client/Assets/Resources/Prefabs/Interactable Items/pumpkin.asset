@@ -20,6 +20,7 @@ MonoBehaviour:
     making carved pumpkins '
   sellValue: 2
   buyValue: 3
+  ignoreGravity: 1
   originType: 0
   isUsableItem: 0
   dontDrop: 0

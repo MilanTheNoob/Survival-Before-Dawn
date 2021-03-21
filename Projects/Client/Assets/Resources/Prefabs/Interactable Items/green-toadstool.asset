@@ -20,6 +20,7 @@ MonoBehaviour:
     crude medicine
   sellValue: 1
   buyValue: 2
+  ignoreGravity: 1
   originType: 0
   isUsableItem: 0
   dontDrop: 0

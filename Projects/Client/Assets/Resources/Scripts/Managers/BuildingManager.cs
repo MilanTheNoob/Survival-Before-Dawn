@@ -17,10 +17,6 @@ public class BuildingManager : MonoBehaviour
     public GameObject cancelButton;
     public GameObject rotateButton;
 
-    [Header("Layer for building")]
-    public LayerMask layer;
-    public int layerInt;
-
     [Header("Stick tolerance")]
     public float tolerance = 0f;
 
@@ -37,6 +33,11 @@ public class BuildingManager : MonoBehaviour
     BuildPreview previewS;
     ItemSettings previewI;
 
+    GameObject dropG;
+    ItemSettings dropI;
+
+    #region Unity Funcs
+
     void Start()
     {
         buildButton.SetActive(false);
@@ -52,37 +53,46 @@ public class BuildingManager : MonoBehaviour
 
         if (isBuilding)
         {
-            if (isBuilding != oldBuilding) 
-            { 
-                TweeningLibrary.FadeIn(cancelButton, 0.1f); 
-                TweeningLibrary.FadeIn(rotateButton, 0.1f); 
-                oldBuilding = isBuilding; 
-
-                if (previewS.GetSnapped()) { TweeningLibrary.FadeIn(buildButton, 0.1f); }
-            }
-
-            if (previewS.GetSnapped() != oldSnapped)
+            if (dropG == null)
             {
-                if (previewS.GetSnapped() == true) { TweeningLibrary.FadeIn(buildButton, 0.1f); } else { TweeningLibrary.FadeOut(buildButton, 0.1f); }
-                oldSnapped = previewS.GetSnapped();
+                if (isBuilding != oldBuilding)
+                {
+                    TweeningLibrary.FadeIn(cancelButton, 0.1f);
+                    TweeningLibrary.FadeIn(rotateButton, 0.1f);
+                    oldBuilding = isBuilding;
+
+                    if (previewS.GetSnapped()) { TweeningLibrary.FadeIn(buildButton, 0.1f); }
+                }
+
+                if (previewS.GetSnapped() != oldSnapped)
+                {
+                    if (previewS.GetSnapped() == true) { TweeningLibrary.FadeIn(buildButton, 0.1f); } else { TweeningLibrary.FadeOut(buildButton, 0.1f); }
+                    oldSnapped = previewS.GetSnapped();
+                }
+
+                if (pauseBuilding)
+                {
+                    if (InputManager.instance != null)
+                    {
+                        if (Mathf.Abs(InputManager.MouseX) >= tolerance || Mathf.Abs(InputManager.MouseY) >= tolerance) { pauseBuilding = false; }
+                    }
+                    else
+                    {
+                        if (Mathf.Abs(MultiplayerInputManager.MouseX) >= tolerance || Mathf.Abs(MultiplayerInputManager.MouseY) >= tolerance) { pauseBuilding = false; }
+                    }
+                }
+                else { BuildRay(); }
             }
 
-            if (pauseBuilding)
-            {
-                print("YO PAUSE");
+            if (dropG != null) { BuildRay(); }
 
-                if (InputManager.instance != null)
-                {
-                    if (Mathf.Abs(InputManager.MouseX) >= tolerance || Mathf.Abs(InputManager.MouseY) >= tolerance) { pauseBuilding = false; print("YO UNPAUSE"); }
-                }
-                else
-                {
-                    if (Mathf.Abs(MultiplayerInputManager.MouseX) >= tolerance || Mathf.Abs(MultiplayerInputManager.MouseY) >= tolerance) { pauseBuilding = false; }
-                }
-            }
-            else { BuildRay(); }
+            if (dropG != null) { dropG.layer = 10; } 
         }
     }
+
+    #endregion
+
+    #region Basic Building Funcs
 
     public bool NewBuild(ItemSettings i)
     {
@@ -92,7 +102,7 @@ public class BuildingManager : MonoBehaviour
         previewG.name = i.name;
         previewS = previewG.GetComponent<BuildPreview>();
         previewI = i;
-        previewG.layer = layerInt;
+        previewG.layer = 10;
 
         isBuilding = true;
         AudioManager.PlayBuild();
@@ -103,16 +113,34 @@ public class BuildingManager : MonoBehaviour
     public void RotateBuild()
     {
         if (!isBuilding) { return; }
-        previewG.transform.eulerAngles = new Vector3(previewG.transform.eulerAngles.x, previewG.transform.eulerAngles.y + 90f, previewG.transform.eulerAngles.z);
+
+        if (previewG != null)
+        {
+            previewG.transform.eulerAngles = new Vector3(previewG.transform.eulerAngles.x, previewG.transform.eulerAngles.y + 90f, previewG.transform.eulerAngles.z);
+        }
+        else
+        {
+            dropG.transform.eulerAngles = new Vector3(dropG.transform.eulerAngles.x, dropG.transform.eulerAngles.y + 90f, dropG.transform.eulerAngles.z);
+        }
     }
 
     public void CancelBuild()
     {
-        Destroy(previewG);
+        if (previewG != null)
+        {
+            Destroy(previewG);
 
-        previewG = null;
-        previewS = null;
-        previewI = null;
+            previewG = null;
+            previewS = null;
+            previewI = null;
+        }
+        else
+        {
+            Destroy(dropG);
+
+            dropG = null;
+            dropI = null;
+        }
 
         isBuilding = false;
         oldBuilding = false;
@@ -124,33 +152,65 @@ public class BuildingManager : MonoBehaviour
         TweeningLibrary.FadeOut(rotateButton, 0.1f);
     }
 
+    #endregion
+
     public void FinishBuild()
     {
-        if (!previewS.GetSnapped()) { return; }
-
-        if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
+        if (previewG != null)
         {
-            StructureData sd = new StructureData
+            if (!previewS.GetSnapped()) { return; }
+
+            if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
             {
-                name = previewI.name,
-                pos = previewG.transform.position,
-                rot = previewG.transform.rotation
-            };
-            placedStructures.Add(previewG.transform.position);
-            SavingManager.SaveFile.structures.Add(sd);
+                StructureData sd = new StructureData
+                {
+                    name = previewI.name,
+                    pos = previewG.transform.position,
+                    rot = previewG.transform.rotation
+                };
+                placedStructures.Add(previewG.transform.position);
+                SavingManager.SaveFile.structures.Add(sd);
 
-            Inventory.instance.Destroy(previewI);
-            previewS.Place();
+                Inventory.instance.Destroy(previewI);
+            }
+            else if (SavingManager.GameState == SavingManager.GameStateEnum.Multiplayer)
+            {
+                ClientSend.AddStructure(previewG);
+                Destroy(previewG);
+            }
+
+            previewG = null;
+            previewS = null;
+            previewI = null;
         }
-        else if (SavingManager.GameState == SavingManager.GameStateEnum.Multiplayer)
+        else
         {
-            ClientSend.AddStructure(previewG);
-            Destroy(previewG);
-        }
+            if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
+            {
+                PropData propData = new PropData
+                {
+                    Name = dropI.gameObject.name,
+                    Position = dropG.transform.position,
+                    Rotation = dropG.transform.rotation,
+                    Scale = dropG.transform.localScale
+                };
+                SavingManager.SaveFile.Chunks[TerrainGenerator.GetNearestChunk(propData.Position)].Props.Add(propData);
 
-        previewG = null;
-        previewS = null;
-        previewI = null;
+                Inventory.instance.Destroy(dropI);
+                dropG.layer = 9;
+                dropG.GetComponent<Collider>().enabled = true;
+
+                if (!dropI.ignoreGravity) { dropG.AddComponent<Rigidbody>(); }
+                TerrainGenerator.AddToNearestChunk(dropG, TerrainGenerator.ChildType.Prop);
+            }
+            else if (SavingManager.GameState == SavingManager.GameStateEnum.Multiplayer)
+            {
+                // TODO: Add multiplayer support
+            }
+
+            dropG = null;
+            dropI = null;
+        }
 
         isBuilding = false;
         oldBuilding = false;
@@ -160,6 +220,27 @@ public class BuildingManager : MonoBehaviour
         TweeningLibrary.FadeOut(buildButton, 0.1f);
         TweeningLibrary.FadeOut(cancelButton, 0.1f);
         TweeningLibrary.FadeOut(rotateButton, 0.1f);
+    }
+
+    public bool StartDropItem(ItemSettings i)
+    {
+        if (isBuilding) { return false; }
+
+        InputManager.instance.ToggleUISectionsInt(0);
+        TweeningLibrary.FadeIn(buildButton, 0.1f);
+        TweeningLibrary.FadeIn(cancelButton, 0.1f);
+        TweeningLibrary.FadeIn(rotateButton, 0.1f);
+
+        dropG = Instantiate(i.gameObject);
+        dropG.layer = 10;
+        dropG.GetComponent<Collider>().enabled = false;
+        dropG.transform.eulerAngles = Vector3.zero;
+        dropG.name = i.gameObject.name;
+        dropI = i;
+
+        isBuilding = true;
+
+        return true;
     }
 
     public static void PauseBuild(bool v) { instance.pauseBuilding = v; }
@@ -167,8 +248,20 @@ public class BuildingManager : MonoBehaviour
     void BuildRay()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 20f, ~layer)) { previewG.transform.position = hit.point; }
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 20f, ~10)) 
+        { 
+            if (previewG != null)
+            {
+                previewG.transform.position = hit.point;
+            }
+            else
+            {
+                dropG.transform.position = hit.point;
+            }
+        }
     }
+
+    #region Loading
 
     public void LoadData()
     {
@@ -179,11 +272,12 @@ public class BuildingManager : MonoBehaviour
                 StructureItemSettings si = Resources.Load<StructureItemSettings>("Prefabs/Interactable Items/" + SavingManager.SaveFile.structures[i].name);
                 GameObject g = Instantiate(si.gameObject, SavingManager.SaveFile.structures[i].pos, SavingManager.SaveFile.structures[i].rot);
                 g.GetComponent<BuildPreview>().Place();
-                g.layer = layerInt;
 
                 placedStructures.Add(SavingManager.SaveFile.structures[i].pos);
             }
             
         }
     }
+
+    #endregion
 }

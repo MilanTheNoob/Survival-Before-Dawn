@@ -20,6 +20,7 @@ MonoBehaviour:
     that use it
   sellValue: 4
   buyValue: 8
+  ignoreGravity: 1
   originType: 0
   isUsableItem: 0
   dontDrop: 0

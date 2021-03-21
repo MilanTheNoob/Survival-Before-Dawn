@@ -20,6 +20,7 @@ MonoBehaviour:
     with recipes just like a normal pumpkin
   sellValue: 2
   buyValue: 4
+  ignoreGravity: 1
   originType: 0
   isUsableItem: 0
   dontDrop: 0

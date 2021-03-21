@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [Header("Audio vars")]
+    [Header("UI Components")]
     public AudioMixer AudioMixer;
 
     [Space]
@@ -16,7 +16,17 @@ public class SettingsMenu : MonoBehaviour
     public Slider SFAudioSlider;
     public Slider MusicAudioSlider;
 
-    [Header("Graphic vars")]
+    [Space]
+
+    public Slider RenderDistance;
+    public Text RenderDistanceT;
+
+    [Space]
+
+    public Toggle LQGeneration;
+
+    [Space]
+
     public Slider FramerateSlider;
     public Text FramerateTxt;
 
@@ -32,10 +42,11 @@ public class SettingsMenu : MonoBehaviour
     public Toggle UseVignette;
     public Toggle UseBloom;
 
-    [Header("Misc vars")]
+    [Space]
+
     public Slider Sensitivity;
 
-    [Header("Volume Profile")]
+    [Header("Profiles & Scriptable Objects")]
     public VolumeProfile ProcessingVolume;
 
     Camera cam;
@@ -96,6 +107,10 @@ public class SettingsMenu : MonoBehaviour
 
         InputManager.instance.viewSensitivity = SavingManager.SaveData.SettingsData.Sensitivity;
         Sensitivity.value = SavingManager.SaveData.SettingsData.Sensitivity;
+
+        RenderDistance.value = SavingManager.SaveData.SettingsData.RenderDistance;
+        RenderDistanceT.text = SavingManager.SaveData.SettingsData.RenderDistance.ToString();
+        LQGeneration.isOn = SavingManager.SaveFile.LQGeneration;
     }
 
     #region BasicChangeFuncs
@@ -114,6 +129,20 @@ public class SettingsMenu : MonoBehaviour
     public void SetMotionBlur(bool b) { UseMotionBlur.isOn = b; motionBlur.active = b; SavingManager.SaveData.SettingsData.MotionBlur = b; }
 
     public void SetSensitivity(float s) { InputManager.instance.viewSensitivity = s; SavingManager.SaveData.SettingsData.Sensitivity = s; }
+
+    public void SetRenderDistance(float d) 
+    { 
+        TerrainGenerator.instance.ViewDst = (int)d; 
+        TerrainGenerator.instance.UpdateViewDist();
+
+        SavingManager.SaveData.SettingsData.RenderDistance = (int)d;
+        RenderDistanceT.text = d.ToString();
+    }
+    public void SetLQGeneration(bool u)
+    {
+        SavingManager.SaveFile.LQGeneration = u;
+        PropsGeneration.instance.EnableLQGeneration(u);
+    }
 
     #endregion
 }

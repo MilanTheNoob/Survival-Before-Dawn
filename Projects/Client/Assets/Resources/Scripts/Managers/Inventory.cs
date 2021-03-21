@@ -79,16 +79,12 @@ public class Inventory : MonoBehaviour
 
         if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer)
         {
-            items.Remove(itemSettings);
-
             if (itemSettings.gameObject != null && !itemSettings.dontDrop)
             {
-                Vector3 pPos = SavingManager.player.transform.position;
-                GameObject item = Instantiate(itemSettings.gameObject, new Vector3(pPos.x, pPos.y + 5, pPos.z), Quaternion.identity);
-                item.transform.name = itemSettings.gameObject.transform.name;
-
-                item.AddComponent<Rigidbody>();
-                try { item.GetComponent<MeshCollider>().convex = true; } catch { }
+                ThreadManager.ExecuteOnMainThread(() =>
+                {
+                    BuildingManager.instance.StartDropItem(itemSettings);
+                });
             }
 
             if (SavingManager.GameState == SavingManager.GameStateEnum.Singleplayer) { SavingManager.SaveFile.inventoryItems.Remove(itemSettings.name); }

@@ -20,6 +20,7 @@ public class ProfileManager : MonoBehaviour
 
     [Space]
 
+    public Toggle LQGeneration;
     public InputField SaveSeed;
     public InputField SaveName;
 
@@ -201,7 +202,7 @@ public class ProfileManager : MonoBehaviour
     /// <summary>
     /// Creates a save file from current input fields
     /// </summary>
-    public void CreateSave() { SavingManager.CreateSave(SaveName.text, SaveSeed.text); }
+    public void CreateSave() { SavingManager.CreateSave(SaveName.text, SaveSeed.text, LQGeneration.isOn); }
     /// <summary>
     /// Joins a new server based of input fields
     /// </summary>

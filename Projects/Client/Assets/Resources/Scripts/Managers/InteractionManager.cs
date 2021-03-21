@@ -64,7 +64,7 @@ public class InteractionManager : MonoBehaviour
                 if (interactable.toolType == ToolsManager.instance.currentToolType && interactable.isInteractable || interactable.toolType == ToolsManager.ToolType.None && interactable.isInteractable)
                 {
                     interactText.text = interactable.interactTxt;
-                    interactName.text = interactable.name;
+                    interactName.text = interactable.name.Replace("-", " ");
 
                     if (interactButton.onClicked) { interactable.OnInteract(); }
                     if (!buttonFaded) { TweeningLibrary.FadeIn(interactButton.gameObject, 0.1f); buttonFaded = true; }
