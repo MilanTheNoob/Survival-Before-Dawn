@@ -51,6 +51,8 @@ public class InteractionManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (interactableI != null && interactButton.onClicked) { interactableI.OnInteract(); }
+
         if (interactCamera != null)
         {
             Ray ray = new Ray(interactCamera.transform.position, interactCamera.transform.forward);
@@ -66,7 +68,6 @@ public class InteractionManager : MonoBehaviour
                     interactText.text = interactableI.interactTxt;
                     interactName.text = interactableI.name.Replace("-", " ");
 
-                    if (interactButton.onClicked) { interactableI.OnInteract(); }
                     TweeningLibrary.FadeIn(interactButton.gameObject, 0.1f);
 
                     HighlightManager.Highlight(interactableI.gameObject);

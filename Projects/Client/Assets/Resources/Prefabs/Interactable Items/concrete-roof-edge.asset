@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a65161c55d14a14c932a197b2e7d131, type: 3}
+  m_Name: concrete-roof-edge
+  m_EditorClassIdentifier: 
+  desc: Roof Edge
+  descName: Concrete Roof Edge
+  icon: {fileID: 21300000, guid: 3be371ef1f0ace14a909da72bba65e8f, type: 3}
+  gameObject: {fileID: 1918657296074768, guid: 271f1ff54e6f37845b4a434cccddec31, type: 3}
+  description: A concrete roof edge to make your house that little bit better
+  sellValue: 12
+  buyValue: 24
+  ignoreGravity: 0
+  originType: 0
+  isUsableItem: 1
+  dontDrop: 1

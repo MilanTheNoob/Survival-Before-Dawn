@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a65161c55d14a14c932a197b2e7d131, type: 3}
+  m_Name: concrete-roof
+  m_EditorClassIdentifier: 
+  desc: Roof
+  descName: Concrete Roof
+  icon: {fileID: 21300000, guid: 9861965c4dc183344a0bafa0c85e8480, type: 3}
+  gameObject: {fileID: 1021798222166640, guid: 4e2549107f8f24a40ac15588dbfee7a7, type: 3}
+  description: A very plain and simple looking concrete roof for your simple builds
+  sellValue: 10
+  buyValue: 20
+  ignoreGravity: 0
+  originType: 0
+  isUsableItem: 1
+  dontDrop: 1

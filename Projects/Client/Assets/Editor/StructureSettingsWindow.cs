@@ -89,6 +89,7 @@ public class StructureSettingsWindow : EditorWindow
             if (structureType == 1) { newBP.structureType = BuildPreview.StructureType.Foundation; }
             else if (structureType == 2) { newBP.structureType = BuildPreview.StructureType.Wall; }
             else if (structureType == 3) { newBP.structureType = BuildPreview.StructureType.Furniture; }
+            else if (structureType == 4) { newBP.structureType = BuildPreview.StructureType.Storage; }
 
             if (newG.GetComponent<MeshCollider>() == null && newG.GetComponent<BoxCollider>() == null)
                 newG.AddComponent<MeshCollider>();

@@ -22,7 +22,6 @@ public class ItemSettingCreationWindows : EditorWindow
     GameObject g;
     string desc;
     int sellValue;
-    string modelType;
     GameObject ga;
     GameObject model;
 
@@ -36,29 +35,18 @@ public class ItemSettingCreationWindows : EditorWindow
     {
         GUILayout.Label("Standard ItemSetting Creation Window", EditorStyles.boldLabel);
 
-        GUILayout.Label("\nInput all values below, the output will \nbe store in 'Prefabs/Basic Objects/'. Please go to trello\nto fill in the names and description first.\n\nFinal thing, make sure to drag your model &\nmaterial into the correct folders\n\nThe short name for the item (one word)");
         name = EditorGUILayout.TextField("The short name: ", name);
-
-        GUILayout.Label("\nThe longer and more descriptive name\n of the interactable. (needs to be unique)");
         longerName = EditorGUILayout.TextField("The longer name: ", longerName);
-
-        GUILayout.Label("\nWhat is the parent name? (e.g. Rocks,\nFood, etc) Case sensitive");
         parentName = EditorGUILayout.TextField("The Parent name (type): ", parentName);
 
-        GUILayout.Label("\nThe gameObject, must be from the Assets Folder");
-        g = (GameObject)EditorGUILayout.ObjectField(g, typeof(GameObject), false);
+        GUILayout.Label("\n");
 
-        GUILayout.Label("\nThe Model that the gameObject derives from,\nmust be a model not prefab");
-        GUILayout.Label("FBX ONLY", EditorStyles.boldLabel);
+        g = (GameObject)EditorGUILayout.ObjectField(g, typeof(GameObject), false);
         model = (GameObject)EditorGUILayout.ObjectField(model, typeof(GameObject), false);
 
-        GUILayout.Label("\nWhat is the model type (e.g. fbx, obj, etc)");
-        modelType = EditorGUILayout.TextField("The model type: ", modelType);
+        GUILayout.Label("\n");
 
-        GUILayout.Label("\nWhat is the description of the itemSettings,\ncan be descriptive");
         desc = EditorGUILayout.TextField("The description", desc);
-
-        GUILayout.Label("\nThe amount you can trade in this item for to\na trader");
         sellValue = EditorGUILayout.IntField("The sell value: ", sellValue);
 
         if (GUILayout.Button("Create ItemSettings"))
@@ -68,7 +56,7 @@ public class ItemSettingCreationWindows : EditorWindow
             string folderId = AssetDatabase.CreateFolder("Assets/Resources/Prefabs/Basic Objects/" + parentName, longerName);
             string folderPath = AssetDatabase.GUIDToAssetPath(folderId);
 
-            AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(model), "Assets/Resources/Prefabs/_Misc/Meshes/" + projName + "." + modelType);
+            AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(model), "Assets/Resources/Prefabs/_Misc/Meshes/" + projName + ".fbx");
             AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(g), folderPath + "/" + projName + ".prefab");
 
             AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(model));

@@ -248,7 +248,7 @@ public class BuildingManager : MonoBehaviour
     void BuildRay()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 20f, ~10)) 
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, ~10)) 
         { 
             if (previewG != null)
             {
