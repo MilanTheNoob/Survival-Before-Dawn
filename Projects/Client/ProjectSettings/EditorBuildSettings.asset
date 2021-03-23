@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Resources/Scenes/Profile.unity
+    path: Assets/Scenes/Profile.unity
     guid: d131ab1388082d9448d7ec1f93af0a2f
   - enabled: 1
-    path: Assets/Resources/Scenes/Singleplayer.unity
+    path: Assets/Scenes/Singleplayer.unity
     guid: 1517905cbae8507468cef74dc99f79dc
   - enabled: 1
-    path: Assets/Resources/Scenes/Multiplayer.unity
+    path: Assets/Scenes/Multiplayer.unity
     guid: 148744ea3d672b24cb6276b56f62c499
   m_configObjects: {}

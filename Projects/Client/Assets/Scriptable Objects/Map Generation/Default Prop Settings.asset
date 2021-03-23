@@ -1,0 +1,556 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6dfc3f290a5b284391e0e7cbf9ce505, type: 3}
+  m_Name: Default Prop Settings
+  m_EditorClassIdentifier: 
+  autoUpdate: 0
+  PropGroups:
+  - Name: Trees
+    Props:
+    - PropName: Conifer Tree
+      PrefabVariants:
+      - {fileID: 4241519956225222151, guid: 4d1a07ad390f0b94fafee403716be119, type: 3}
+      - {fileID: 2115630578259181188, guid: a9ce8275bf80eb6429ede0569cef476d, type: 3}
+      - {fileID: 4241519956225222151, guid: 4d1a07ad390f0b94fafee403716be119, type: 3}
+      YOffset: -0.2
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 300
+    - PropName: Spruce Tree
+      PrefabVariants:
+      - {fileID: 5134803203259455989, guid: c9dac8d0083edef4f9d69a86f2b9e814, type: 3}
+      - {fileID: 652379776919850053, guid: ef6e5839b2303ce4798487b083166bd9, type: 3}
+      YOffset: -0.2
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+    - PropName: Beech Tree
+      PrefabVariants:
+      - {fileID: 5081485345126557810, guid: 82bd0e3eef3cc854eae31c6f4cd718bf, type: 3}
+      - {fileID: 1477897974640567763, guid: aa6cff232e1878a41832c385dfb3da6d, type: 3}
+      YOffset: -0.2
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+    - PropName: Dry Tree
+      PrefabVariants:
+      - {fileID: 2708162766823480858, guid: cb0dba13ded5e57449e9eb590a4638b7, type: 3}
+      - {fileID: 4398310901143096901, guid: 413c0ee9c5b281a42aaccccc0d5d55b6, type: 3}
+      - {fileID: 1141664039621681626, guid: 1ea0053df3a8d874bace9d3dead527cd, type: 3}
+      YOffset: -0.2
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+    - PropName: Pot Tree
+      PrefabVariants:
+      - {fileID: 4721673776926961227, guid: 884e1d5302214054e8d9c803030c21ab, type: 3}
+      YOffset: -0.1
+      RotationClamp: {x: 0, y: 180, z: 0}
+      PoolSizes: 200
+  - Name: Rocks
+    Props:
+    - PropName: Flat Stone
+      PrefabVariants:
+      - {fileID: 1000010262655218, guid: 4219a34a252329845951487f3638b799, type: 3}
+      - {fileID: 1000010635393592, guid: dbc745348c90eef419686653605cd7b1, type: 3}
+      - {fileID: 1000011505633412, guid: eae67a4ae2f76a443b6f0658b5fe2dda, type: 3}
+      YOffset: -0.05
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+    - PropName: Diamond Stone
+      PrefabVariants:
+      - {fileID: 1000013747084568, guid: 1ddaf028a0e74ed489d51ddc3c637ee2, type: 3}
+      - {fileID: 1000013714799558, guid: 99f4a1c5d05971547873356f8f25897b, type: 3}
+      - {fileID: 1000011816824358, guid: eb408404c5abb4c48a2c3dfa4a9b84ba, type: 3}
+      YOffset: -0.1
+      RotationClamp: {x: 180, y: 180, z: 180}
+      PoolSizes: 200
+  - Name: Ores
+    Props:
+    - PropName: Blue Ore
+      PrefabVariants:
+      - {fileID: 1000011724667232, guid: 855c271cb8b750547ab6237a901499ca, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+    - PropName: Green Ore
+      PrefabVariants:
+      - {fileID: 1000013815401846, guid: d3f22b25a11ced94f9b8031e08d4cfc6, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+    - PropName: Orange Ore
+      PrefabVariants:
+      - {fileID: 1000012672329024, guid: 1b68a55cd43b464458a39faf3e5b68a3, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+  - Name: Nature
+    Props:
+    - PropName: Boletus Mushroom
+      PrefabVariants:
+      - {fileID: 1000013385108184, guid: 50020ba5947da8640986440787d983b6, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 100
+    - PropName: Green Toadstool
+      PrefabVariants:
+      - {fileID: 1000013157714826, guid: 0263f908a55ef3045bfe2d5fee2357ee, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 100
+    - PropName: Log
+      PrefabVariants:
+      - {fileID: 1000014092007092, guid: 821b66508d0d1b144a58963d36e0e4e9, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+    - PropName: Roses
+      PrefabVariants:
+      - {fileID: 1000012594744698, guid: e0c268c3d3128df4199a1f3bc6a32e16, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 200
+    - PropName: Sunflower
+      PrefabVariants:
+      - {fileID: 1000012396999754, guid: b148061cf3c1a6843aaf77a4fb75d655, type: 3}
+      YOffset: -0.03
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 500
+  - Name: Food
+    Props:
+    - PropName: Apple
+      PrefabVariants:
+      - {fileID: 1297172181180802, guid: fe9c3ad0a7fc5c0449548e6bcc52f8e3, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 200
+    - PropName: Blueberries
+      PrefabVariants:
+      - {fileID: 4693999766978958390, guid: 06ba5e6bdad6bad46aaae50cd542b99b, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 5, y: 180, z: 5}
+      PoolSizes: 100
+    - PropName: Broccoli
+      PrefabVariants:
+      - {fileID: 4337355781907094235, guid: 8f059d547653f864687400acec7cb65c, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Beans
+      PrefabVariants:
+      - {fileID: 1830786660257520, guid: 4c83b93dfdeef4246a08377a5754996d, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Carrot
+      PrefabVariants:
+      - {fileID: 1391460097829842, guid: 00953b025589fc54f8e0098d78b4b60e, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Egg
+      PrefabVariants:
+      - {fileID: 8698811430785092606, guid: 1577fe1a0a501874d86feb754961f5bd, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Corn
+      PrefabVariants:
+      - {fileID: 1989835390974618, guid: 0118eb39998c893478203f04b2de1924, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Potato
+      PrefabVariants:
+      - {fileID: 2409780807096047618, guid: 3c0864beedc409b4b9cd3c2d274b9816, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 90, y: 180, z: 90}
+      PoolSizes: 100
+    - PropName: Peach
+      PrefabVariants:
+      - {fileID: 6467739697545267921, guid: 7bad394fc8563284095b4b6cf11ea9c6, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 10, y: 180, z: 10}
+      PoolSizes: 100
+    - PropName: Onion
+      PrefabVariants:
+      - {fileID: 7954558002276144191, guid: a0c001c5016fd8246a2cb1ee0f7f9422, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 10, y: 180, z: 10}
+      PoolSizes: 100
+    - PropName: Tomato
+      PrefabVariants:
+      - {fileID: 1210133651702842554, guid: d6004aa65a441834b9d546aceb9dafaf, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 10, y: 180, z: 10}
+      PoolSizes: 100
+    - PropName: White Onion
+      PrefabVariants:
+      - {fileID: 6156479949595482697, guid: 4522906a96e5dd34f873d2ce25c6f103, type: 3}
+      YOffset: 0
+      RotationClamp: {x: 10, y: 180, z: 10}
+      PoolSizes: 100
+  - Name: Structures
+    Props:
+    - PropName: Table
+      PrefabVariants:
+      - {fileID: 1641772252890988, guid: 57e57770716555c4a82519524dc00d7e, type: 3}
+      YOffset: 0.2
+      RotationClamp: {x: 0, y: 180, z: 0}
+      PoolSizes: 50
+    - PropName: Forest Bench
+      PrefabVariants:
+      - {fileID: 1000013282467606, guid: 040fbce94ca033d4a82e1748b5913c68, type: 3}
+      YOffset: 0.2
+      RotationClamp: {x: 0, y: 180, z: 0}
+      PoolSizes: 50
+  Biomes:
+  - Name: Conifer Forest
+    props:
+    - Name: Conifer Tree
+      Group: 0
+      Prop: 0
+      PerChunk: 5
+      SizeMax: 2
+      SizeMin: 1.5
+    - Name: Spruce Tree
+      Group: 0
+      Prop: 1
+      PerChunk: 2
+      SizeMax: 2
+      SizeMin: 0.8
+    - Name: Diamond Stone
+      Group: 1
+      Prop: 1
+      PerChunk: 2
+      SizeMax: 1.2
+      SizeMin: 0.4
+    - Name: Blue Ore
+      Group: 2
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Green Ore
+      Group: 2
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Orange Ore
+      Group: 2
+      Prop: 2
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Boletus Mushroom
+      Group: 3
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Green Mushroom
+      Group: 3
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Log
+      Group: 3
+      Prop: 2
+      PerChunk: 2
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Roses
+      Group: 3
+      Prop: 3
+      PerChunk: 2
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Apple
+      Group: 4
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.5
+      SizeMin: 0.8
+    - Name: Carrot
+      Group: 4
+      Prop: 4
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Dry Tree
+      Group: 0
+      Prop: 3
+      PerChunk: 2
+      SizeMax: 1.5
+      SizeMin: 0.8
+  - Name: Sunflower Forest
+    props:
+    - Name: Conifer Tree
+      Group: 0
+      Prop: 0
+      PerChunk: 7
+      SizeMax: 2
+      SizeMin: 0.8
+    - Name: Diamond Stone
+      Group: 1
+      Prop: 1
+      PerChunk: 2
+      SizeMax: 1.2
+      SizeMin: 0.4
+    - Name: Blue Ore
+      Group: 2
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Green Ore
+      Group: 2
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Orange Ore
+      Group: 2
+      Prop: 2
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Boletus Mushroom
+      Group: 3
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Green Mushroom
+      Group: 3
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Log
+      Group: 3
+      Prop: 2
+      PerChunk: 2
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Apple
+      Group: 4
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.5
+      SizeMin: 0.8
+    - Name: Carrot
+      Group: 4
+      Prop: 4
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Sunflower
+      Group: 3
+      Prop: 4
+      PerChunk: 6
+      SizeMax: 1.3
+      SizeMin: 0.7
+  - Name: Mega Conifer Forest
+    props:
+    - Name: Conifer Tree
+      Group: 0
+      Prop: 0
+      PerChunk: 3
+      SizeMax: 3
+      SizeMin: 2
+    - Name: Diamond Stone
+      Group: 1
+      Prop: 1
+      PerChunk: 2
+      SizeMax: 1.2
+      SizeMin: 0.4
+    - Name: Blue Ore
+      Group: 2
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Green Ore
+      Group: 2
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Orange Ore
+      Group: 2
+      Prop: 2
+      PerChunk: 1
+      SizeMax: 0.6
+      SizeMin: 0.4
+    - Name: Boletus Mushroom
+      Group: 3
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Green Mushroom
+      Group: 3
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Log
+      Group: 3
+      Prop: 2
+      PerChunk: 2
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Apple
+      Group: 4
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1.5
+      SizeMin: 0.8
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Dry Tree
+      Group: 0
+      Prop: 3
+      PerChunk: 1
+      SizeMax: 2
+      SizeMin: 0.8
+  - Name: Plains
+    props:
+    - Name: Beech Tree
+      Group: 0
+      Prop: 2
+      PerChunk: 3
+      SizeMax: 1
+      SizeMin: 0.5
+    - Name: Log
+      Group: 3
+      Prop: 2
+      PerChunk: 2
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Carrot
+      Group: 4
+      Prop: 4
+      PerChunk: 1
+      SizeMax: 1.2
+      SizeMin: 0.8
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Dry Tree
+      Group: 0
+      Prop: 3
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 0.7
+  Structures:
+  - Structure: {fileID: 1169681003932024, guid: 06b472f147551488aa5393e9477e4e0b, type: 3}
+    Props:
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+  - Structure: {fileID: 1000012191212250, guid: 02b6852f899a15d44957b934349e7e9a, type: 3}
+    Props:
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+  - Structure: {fileID: 1000012383013900, guid: be44107002abe0046a8a7f08bbf0eef1, type: 3}
+    Props:
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1
+      SizeMin: 1
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+  - Structure: {fileID: 1000012625864402, guid: d9f771127f198ea40869d419a85f3b89, type: 3}
+    Props:
+    - Name: Table
+      Group: 5
+      Prop: 0
+      PerChunk: 2
+      SizeMax: 1.5
+      SizeMin: 0.5
+    - Name: Forest Bench
+      Group: 5
+      Prop: 1
+      PerChunk: 1
+      SizeMax: 1
+      SizeMin: 1
+  Cars:
+  - {fileID: 4553246293962230684, guid: b2453bb5e0bd21749a045fcc634c0334, type: 3}
