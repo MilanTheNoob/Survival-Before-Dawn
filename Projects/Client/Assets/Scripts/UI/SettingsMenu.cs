@@ -84,8 +84,8 @@ public class SettingsMenu : MonoBehaviour
         FramerateSlider.value = fps;
         FramerateTxt.text = fps.ToString();
 
-        UseAliasing.isOn = SavingManager.SaveData.SettingsData.AA;
-        cam.allowMSAA = SavingManager.SaveData.SettingsData.AA;
+        //UseAliasing.isOn = SavingManager.SaveData.SettingsData.AA;
+        //cam.allowMSAA = SavingManager.SaveData.SettingsData.AA;
 
         UseHDR.isOn = SavingManager.SaveData.SettingsData.HDR;
         cam.allowHDR = SavingManager.SaveData.SettingsData.HDR;
@@ -119,7 +119,7 @@ public class SettingsMenu : MonoBehaviour
     public void SetMusicVolume(float volume) { AudioMixer.SetFloat("MusicLevel", volume); SavingManager.SaveData.MusicAudioLevel = volume; }
 
     public void SetFramerate(float value) { Application.targetFrameRate = (int)value; SavingManager.SaveData.SettingsData.FPS = (int)value; FramerateTxt.text = value.ToString(); }
-    public void SetAA(bool aa) { cam.allowMSAA = aa; SavingManager.SaveData.SettingsData.AA = aa; }
+    public void SetAA(bool aa) { /*cam.allowMSAA = aa; SavingManager.SaveData.SettingsData.AA = aa;*/ }
     public void SetHDR(bool hdr) { cam.allowHDR = hdr; SavingManager.SaveData.SettingsData.HDR = hdr; }
 
     public void SetVignette(bool b) { UseVignette.isOn = b; vignette.active = b; }

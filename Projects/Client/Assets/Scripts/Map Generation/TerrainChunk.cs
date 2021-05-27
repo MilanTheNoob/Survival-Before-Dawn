@@ -28,7 +28,7 @@ public class TerrainChunk
     public HeightMap heightData;
     bool heightMapRecieved;
     float maxViewDst;
-    bool generated;
+    public bool isGenerated;
 
     HeightMapSettings heightMapSettings;
     MeshSettings meshSettings;

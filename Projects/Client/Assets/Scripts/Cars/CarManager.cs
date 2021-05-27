@@ -35,6 +35,7 @@ public class CarManager : MonoBehaviour
         {
             currentCar.steering = Wheel.OutPut * 50;
             currentCar.throttle = Accelerator.value;
+            print(Accelerator.value);
 
             if (Exit.onClicked)
             {

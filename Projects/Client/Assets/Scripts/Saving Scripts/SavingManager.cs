@@ -251,7 +251,7 @@ public class SavingManager : MonoBehaviour
         public int RenderDistance = 80;
 
         public bool AA = true;
-        public bool HDR = false;
+        public bool HDR = true;
 
         public bool Tonemapping = true;
         public bool DepthOfField = false;

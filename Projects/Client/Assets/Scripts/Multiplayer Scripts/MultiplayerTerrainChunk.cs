@@ -24,6 +24,8 @@ public class MultiplayerTerrainChunk
     public GameObject items;
     public GameObject structures;
 
+    public bool isGenerated;
+
     Mesh mesh;
     MeshSettings meshSettings;
     Transform viewer;

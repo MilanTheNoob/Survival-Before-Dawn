@@ -16,8 +16,6 @@ public class PropsGeneration : MonoBehaviour
     [HideInInspector]
     public PropsSettings PropSettings;
 
-    List<Vector2> generatedChunks = new List<Vector2>();
-
     #region Start Funcs
 
     void Awake() 
@@ -73,8 +71,8 @@ public class PropsGeneration : MonoBehaviour
 
     public void Generate(TerrainChunk chunk)
     {
-        if (generatedChunks.Contains(chunk.coord) || chunk.meshFilter.mesh.vertices.Length < 10) { return; }
-        generatedChunks.Add(chunk.coord);
+        if (chunk.isGenerated || chunk.meshFilter.mesh.vertices.Length < 10) { return; }
+        chunk.isGenerated = true;
 
         if (SavingManager.SaveFile.Chunks.ContainsKey(new Vector2(chunk.coord.x, chunk.coord.y)))
         {
@@ -109,7 +107,7 @@ public class PropsGeneration : MonoBehaviour
                         vehicle.transform.parent = chunk.props.transform;
                         vehicle.SetActive(true);
 
-                        vehicle.transform.position = new Vector3(Props[i].Position.x, Props[i].Position.y + 5f, Props[i].Position.z);
+                        vehicle.transform.position = new Vector3(Props[i].Position.x, Props[i].Position.y + 2f, Props[i].Position.z);
                         vehicle.transform.rotation = Props[i].Rotation;
                         vehicle.transform.localScale = Props[i].Scale;
                     }
@@ -128,10 +126,25 @@ public class PropsGeneration : MonoBehaviour
             if (Random.value < 0.05f)
             {
                 int r = Random.Range(0, PropSettings.Cars.Length);
+                Vector3 vert = vertices[Random.Range(0, vertices.Count)];
+
+                GameObject colG = new GameObject();
+                colG.transform.parent = chunk.vehicles.transform;
+                colG.transform.localPosition = vert;
+                BoxCollider colC = colG.AddComponent<BoxCollider>();
+                colC.size = new Vector3(3, 3, 3);
+
+                for (int i = 0; i < vertices.Count; i++)
+                {
+                    if (colC.bounds.Contains(vertices[i]))
+                    {
+                        exclusions.Add(vertices[i]);
+                    }
+                }
+
                 GameObject g = Instantiate(PropSettings.Cars[r]);
                 g.transform.parent = chunk.vehicles.transform;
-                Vector3 vert = vertices[Random.Range(0, vertices.Count)];
-                g.transform.localPosition = new Vector3(vert.x, vert.y + 5f, vert.z);
+                g.transform.localPosition = new Vector3(vert.x, vert.y + 2f, vert.z);
                 g.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
                 g.transform.name = PropSettings.Cars[r].name;
                 g.SetActive(true);
@@ -245,8 +258,8 @@ public class PropsGeneration : MonoBehaviour
 
     public void MultiplayerGenerate(MultiplayerTerrainChunk chunk)
     {
-        if (generatedChunks.Contains(chunk.coord)) { return; }
-        generatedChunks.Add(chunk.coord);
+        if (chunk.isGenerated) { return; }
+        chunk.isGenerated = true;
 
         chunk.propDict.Clear();
         chunk.structureDict.Clear();
@@ -302,15 +315,15 @@ public class PropsGeneration : MonoBehaviour
 
     public void RemoveFromChunk(TerrainChunk chunk)
     {
-        if (chunk.props.transform.childCount == 0 || !generatedChunks.Contains(chunk.coord)) { return; }
-        generatedChunks.Remove(chunk.coord);
+        if (chunk.props.transform.childCount == 0) { return; }
+        chunk.isGenerated = false;
 
         for (int i = 0; i < chunk.props.transform.childCount; i++) { RemoveProp(chunk.props.transform.GetChild(i)); }
     }
     public void RemoveFromChunk(MultiplayerTerrainChunk chunk)
     {
-        if (chunk.props.transform.childCount == 0 || !generatedChunks.Contains(chunk.coord)) { return; }
-        generatedChunks.Remove(chunk.coord);
+        if (chunk.props.transform.childCount == 0) { return; }
+        chunk.isGenerated = false;
 
         chunk.propDict.Clear();
         for (int i = 0; i < chunk.props.transform.childCount; i++) { RemoveProp(chunk.props.transform.GetChild(i)); }
@@ -333,7 +346,7 @@ public class PropsGeneration : MonoBehaviour
         i.transform.parent = Pools[i.name + " Pool"].PropVariants[0].Holder.transform;
         i.transform.position = new Vector3(0f, -10f, 0f);
         i.transform.rotation = Quaternion.identity;
-        //i.SetActive(false);
+        i.SetActive(false);
 
         Pools[i.name + " Pool"].PropVariants[0].Props.Add(i);
     }

@@ -90,7 +90,7 @@ public class WheelVehicle : InteractableItem
                 wheel.brakeTorque = brakeForce;
             }
         }
-        else if (Mathf.Abs(speed) < 4 || Mathf.Sign(speed) == Mathf.Sign(throttle))
+        else
         {
             if (chunk != TerrainGenerator.GetNearestChunk(transform.position))
             {
@@ -113,13 +113,6 @@ public class WheelVehicle : InteractableItem
             foreach (WheelCollider wheel in driveWheel)
             {
                 wheel.motorTorque = throttle * motorTorque.Evaluate(speed) * diffGearing / driveWheel.Length;
-            }
-        }
-        else
-        {
-            foreach (WheelCollider wheel in wheels)
-            {
-                wheel.brakeTorque = Mathf.Abs(throttle) * brakeForce;
             }
         }
 

@@ -6,6 +6,8 @@ public class ChunkSaving : MonoBehaviour
 {
     public static void SaveChunkData(TerrainChunk chunk)
     {
+        if (!chunk.isGenerated) { return; }
+
         ChunkData chunkData = new ChunkData();
 
         for (int i = 0; i < chunk.props.transform.childCount; i++)
